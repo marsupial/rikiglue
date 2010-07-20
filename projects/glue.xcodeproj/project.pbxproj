@@ -10,10 +10,8 @@
 		C285653C11F4CFEC00ABCD8A /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
 		C285673111F54F0200ABCD8A /* errorCorrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672C11F54F0200ABCD8A /* errorCorrect.cpp */; };
 		C285673211F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
-		C285673411F54F0200ABCD8A /* rsaEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672F11F54F0200ABCD8A /* rsaEncrypt.cpp */; };
 		C285673611F54F0200ABCD8A /* errorCorrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672C11F54F0200ABCD8A /* errorCorrect.cpp */; };
 		C285673711F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
-		C285673911F54F0200ABCD8A /* rsaEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672F11F54F0200ABCD8A /* rsaEncrypt.cpp */; };
 		C285674F11F54FAF00ABCD8A /* decode_rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C285674911F54FAF00ABCD8A /* decode_rs.c */; };
 		C285675111F54FAF00ABCD8A /* encode_rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C285674B11F54FAF00ABCD8A /* encode_rs.c */; };
 		C285675511F54FAF00ABCD8A /* decode_rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C285674911F54FAF00ABCD8A /* decode_rs.c */; };
@@ -25,6 +23,10 @@
 		C28567D211F554E600ABCD8A /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C28567D011F554E600ABCD8A /* strings.cpp */; };
 		C285684D11F55B5300ABCD8A /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285684C11F55B5300ABCD8A /* frame.cpp */; };
 		C285684E11F55B5300ABCD8A /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285684C11F55B5300ABCD8A /* frame.cpp */; };
+		C2856B1411F6107300ABCD8A /* rsa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1311F6107300ABCD8A /* rsa.cpp */; };
+		C2856B1511F6107300ABCD8A /* rsa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1311F6107300ABCD8A /* rsa.cpp */; };
+		C2856B1C11F6116E00ABCD8A /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1B11F6116E00ABCD8A /* channel.cpp */; };
+		C2856B1D11F6116E00ABCD8A /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1B11F6116E00ABCD8A /* channel.cpp */; };
 		C2FA52B911EFD3180014E460 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
 		C2FA5D5F11F372630014E460 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5B11F372630014E460 /* InfoPlist.strings */; };
 		C2FA5D6011F372630014E460 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5D11F372630014E460 /* MainMenu.xib */; };
@@ -56,7 +58,6 @@
 /* Begin PBXFileReference section */
 		C285672C11F54F0200ABCD8A /* errorCorrect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = errorCorrect.cpp; path = ../src/frame/errorCorrect.cpp; sourceTree = SOURCE_ROOT; };
 		C285672D11F54F0200ABCD8A /* lut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.cpp; path = ../src/frame/lut.cpp; sourceTree = SOURCE_ROOT; };
-		C285672F11F54F0200ABCD8A /* rsaEncrypt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rsaEncrypt.cpp; path = ../src/frame/rsaEncrypt.cpp; sourceTree = SOURCE_ROOT; };
 		C285674611F54FAF00ABCD8A /* ccsds_tab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ccsds_tab.c; path = ../src/ec/ccsds_tab.c; sourceTree = SOURCE_ROOT; };
 		C285674711F54FAF00ABCD8A /* ccsds_tal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ccsds_tal.c; path = ../src/ec/ccsds_tal.c; sourceTree = SOURCE_ROOT; };
 		C285674811F54FAF00ABCD8A /* decode_rs_ccsds.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decode_rs_ccsds.c; path = ../src/ec/decode_rs_ccsds.c; sourceTree = SOURCE_ROOT; };
@@ -71,6 +72,8 @@
 		C28567CF11F554E600ABCD8A /* pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pf.cpp; path = ../src/plugin/pf.cpp; sourceTree = SOURCE_ROOT; };
 		C28567D011F554E600ABCD8A /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = strings.cpp; path = ../src/plugin/strings.cpp; sourceTree = SOURCE_ROOT; };
 		C285684C11F55B5300ABCD8A /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = ../src/frame/frame.cpp; sourceTree = SOURCE_ROOT; };
+		C2856B1311F6107300ABCD8A /* rsa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rsa.cpp; path = ../src/frame/rsa.cpp; sourceTree = SOURCE_ROOT; };
+		C2856B1B11F6116E00ABCD8A /* channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = channel.cpp; path = ../src/frame/channel.cpp; sourceTree = SOURCE_ROOT; };
 		C2FA506011EF81F70014E460 /* glue.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glue.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2FA52B811EFD3180014E460 /* rijndael.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = rijndael.c; path = ../src/rj/rijndael.c; sourceTree = SOURCE_ROOT; };
 		C2FA56FE11F1E9B20014E460 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Library/Frameworks/QtGui.framework; sourceTree = SDKROOT; };
@@ -185,7 +188,8 @@
 				C285684C11F55B5300ABCD8A /* frame.cpp */,
 				C285672C11F54F0200ABCD8A /* errorCorrect.cpp */,
 				C285672D11F54F0200ABCD8A /* lut.cpp */,
-				C285672F11F54F0200ABCD8A /* rsaEncrypt.cpp */,
+				C2856B1B11F6116E00ABCD8A /* channel.cpp */,
+				C2856B1311F6107300ABCD8A /* rsa.cpp */,
 			);
 			name = frame;
 			sourceTree = "<group>";
@@ -329,11 +333,12 @@
 				C285653C11F4CFEC00ABCD8A /* rijndael.c in Sources */,
 				C285673611F54F0200ABCD8A /* errorCorrect.cpp in Sources */,
 				C285673711F54F0200ABCD8A /* lut.cpp in Sources */,
-				C285673911F54F0200ABCD8A /* rsaEncrypt.cpp in Sources */,
 				C285675511F54FAF00ABCD8A /* decode_rs.c in Sources */,
 				C285675711F54FAF00ABCD8A /* encode_rs.c in Sources */,
 				C285676711F5502A00ABCD8A /* ccsds_tab.c in Sources */,
 				C285684E11F55B5300ABCD8A /* frame.cpp in Sources */,
+				C2856B1511F6107300ABCD8A /* rsa.cpp in Sources */,
+				C2856B1D11F6116E00ABCD8A /* channel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,13 +349,14 @@
 				C2FA52B911EFD3180014E460 /* rijndael.c in Sources */,
 				C285673111F54F0200ABCD8A /* errorCorrect.cpp in Sources */,
 				C285673211F54F0200ABCD8A /* lut.cpp in Sources */,
-				C285673411F54F0200ABCD8A /* rsaEncrypt.cpp in Sources */,
 				C285674F11F54FAF00ABCD8A /* decode_rs.c in Sources */,
 				C285675111F54FAF00ABCD8A /* encode_rs.c in Sources */,
 				C285676811F5502A00ABCD8A /* ccsds_tab.c in Sources */,
 				C28567D111F554E600ABCD8A /* pf.cpp in Sources */,
 				C28567D211F554E600ABCD8A /* strings.cpp in Sources */,
 				C285684D11F55B5300ABCD8A /* frame.cpp in Sources */,
+				C2856B1411F6107300ABCD8A /* rsa.cpp in Sources */,
+				C2856B1C11F6116E00ABCD8A /* channel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

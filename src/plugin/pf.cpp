@@ -178,27 +178,27 @@ rikiGlue( PF_Cmd        cmd,
 						switch ( selector )
 						{
 							case kEncode:
-								err = frame.ecEncode();
+								err = frame.operate(&ecEncode);
 								break;
 
 							case kDecode:
-								err = frame.ecDecode();
+								err = frame.operate(&ecDecode);
 								break;
 
 							case kEncrypt:
-								err = frame.rsaEncrypt();
+								err = frame.operate(&rsaEncrypt);
 								break;
 
 							case kDecrypt:
-								err = frame.rsaDecrypt();
+								err = frame.operate(&rsaDecrypt);
 								break;
 
 							case kEncryptLut:
-								err = frame.lutEncrypt();
+								err = frame.operate(&lutEncrypt);
 								break;
 
 							case kDecryptLut:
-								err = frame.lutDecrypt();
+								err = frame.operate(&lutDecrypt);
 								break;
 
 						}

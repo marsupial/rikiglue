@@ -86,18 +86,10 @@
 	CGContextDrawImage(contextRef, imageRect, capturedImage); 
 	CGImageRelease(capturedImage);
 
+	rikiGlue::Frame::operation_t ops[] = { rikiGlue::lutDecrypt, rikiGlue::bChannel };
 	rikiGlue::Frame  frame(&argb[0], rowBytes, imageRect.size.width, imageRect.size.height);	
-	//frame.rsaDecrypt();
-	frame.lutDecrypt();
 
-	uint8_t *bSplice = &argb[0];
-	for ( register_t y = 0; y < imageRect.size.height; ++y )
-		for ( register_t x = 0; x < imageRect.size.width; ++x )
-		{
-			bSplice[1] = bSplice[3];
-			bSplice[2] = bSplice[3];
-			bSplice += 4;
-		}
+	frame.operate(ops, 2);
 
 	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);

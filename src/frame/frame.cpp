@@ -43,4 +43,23 @@ Frame::setBlock( size_t    i,
 	}
 }
 
+register_t
+Frame::operate( operation_t    *ops,
+                size_t         nOps )
+{
+	for ( register_t i = 0; i < numBlocks(); ++i )
+	{
+		Block &block = getBlock(i);
+
+		for ( register_t o = 0; o < nOps; ++o )
+		{
+			if ( register_t rval = ops[o](block) )
+				return ( rval );
+		}
+
+		setBlock(i, block);
+	}
+	return ( 0 );
 }
+
+} /* namespace rikiGlue */

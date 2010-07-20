@@ -1,5 +1,5 @@
 /*
-	rsaEncrypt.cpp
+	rsa.cpp
 */
 
 #include "frame/frame.h"
@@ -8,6 +8,8 @@
 
 namespace rikiGlue
 {
+
+static const size_t kRSALength = 16;
 
 static const char *kKey =
 	"MIICXQIBAAKBgQC+KyuRXOUxsPWt2J/NIMCc4jc8HtBYgoZsyafXjfJmAlhFOGbw"
@@ -24,48 +26,35 @@ static const char *kKey =
 	"toNz0AhyijMM83jKLSsCQQDpn+P55Nm4xCpxXgKEwQ6cPWoaI5WXl4mNPi2cw4Cl"
 	"L2FWhu8NGXi8IZUX6fhPndTHTYf344eFVtErii7c4lCw";
 
-int
-Frame::rsaEncrypt()
+
+static register_t
+rsaOperation( uint8_t         flag,
+              void (*op) (rijndael_ctx *ctx, u_char *src, u_char *dst),
+              Frame::Block    &block )
 {
 	rijndael_ctx   ctx;
-	rijndael_set_key(&ctx, (u_char*) kKey, 128, 1);
+	rijndael_set_key(&ctx, (u_char*) kKey, 128, flag);
 
-	for ( register_t i = 0; i < numBlocks(); ++i )
+	const register_t n = block.size() / kRSALength;
+	for ( register_t i = 0; i < n; ++i )
 	{
-		Block &block = getBlock(i);
-
-		const register_t rsaLen = 16;
-		const size_t     blockLen = block.size();
-
-		for ( size_t j = 0; j+rsaLen <= blockLen; j += rsaLen )
-			rijndael_encrypt(&ctx, &block[j], &block[j]);
-		
-		setBlock(i, block);
+		const register_t j = i*kRSALength;
+		op(&ctx, &block[j], &block[j]);
 	}
 
 	return ( 0 );
 }
 
-int
-Frame::rsaDecrypt()
+register_t
+rsaEncrypt( Frame::Block    &block )
 {
-	rijndael_ctx   ctx;
-	rijndael_set_key(&ctx, (u_char*) kKey, 128, 0);
+	return ( rsaOperation(1, rijndael_encrypt, block) );
+}
 
-	for ( register_t i = 0; i < numBlocks(); ++i )
-	{
-		Block &block = getBlock(i);
-
-		const register_t rsaLen = 16;
-		const size_t     blockLen = block.size();
-
-		for ( size_t j = 0; j+rsaLen <= blockLen; j += rsaLen )
-			rijndael_decrypt(&ctx, &block[j], &block[j]);
-		
-		setBlock(i, block);
-	}
-
-	return ( 0 );
+register_t
+rsaDecrypt( Frame::Block    &block )
+{
+	return ( rsaOperation(0, rijndael_decrypt, block) );
 }
 
 } /* namespace rikiGlue */
