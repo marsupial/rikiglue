@@ -94,8 +94,9 @@
 	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);
 
-	NSTimeInterval interval = [ date timeIntervalSinceNow ];
-	printf("t: %f\n", interval);
+	interval += [ date timeIntervalSinceNow ];
+	nIntervals++;
+
 	//[ date release ];
     return ( imageRef );
 }
@@ -118,12 +119,17 @@
 	                                                    selector: @selector(timerFired:)
 	                                                    userInfo: nil
 	                                                    repeats: YES ] retain];
+
+	interval = 0;
+	nIntervals = 0;
 }
 
 - (void) applicationWillTerminate: (NSNotification*) notification
 {
 	[ timer release ];
 	CGColorSpaceRelease(colorSpace);
+
+	printf("t: %f\n", interval/nIntervals);
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) application

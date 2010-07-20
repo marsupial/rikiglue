@@ -17,5 +17,7 @@
 
 	CGColorSpaceRef   colorSpace;
 	NSTimer           *timer;
+	
+	double interval, nIntervals;
 }
 @end

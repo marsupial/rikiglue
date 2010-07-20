@@ -15,8 +15,15 @@ chOperation( uint8_t         c,
 	uint8_t *data = &block[0];
 	for ( register_t i = 0; i < n; ++i )
 	{
+#if defined(RUNROLL)
+		const uint8_t val = data[c];
+		*data++ = val;
+		*data++ = val;
+		*data++ = val;
+#else
 		memset(&data[0], data[c], 3);
 		data += 3;
+#endif
 	}
 
 	return ( 0 );
