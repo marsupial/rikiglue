@@ -3,6 +3,7 @@
 */
 
 #include "frame/frame.h"
+#include "threads/threads.h"
 #include <assert.h>
 
 namespace rikiGlue
@@ -38,7 +39,7 @@ Frame::setBlock( size_t    i,
 {
 	assert( i < mHeight );
 
-	const uint8_t *srcData = &mBlock[0];
+	const uint8_t *srcData = &block[0];
 	uint8_t *dstData = mData + (mRowbytes * i);
 	for ( register_t x = 0; x < mWidth; ++x )
 	{
@@ -57,20 +58,47 @@ Frame::setBlock( size_t    i,
 
 register_t
 Frame::operate( operation_t    *ops,
-                size_t         nOps )
+                size_t         numOps,
+                DecodeThread   *inDecoder )
 {
-	for ( register_t i = 0; i < numBlocks(); ++i )
+	if ( inDecoder )
 	{
-		Block &block = getBlock(i);
+		DecodeThread &decoder = *inDecoder;
 
-		for ( register_t o = 0; o < nOps; ++o )
+		for ( register_t i = 0; i < numBlocks(); ++i )
 		{
-			if ( register_t rval = ops[o](block) )
-				return ( rval );
+			const Block &block = getBlock(i);
+
+			decoder.lock();
+			decoder.queue()[i] = ThreadBlock(this, ops, numOps);
+			decoder.queue()[i].mBlock = block;
+			decoder.unlock();
+
+			decoder.signal();
 		}
 
-		setBlock(i, block);
+		decoder.lock();
+		while ( decoder.queue().size() )
+			decoder.decode(true);
+
+		decoder.unlock();
 	}
+	else
+	{
+		for ( register_t i = 0; i < numBlocks(); ++i )
+		{
+			Block &block = getBlock(i);
+
+			for ( register_t o = 0; o < numOps; ++o )
+			{
+				if ( register_t rval = ops[o](block) )
+					return ( rval );
+			}
+
+			setBlock(i, block);
+		}
+	}
+
 	return ( 0 );
 }
 
