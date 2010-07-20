@@ -40,7 +40,6 @@
 
 	size_t rowBytes = imageRect.size.width * 4;
 	void *argb = malloc( rowBytes * imageRect.size.height );
-//memset(argb, 128, rowBytes * imageRect.size.height);
 	CGColorSpaceRef csRef = CGColorSpaceCreateDeviceRGB();
 	CGContextRef contextRef = CGBitmapContextCreate(argb, imageRect.size.width, imageRect.size.height, 8, rowBytes, csRef, kCGImageAlphaPremultipliedFirst);
 	CGImageRef bmapImage = CGBitmapContextCreateImage(contextRef);
@@ -107,13 +106,6 @@
 @end
 
 int main(int argc, char *argv[])
-{
-/*	
-        _redrawTimer = [[NSTimer scheduledTimerWithTimeInterval:(1.0 / 30.0)
-                                                        target:self
-                                                      selector:@selector(_frameTimerFired:)
-                                                      userInfo:nil
-                                                       repeats:YES] retain];
-*/													   
+{												   
     return NSApplicationMain(argc,  (const char **) argv);
 }
