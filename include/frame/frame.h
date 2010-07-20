@@ -26,6 +26,9 @@ struct Frame
 {
 public:
 
+	typedef std::vector<uint8_t> Block;
+	typedef register_t (*operation_t) ( Frame::Block     &block );
+
 	Frame( void    *data,
 	       size_t  rowbytes,
 	       size_t  width,
@@ -38,27 +41,17 @@ public:
 	{
 	}
 
-	int 
-	rsaEncrypt();
+	register_t
+	operate( operation_t    ops[],
+	         size_t         nOps );
 
-	int 
-	rsaDecrypt();
-
-	int 
-	ecEncode();
-
-	int 
-	ecDecode();
-
-	int
-	lutEncrypt();
-
-	int
-	lutDecrypt();
+	register_t
+	operate( operation_t    op )
+	{
+		return ( operate(&op, 1) );
+	}
 
 private:
-
-	typedef std::vector<uint8_t> Block;
 
 	size_t
 	numBlocks() const
@@ -73,13 +66,6 @@ private:
 	setBlock( size_t    i,
 	          Block     &block );
 
-	void
-	lutCrypt( unsigned char    lut[256] );
-
-	void
-	lutCrypt( unsigned char    lut[3][256] );
-
-
 	uint8_t       *mData;
 
 	const size_t  mWidth,
@@ -88,6 +74,27 @@ private:
 
 	Block         mBlock;
 };
+
+register_t 
+rsaEncrypt( Frame::Block    &block );
+
+register_t 
+rsaDecrypt( Frame::Block    &block );
+
+register_t 
+ecEncode( Frame::Block    &block );
+
+register_t 
+ecDecode( Frame::Block    &block );
+
+register_t
+lutEncrypt( Frame::Block    &block );
+
+register_t
+lutDecrypt( Frame::Block    &block );
+
+register_t
+bChannel( Frame::Block    &block );
 
 } /* namespace rikiGlue */
 
