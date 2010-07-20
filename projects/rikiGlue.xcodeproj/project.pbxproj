@@ -36,17 +36,7 @@
 		C2FA52B911EFD3180014E460 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
 		C2FA561111F0BDF60014E460 /* colorShift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA561011F0BDF60014E460 /* colorShift.cpp */; };
 		C2FA562411F0BFC00014E460 /* paramUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA562311F0BFC00014E460 /* paramUtils.cpp */; };
-		C2FA56E611F1E8330014E460 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA56E411F1E8330014E460 /* main.cpp */; };
-		C2FA56E711F1E8330014E460 /* screenshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA56E511F1E8330014E460 /* screenshot.cpp */; };
-		C2FA56FF11F1E9B20014E460 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FA56FE11F1E9B20014E460 /* QtGui.framework */; };
-		C2FA570311F1E9D80014E460 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FA570211F1E9D80014E460 /* QtCore.framework */; };
-		C2FA571511F1EAA50014E460 /* screenshot.moc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA571411F1EAA50014E460 /* screenshot.moc.cpp */; };
-		C2FA59FA11F213E00014E460 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FA59F911F213E00014E460 /* Carbon.framework */; };
-		C2FA5B0111F2202A0014E460 /* rsaEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52AF11EFD2810014E460 /* rsaEncrypt.cpp */; };
-		C2FA5B1311F220A20014E460 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
-		C2FA5C0111F22F390014E460 /* rot13.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C0011F22F390014E460 /* rot13.cpp */; };
 		C2FA5C0211F22F390014E460 /* rot13.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C0011F22F390014E460 /* rot13.cpp */; };
-		C2FA5C7B11F252530014E460 /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C7A11F252530014E460 /* lut.cpp */; };
 		C2FA5C7C11F252530014E460 /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C7A11F252530014E460 /* lut.cpp */; };
 		C2FA5D5F11F372630014E460 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5B11F372630014E460 /* InfoPlist.strings */; };
 		C2FA5D6011F372630014E460 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5D11F372630014E460 /* MainMenu.xib */; };
@@ -55,13 +45,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		C28564FD11F4CE5300ABCD8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C4E618CB095A3CE80012CA3F /* rikiGlue */;
-			remoteInfo = rikiGlue;
-		};
-		C2FA5C2E11F230D50014E460 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
 			proxyType = 1;
@@ -103,12 +86,8 @@
 		C2FA52B811EFD3180014E460 /* rijndael.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = rijndael.c; path = ../src/rj/rijndael.c; sourceTree = SOURCE_ROOT; };
 		C2FA561011F0BDF60014E460 /* colorShift.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = colorShift.cpp; path = ../src/colorShift.cpp; sourceTree = SOURCE_ROOT; };
 		C2FA562311F0BFC00014E460 /* paramUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = paramUtils.cpp; path = "aegp++/src/paramUtils.cpp"; sourceTree = EXTERNALS; };
-		C2FA56DA11F1E7FC0014E460 /* qtApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qtApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2FA56E411F1E8330014E460 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/qt/main.cpp; sourceTree = SOURCE_ROOT; };
-		C2FA56E511F1E8330014E460 /* screenshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screenshot.cpp; path = ../src/qt/screenshot.cpp; sourceTree = SOURCE_ROOT; };
 		C2FA56FE11F1E9B20014E460 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Library/Frameworks/QtGui.framework; sourceTree = SDKROOT; };
 		C2FA570211F1E9D80014E460 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Library/Frameworks/QtCore.framework; sourceTree = SDKROOT; };
-		C2FA571411F1EAA50014E460 /* screenshot.moc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screenshot.moc.cpp; path = ../src/qt/screenshot.moc.cpp; sourceTree = SOURCE_ROOT; };
 		C2FA59F911F213E00014E460 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		C2FA5BCA11F22B300014E460 /* rikiFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rikiFrame.h; path = ../include/rikiFrame.h; sourceTree = SOURCE_ROOT; };
 		C2FA5C0011F22F390014E460 /* rot13.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rot13.cpp; path = ../src/rot13.cpp; sourceTree = SOURCE_ROOT; };
@@ -120,16 +99,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C2FA56D811F1E7FC0014E460 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2FA56FF11F1E9B20014E460 /* QtGui.framework in Frameworks */,
-				C2FA570311F1E9D80014E460 /* QtCore.framework in Frameworks */,
-				C2FA59FA11F213E00014E460 /* Carbon.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C2FA5D2511F371190014E460 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,16 +178,6 @@
 			name = rj;
 			sourceTree = "<group>";
 		};
-		C2FA56DF11F1E8060014E460 /* qt */ = {
-			isa = PBXGroup;
-			children = (
-				C2FA571411F1EAA50014E460 /* screenshot.moc.cpp */,
-				C2FA56E411F1E8330014E460 /* main.cpp */,
-				C2FA56E511F1E8330014E460 /* screenshot.cpp */,
-			);
-			name = qt;
-			sourceTree = "<group>";
-		};
 		C2FA5D6111F372750014E460 /* operation */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,7 +218,6 @@
 				D0FE57630993C4FD00139A60 /* src */,
 				C2F5993A113CE59800B0FD05 /* lib */,
 				C2FA506011EF81F70014E460 /* rikiGlue.plugin */,
-				C2FA56DA11F1E7FC0014E460 /* qtApp.app */,
 				C2FA5D2711F371190014E460 /* cocoaApp.app */,
 			);
 			sourceTree = "<group>";
@@ -269,7 +227,6 @@
 			children = (
 				C2FA5D6111F372750014E460 /* operation */,
 				C2FA5D6211F372810014E460 /* plugin */,
-				C2FA56DF11F1E8060014E460 /* qt */,
 				C2FA5D6311F3729B0014E460 /* cocoa */,
 			);
 			name = src;
@@ -278,24 +235,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C2FA56D911F1E7FC0014E460 /* qtApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C2FA56DE11F1E7FD0014E460 /* Build configuration list for PBXNativeTarget "qtApp" */;
-			buildPhases = (
-				C2FA56D611F1E7FC0014E460 /* Resources */,
-				C2FA56D711F1E7FC0014E460 /* Sources */,
-				C2FA56D811F1E7FC0014E460 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C2FA5C2F11F230D50014E460 /* PBXTargetDependency */,
-			);
-			name = qtApp;
-			productName = qtApp;
-			productReference = C2FA56DA11F1E7FC0014E460 /* qtApp.app */;
-			productType = "com.apple.product-type.application";
-		};
 		C2FA5D2611F371190014E460 /* cocoaApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2FA5D2B11F3711B0014E460 /* Build configuration list for PBXNativeTarget "cocoaApp" */;
@@ -347,20 +286,12 @@
 			projectRoot = "";
 			targets = (
 				C4E618CB095A3CE80012CA3F /* rikiGlue */,
-				C2FA56D911F1E7FC0014E460 /* qtApp */,
 				C2FA5D2611F371190014E460 /* cocoaApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C2FA56D611F1E7FC0014E460 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C2FA5D2311F371190014E460 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -391,20 +322,6 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C2FA56D711F1E7FC0014E460 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2FA56E611F1E8330014E460 /* main.cpp in Sources */,
-				C2FA56E711F1E8330014E460 /* screenshot.cpp in Sources */,
-				C2FA571511F1EAA50014E460 /* screenshot.moc.cpp in Sources */,
-				C2FA5B0111F2202A0014E460 /* rsaEncrypt.cpp in Sources */,
-				C2FA5B1311F220A20014E460 /* rijndael.c in Sources */,
-				C2FA5C0111F22F390014E460 /* rot13.cpp in Sources */,
-				C2FA5C7B11F252530014E460 /* lut.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C2FA5D2411F371190014E460 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -458,11 +375,6 @@
 			target = C4E618CB095A3CE80012CA3F /* rikiGlue */;
 			targetProxy = C28564FD11F4CE5300ABCD8A /* PBXContainerItemProxy */;
 		};
-		C2FA5C2F11F230D50014E460 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C4E618CB095A3CE80012CA3F /* rikiGlue */;
-			targetProxy = C2FA5C2E11F230D50014E460 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -485,30 +397,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C2FA56DD11F1E7FC0014E460 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"BS_GLOBAL_SP=1",
-					"QT_MAC_USE_COCOA=1",
-				);
-				INFOPLIST_FILE = ../rsrc/qtqtApp.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
-				PRODUCT_NAME = qtApp;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
 		C2FA5D2A11F3711B0014E460 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -616,14 +504,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C2FA56DE11F1E7FD0014E460 /* Build configuration list for PBXNativeTarget "qtApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C2FA56DD11F1E7FC0014E460 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		C2FA5D2B11F3711B0014E460 /* Build configuration list for PBXNativeTarget "cocoaApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
