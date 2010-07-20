@@ -5,6 +5,9 @@
 #import "cocoa/gabba.h"
 #import "frame/frame.h"
 
+static const rikiGlue::Frame::operation_t
+	kOperations[] = { rikiGlue::lutDecrypt, rikiGlue::bChannel };
+
 @implementation Dabba
 
 - (id) initWithFrame: (NSRect) frameRect
@@ -86,10 +89,10 @@
 	CGContextDrawImage(contextRef, imageRect, capturedImage); 
 	CGImageRelease(capturedImage);
 
-	rikiGlue::Frame::operation_t ops[] = { rikiGlue::lutDecrypt, rikiGlue::bChannel };
 	rikiGlue::Frame  frame(&argb[0], rowBytes, imageRect.size.width, imageRect.size.height);	
 
-	frame.operate(ops, 2);
+	frame.operate(kOperations, 2, &decoder);
+//	frame.operate(kOperations, 2 );
 
 	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);
@@ -108,24 +111,30 @@
 	{
 		[ imageView setImage: image ];
 		[ imageView setNeedsDisplay: YES];
+		CGImageRelease(image);
 	}
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
 {
 	colorSpace = CGColorSpaceCreateDeviceRGB();
-	timer = [ [ NSTimer scheduledTimerWithTimeInterval: (1.0 / 60.0)
+	timer = [ [ NSTimer scheduledTimerWithTimeInterval: (1.0 / 30.0)
 	                                                    target: self
 	                                                    selector: @selector(timerFired:)
 	                                                    userInfo: nil
 	                                                    repeats: YES ] retain];
-
+	decoder.create();
 	interval = 0;
 	nIntervals = 0;
 }
 
 - (void) applicationWillTerminate: (NSNotification*) notification
 {
+	decoder.lock();
+	decoder.exit();
+	decoder.unlock();
+	decoder.signal();
+	
 	[ timer release ];
 	CGColorSpaceRelease(colorSpace);
 

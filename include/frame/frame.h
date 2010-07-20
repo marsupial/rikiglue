@@ -12,6 +12,8 @@
 namespace rikiGlue
 {
 
+class DecodeThread;
+
 class Params
 {
 public:
@@ -43,13 +45,19 @@ public:
 
 	register_t
 	operate( operation_t    ops[],
-	         size_t         nOps );
+	         size_t         numOps,
+	         DecodeThread   *thread = NULL );
 
 	register_t
-	operate( operation_t    op )
+	operate( operation_t    op,
+	         DecodeThread   *thread = NULL )
 	{
-		return ( operate(&op, 1) );
+		return ( operate(&op, 1, thread) );
 	}
+
+	void
+	setBlock( size_t    i,
+	          Block     &block );
 
 private:
 
@@ -61,10 +69,6 @@ private:
 
 	Block&
 	getBlock( size_t    i );
-
-	void
-	setBlock( size_t    i,
-	          Block     &block );
 
 	uint8_t       *mData;
 
