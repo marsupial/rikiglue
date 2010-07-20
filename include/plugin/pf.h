@@ -1,26 +1,22 @@
 /*
-	rikiPF.h
+	pf.h
 */
 
 #pragma once
 
-#ifndef _rikiPF_h__
-#define _rikiPF_h__
+#ifndef _pf_h__
+#define _pf_h__
 
 #define	MAJOR_VERSION	1
 #define	MINOR_VERSION	0
 #define	BUG_VERSION		0
 #define	STAGE_VERSION	PF_Stage_DEVELOP
 #define	BUILD_VERSION	1
-// #define PF_DEEP_COLOR_AWARE 1
 
-#include "rikiFrame.h"
+#define AERR(x)         do { A_Err err = (x); if ( err != ::A_Err_NONE ) return (err); } while(0)
 
 namespace rikiGlue
 {
-
-typedef Frame Zone;
-
 
 /* Parameter defaults */
 
@@ -36,17 +32,6 @@ enum
 	kNumParamIDs    ,
 };
 
-enum
-{
-	kColorShiftSlider = kInputParam + 1
-};
-
-enum
-{
-	kColorShiftSliderID = kInputParamID + 1,
-	kColorShiftNumParamIDs
-};
-
 } /* namespace rikiGlue */
 
-#endif /* _rikiPF_h__ */
+#endif /* _pf_h__ */

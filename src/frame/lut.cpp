@@ -1,8 +1,8 @@
 /*
-	rot13.cpp
+	lut.cpp
 */
 
-#include "rikiFrame.h"
+#include "frame/frame.h"
 
 namespace rikiGlue
 {

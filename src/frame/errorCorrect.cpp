@@ -2,26 +2,10 @@
 	errorCorrect.cpp
 */
 
-#include "rikiFrame.h"
+#include "frame/frame.h"
 
-#define FIXED 1
-#define CCSDS 1
 #include "ec/fixed.h"
 #include "ec/ccsds.h"
-
-#include "ec/rs/encode_rs.c"
-#include "ec/rs/decode_rs.c"
-
-void encode_rs_ccsds(unsigned char *data,unsigned char *parity);
-int decode_rs_ccsds(unsigned char *data,int *eras_pos,int no_eras);
-
-/*
-#undef ENCODE_RS
-#define ENCODE_RS encode_rs_ccsds
-
-#undef DECODE_RS
-#define DECODE_RS decode_rs_ccsds
-*/
 
 namespace rikiGlue
 {

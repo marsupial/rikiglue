@@ -1,21 +1,16 @@
 /*
-	rikiPF.cpp
+	pf.cpp
 */
 
 #include <entry.h>
-#include <AE_EffectCBSuites.h>
-#include <AE_ChannelSuites.h>
+#include <AE_Effect.h>
+#include <AE_EffectCB.h>
 #include <AE_Macros.h>
+#include <Param_Utils.h>
 
-#include "platform/error.h"
-#include "pica++/boatptr.hpp"
-
-#include "aegp++/suiteVersions.h"
-#include "aegp++/pfSuiteVersions.h"
-#include "aegp++/paramUtils.h"
-
-#include "rikiPF.h"
-#include "rikiStrings.h"
+#include "plugin/pf.h"
+#include "plugin/strings.h"
+#include "frame/frame.h"
 
 namespace rikiGlue
 {
@@ -42,33 +37,22 @@ static PF_Err
 about( PF_InData      *in_data,	
        PF_OutData     *out_data,
        uint8_t        selector )
-{
-	BLOAT_PTR(PFANSISuite, ansiSuite, in_data->pica_basicP);
-	
-	ansiSuite->sprintf(	out_data->return_msg,
-						"%s v%d.%d\r%s",
-						STR(selector + kStrID_Name), 
-						MAJOR_VERSION, 
-						MINOR_VERSION, 
-						STR(selector + kStrID_Description));
+{	
+	in_data->utils->ansi.sprintf( out_data->return_msg, "%s v%d.%d\r%s",
+	                              STR(selector + kStrID_Name), MAJOR_VERSION, MINOR_VERSION, 
+	                              STR(selector + kStrID_Description));
 
-	return (PF_Err_NONE);
+	return ( PF_Err_NONE );
 }
 
 static PF_Err 
 globalSetup( PF_InData      *in_data,	
              PF_OutData     *out_data )
 {
-	out_data->my_version = PF_VERSION(	MAJOR_VERSION, 
-										MINOR_VERSION,
-										BUG_VERSION, 
-										STAGE_VERSION, 
-										BUILD_VERSION);
+	out_data->my_version = PF_VERSION( MAJOR_VERSION, MINOR_VERSION, BUG_VERSION, STAGE_VERSION, BUILD_VERSION);
 
 	out_data->out_flags = 	0;
 	out_data->out_flags2 =  0;
-	
-	BSERR_CODE( initSuites(in_data->pica_basicP) );
 
 	return ( PF_Err_NONE );
 }
@@ -77,7 +61,6 @@ static PF_Err
 globalSetdown( PF_InData      *in_data,	
                PF_OutData     *out_data )
 {
-	BSERR_CODE( shutdownSuites() );
 	return ( PF_Err_NONE );
 }
 
@@ -86,15 +69,7 @@ paramSetup( PF_InData      *in_data,
             PF_OutData     *out_data,
             uint8_t        selector )
 {
-	// SUITE_ERR( addMenu(in_data, selector + kStrID_Direction, DirectionID, 2, 1) );
-	if ( selector == kColorShift )
-	{
-		addIntSlider(in_data, kStrID_ColorLevel, kColorShiftSliderID, 7, 0, 2, 255, 2, 255, 0);
-		out_data->num_params = kColorShiftNumParamIDs;
-	}
-	else
-		out_data->num_params = kNumParamIDs;
-	
+	out_data->num_params = kNumParamIDs;
 	return ( PF_Err_NONE );
 }
 
@@ -115,9 +90,8 @@ sequenceFlatten( PF_InData      *in_data,
                  PF_OutData     *out_data )
 {
 	if ( in_data->sequence_data )
-	{
 		PF_DISPOSE_HANDLE(in_data->sequence_data);
-	}
+
 	return ( PF_Err_NONE );
 }
 
@@ -144,18 +118,14 @@ copyInput( PF_InData           *in_data,
 	if ( output )
 	{
 		if ( extra )
-			SUITE_ERR( extra->cb->checkout_layer_pixels(in_data->effect_ref, kInputParam, &input) );
+			AERR( extra->cb->checkout_layer_pixels(in_data->effect_ref, kInputParam, &input) );
 		
-		BLOAT_PTR(PFWorldTransformSuite, xformSuite, in_data->pica_basicP);
-		if ( in_data->quality == PF_Quality_HI )
-			SUITE_ERR( xformSuite->copy_hq( in_data->effect_ref, input, output, NULL, NULL) );
-		else
-			SUITE_ERR( xformSuite->copy( in_data->effect_ref, input, output, NULL, NULL) );
+		AERR( PF_COPY(input, output, NULL, NULL) );
 	}
 	return ( PF_Err_NONE );
 }
 
-BS_EXTERN_C DllExport A_Err
+static A_Err
 rikiGlue( PF_Cmd        cmd,
           PF_InData     *in_data,
           PF_OutData    *out_data,
@@ -198,13 +168,12 @@ rikiGlue( PF_Cmd        cmd,
 				err = sequenceSetdown(in_data, out_data);
 				break;
 
-
 			case PF_Cmd_RENDER:
 				{
 					err = copyInput(in_data, &params[kInputParam]->u.ld, output, NULL);
 					if ( err == PF_Err_NONE )
 					{
-						Frame  frame(output->data, output->rowbytes, output->width, output->height, 4);
+						Frame  frame(output->data, output->rowbytes, output->width, output->height);
 
 						switch ( selector )
 						{
@@ -224,20 +193,12 @@ rikiGlue( PF_Cmd        cmd,
 								err = frame.rsaDecrypt();
 								break;
 
-							case kColorShift:
-								err = frame.colorShift(PFParams(params));
-								break;
-
 							case kEncryptLut:
 								err = frame.lutEncrypt();
 								break;
 
 							case kDecryptLut:
 								err = frame.lutDecrypt();
-								break;
-	
-							case kRot13:
-								err = frame.rot13();
 								break;
 
 						}
@@ -248,13 +209,9 @@ rikiGlue( PF_Cmd        cmd,
 	}
 	catch(...)
 	{
-		BLOAT_PTR(PFANSISuite, ansiSuite, in_data->pica_basicP);
-		ansiSuite->sprintf(	out_data->return_msg,
-							"%s v%d.%d\r%s",
-							STR(selector + kStrID_Name), 
-							MAJOR_VERSION, 
-							MINOR_VERSION, 
-							STR(kStrID_Exception));
+		in_data->utils->ansi.sprintf( out_data->return_msg, "%s v%d.%d\r%s",
+		                              STR(selector + kStrID_Name), MAJOR_VERSION, MINOR_VERSION, 
+		                              STR(kStrID_Exception) );
 								
 		err = PF_Err_BAD_CALLBACK_PARAM;
 	}
@@ -263,7 +220,10 @@ rikiGlue( PF_Cmd        cmd,
 
 } /* namespace rikiGlue */
 
-BS_EXTERN_C DllExport A_Err
+extern "C"
+{
+
+DllExport A_Err
 rikiEncrypt( PF_Cmd        cmd,
              PF_InData     *in_data,
              PF_OutData    *out_data,
@@ -274,7 +234,7 @@ rikiEncrypt( PF_Cmd        cmd,
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kEncrypt) );
 }
 
-BS_EXTERN_C DllExport A_Err
+DllExport A_Err
 rikiDecrypt( PF_Cmd        cmd,
              PF_InData     *in_data,
              PF_OutData    *out_data,
@@ -285,7 +245,7 @@ rikiDecrypt( PF_Cmd        cmd,
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecrypt) );
 }
 
-BS_EXTERN_C DllExport A_Err
+DllExport A_Err
 rikiEncode( PF_Cmd        cmd,
             PF_InData     *in_data,
             PF_OutData    *out_data,
@@ -296,7 +256,7 @@ rikiEncode( PF_Cmd        cmd,
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kEncode) );
 }
 
-BS_EXTERN_C DllExport A_Err
+DllExport A_Err
 rikiDecode( PF_Cmd        cmd,
             PF_InData     *in_data,
             PF_OutData    *out_data,
@@ -307,18 +267,7 @@ rikiDecode( PF_Cmd        cmd,
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecode) );
 }
 
-BS_EXTERN_C DllExport A_Err
-rikiColorShift( PF_Cmd        cmd,
-                PF_InData     *in_data,
-                PF_OutData    *out_data,
-                PF_ParamDef   *params[],
-                PF_LayerDef   *output,
-                void          *extra )
-{	
-	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kColorShift) );
-}
-
-BS_EXTERN_C DllExport A_Err
+DllExport A_Err
 rikiEncLut( PF_Cmd        cmd,
            PF_InData     *in_data,
            PF_OutData    *out_data,
@@ -329,7 +278,7 @@ rikiEncLut( PF_Cmd        cmd,
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kEncryptLut) );
 }
 
-BS_EXTERN_C DllExport A_Err
+DllExport A_Err
 rikiDecLut( PF_Cmd        cmd,
            PF_InData     *in_data,
            PF_OutData    *out_data,
@@ -340,13 +289,4 @@ rikiDecLut( PF_Cmd        cmd,
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecryptLut) );
 }
 
-BS_EXTERN_C DllExport A_Err
-rikiRot13( PF_Cmd        cmd,
-           PF_InData     *in_data,
-           PF_OutData    *out_data,
-           PF_ParamDef   *params[],
-           PF_LayerDef   *output,
-           void          *extra )
-{	
-	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kRot13) );
 }
