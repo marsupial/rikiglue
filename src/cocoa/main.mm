@@ -8,10 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
-#import "ScreenGrabDelegate.h"
-#import "rikiFrame.h"
+#import "cocoa/gabba.h"
+#import "frame/frame.h"
 
-@implementation ScreenGrabDelegate
+@implementation Gabba
 
 - (NSImage*) imageBelowWindow: (NSWindow *) inWindow withRect: (NSRect) inRect
 {
@@ -47,7 +47,7 @@
 	CGContextDrawImage(contextRef, imageRect, capturedImage); 
 	CGImageRelease(capturedImage);
 
-	rikiGlue::Frame  frame(argb, rowBytes, imageRect.size.width, imageRect.size.height, 4);	
+	rikiGlue::Frame  frame(argb, rowBytes, imageRect.size.width, imageRect.size.height);	
 	//frame.rsaDecrypt();
 	frame.lutDecrypt();
 
@@ -94,9 +94,14 @@
 	                                                    repeats: YES ] retain];
 }
 
-- (void)applicationWillTerminate: (NSNotification*) notification
+- (void) applicationWillTerminate: (NSNotification*) notification
 {
 	[ timer release ];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) application
+{
+	return ( TRUE );
 }
 
 @end

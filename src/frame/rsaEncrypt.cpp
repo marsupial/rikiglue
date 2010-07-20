@@ -2,7 +2,7 @@
 	rsaEncrypt.cpp
 */
 
-#include "rikiFrame.h"
+#include "frame/frame.h"
 
 #include "rj/rijndael.h"
 
@@ -24,7 +24,7 @@ static const char *kKey =
 	"toNz0AhyijMM83jKLSsCQQDpn+P55Nm4xCpxXgKEwQ6cPWoaI5WXl4mNPi2cw4Cl"
 	"L2FWhu8NGXi8IZUX6fhPndTHTYf344eFVtErii7c4lCw";
 
-int 
+int
 Frame::rsaEncrypt()
 {
 	rijndael_ctx   ctx;
@@ -46,7 +46,7 @@ Frame::rsaEncrypt()
 	return ( 0 );
 }
 
-int 
+int
 Frame::rsaDecrypt()
 {
 	rijndael_ctx   ctx;
@@ -67,6 +67,5 @@ Frame::rsaDecrypt()
 
 	return ( 0 );
 }
-
 
 } /* namespace rikiGlue */

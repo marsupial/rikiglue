@@ -1,10 +1,10 @@
 /*
-	ScreenGrabDelegate.h
+	gabba.h
 */
 
 #import <Cocoa/Cocoa.h>
 
-@interface ScreenGrabDelegate : NSObject
+@interface Gabba : NSObject
 {
 	IBOutlet NSWindow *window;
 	IBOutlet NSView   *imageView;

@@ -5,6 +5,11 @@
  * Copyright 2002 Phil Karn, KA9Q
  * May be used under the terms of the GNU General Public License (GPL)
  */
+ 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+ 
 #define DTYPE unsigned char
 
 #ifndef MODNN
@@ -40,3 +45,7 @@ extern unsigned char CCSDS_poly[];
 
 void ENCODE_RS(DTYPE *data,DTYPE *parity);
 int DECODE_RS(DTYPE *data, int *eras_pos, int no_eras);
+
+#if defined(__cplusplus)
+} // extern "C"
+#endif

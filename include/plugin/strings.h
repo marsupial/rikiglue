@@ -1,13 +1,11 @@
 /*
-	rikiStrings.h
+	strings.h
 */
 
 #pragma once
 
-#ifndef _rikiStrings_h__
-#define _rikiStrings_h__
-
-#include "platform/types.h"
+#ifndef _strings_h__
+#define _strings_h__
 
 enum
 {
@@ -34,11 +32,6 @@ typedef enum
 	kStrID_DecodeName,
 	kStrID_DecodeDescription,
 
-	kColorShift,
-	kStrID_ColorShiftName,
-	kStrID_ColorShiftDescription,
-	kStrID_ColorLevel,
-
 	kEncryptLut,
 	kStrID_ELutName,
 	kStrID_ELutDescription,
@@ -46,10 +39,6 @@ typedef enum
 	kDecryptLut,
 	kStrID_DLutName,
 	kStrID_DLutDescription,
-
-	kRot13,
-	kStrID_Rot13Name,
-	kStrID_Rot13Description,
 
 	kStrID_Exception,
 	kStrID_NUMTYPES
@@ -61,4 +50,4 @@ getStringPtr( uint32_t     strNum );
 
 #define STR getStringPtr
 
-#endif /* _rikiStrings_h__ */
+#endif /* _strings_h__ */

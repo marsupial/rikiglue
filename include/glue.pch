@@ -1,0 +1,16 @@
+/*
+	glue.pch
+*/
+
+#ifndef _glue_pch__
+#define _glue_pch__
+
+#if defined(__x86_64__)
+	#include <CoreServices/CoreServices.h>
+#elif defined(_M_X64) || defined(__amd64__)
+	#include <windows.h>
+#else
+	#include <Carbon/Carbon.h>
+#endif
+
+#endif /* _glue_pch__ */

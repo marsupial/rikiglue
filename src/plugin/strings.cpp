@@ -1,8 +1,8 @@
 /*
-	rikiStrings.cpp
+	strings.cpp
 */
 
-#include "rikiStrings.h"
+#include "strings.h"
 #include <assert.h>
 
 static const char*
@@ -24,11 +24,6 @@ static const char*
 	"Riki Decode Error Correction",
 	"Decode a frame with error correction",
 
-	"Color Shift",
-	"Riki Color Shift Correction",
-	"Shift colors into encoded space",
-	"n",
-
 	"LUT Transform",
 	"Riki Encode LUT",
 	"Encode a frame with a lut",
@@ -36,10 +31,6 @@ static const char*
 	"LUT Detransform",
 	"Riki Decode LUT",
 	"Decode a frame with a lut",
-
-	"Rot13",
-	"Riki Rot13",
-	"Encrypt a frame in rot13",
 
 	"Exception caught"
 };
