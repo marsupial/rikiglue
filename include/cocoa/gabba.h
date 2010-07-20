@@ -4,12 +4,18 @@
 
 #import <Cocoa/Cocoa.h>
 
+@interface Dabba : NSView
+{
+	CGImageRef   imageRef;
+}
+@end
+
 @interface Gabba : NSObject
 {
 	IBOutlet NSWindow *window;
-	IBOutlet NSView   *imageView;
+	IBOutlet Dabba    *imageView;
 
+	CGColorSpaceRef   colorSpace;
 	NSTimer           *timer;
 }
-
 @end

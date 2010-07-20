@@ -1,22 +1,57 @@
-//
-//  main.m
-//  Untitled
-//
-//  Created by pimpleface on 7/18/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*
+   main.mm
+*/
 
-#import <Cocoa/Cocoa.h>
-#import <ApplicationServices/ApplicationServices.h>
 #import "cocoa/gabba.h"
 #import "frame/frame.h"
 
+@implementation Dabba
+
+- (id) initWithFrame: (NSRect) frameRect
+{
+	self = [ super initWithFrame: frameRect ];
+	if ( self )
+		imageRef = NULL;
+	
+	return ( self );
+}
+
+- (void) dealloc
+{
+	if ( imageRef )
+		CGImageRelease(imageRef);
+
+	[ super dealloc ];
+}
+
+- (void) setImage: (CGImageRef) image
+{
+	if ( image == NULL )
+		return;
+
+	if ( imageRef )
+		CGImageRelease(imageRef);
+
+	imageRef = CGImageRetain(image);
+}
+
+- (void) drawRect: (NSRect) rect
+{
+	if ( imageRef )
+	{
+		CGContextRef cgContext = static_cast<CGContextRef>( [ [NSGraphicsContext currentContext] graphicsPort ] );
+		//CGRect imageRect = { {0,0}, { CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)} };
+		CGContextDrawImage(cgContext,  NSRectToCGRect(rect), imageRef);
+	}
+}
+
+@end
+
 @implementation Gabba
 
-- (NSImage*) imageBelowWindow: (NSWindow *) inWindow withRect: (NSRect) inRect
+- (CGImageRef) imageBelowWindow: (NSWindow *) inWindow withRect: (NSRect) inRect
 {
-    // Get the CGWindowID of supplied window
-    CGWindowID windowID = [ inWindow windowNumber ];
+	NSDate *date = [ NSDate date ];
 
     // Get window's rect in flipped screen coordinates
     NSRect windowRect = [inWindow frame];
@@ -28,29 +63,34 @@
     captureRect.origin.y = NSMaxY([[inWindow screen] frame]) - NSMaxY(windowRect);
 
     // Get a composite image of all the windows beneath your window
-    CGImageRef capturedImage = CGWindowListCreateImage(captureRect, kCGWindowListOptionOnScreenBelowWindow, windowID, kCGWindowImageDefault);
+    CGImageRef capturedImage = CGWindowListCreateImage(captureRect, kCGWindowListOptionOnScreenBelowWindow, [ inWindow windowNumber ], kCGWindowImageDefault);
+	if ( capturedImage == NULL )
+		return ( NULL );
 
     CGRect imageRect = { {0,0}, { CGImageGetWidth(capturedImage), CGImageGetHeight(capturedImage)} };
-	
     if( imageRect.size.width <= 1 || imageRect.size.height <= 1  )
 	{
-        CGImageRelease(capturedImage);
-        return nil;
-    }
+		CGImageRelease(capturedImage);
+		return ( NULL );
+	}
 
-	size_t rowBytes = imageRect.size.width * 4;
-	void *argb = malloc( rowBytes * imageRect.size.height );
-	CGColorSpaceRef csRef = CGColorSpaceCreateDeviceRGB();
-	CGContextRef contextRef = CGBitmapContextCreate(argb, imageRect.size.width, imageRect.size.height, 8, rowBytes, csRef, kCGImageAlphaPremultipliedFirst);
-	CGImageRef bmapImage = CGBitmapContextCreateImage(contextRef);
+	const size_t rowBytes = imageRect.size.width * 4;
+	std::vector<uint8_t>  argb( rowBytes * imageRect.size.height );
+	CGContextRef contextRef = CGBitmapContextCreate(&argb[0], imageRect.size.width, imageRect.size.height, 8, rowBytes, colorSpace, kCGImageAlphaPremultipliedFirst);
+	if ( contextRef == NULL )
+	{
+		CGImageRelease(capturedImage);
+		return ( NULL );
+	}
+
 	CGContextDrawImage(contextRef, imageRect, capturedImage); 
 	CGImageRelease(capturedImage);
 
-	rikiGlue::Frame  frame(argb, rowBytes, imageRect.size.width, imageRect.size.height);	
+	rikiGlue::Frame  frame(&argb[0], rowBytes, imageRect.size.width, imageRect.size.height);	
 	//frame.rsaDecrypt();
 	frame.lutDecrypt();
 
-	uint8_t *bSplice = static_cast<uint8_t*>(argb);
+	uint8_t *bSplice = &argb[0];
 	for ( register_t y = 0; y < imageRect.size.height; ++y )
 		for ( register_t x = 0; x < imageRect.size.width; ++x )
 		{
@@ -59,33 +99,28 @@
 			bSplice += 4;
 		}
 
-	// Create a bitmap rep from the window and convert to NSImage...
-	NSBitmapImageRep *bitmapRep = [ [[NSBitmapImageRep alloc] initWithCGImage: bmapImage] autorelease ];
-//	NSBitmapImageRep *bitmapRep = [ [[NSBitmapImageRep alloc] initWithBitmapDataPlanes: argb pixelsWide: imageRect.size.width pixelsHigh: imageRect.size.height bitsPerSample: 8 samplesPerPixel: 4 hasAlpha: YES isPlanar: NO colorSpaceName: NSDeviceRGBColorSpace bytesPerRow: rowBytes bitsPerPixel: 0] autorelease ];
-
-	NSImage *image = [ [[NSImage alloc] initWithSize: NSSizeFromCGSize(imageRect.size) ] autorelease ];
-	[ image addRepresentation: bitmapRep ];
-
-	CGImageRelease(bmapImage);
+	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);
-	CGColorSpaceRelease(csRef);
-	free(argb);
 
-    return image;
+	NSTimeInterval interval = [ date timeIntervalSinceNow ];
+	printf("t: %f\n", interval);
+	//[ date release ];
+    return ( imageRef );
 }
 
 - (void) timerFired :(NSTimer*) timer
 {
-	NSImage *img = [ self imageBelowWindow: window withRect: [imageView frame] ];
-	if ( img )
+	CGImageRef image = [ self imageBelowWindow: window withRect: [imageView frame] ];
+	if ( image )
 	{
-		[ imageView setImage: img ];
+		[ imageView setImage: image ];
 		[ imageView setNeedsDisplay: YES];
 	}
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
 {
+	colorSpace = CGColorSpaceCreateDeviceRGB();
 	timer = [ [ NSTimer scheduledTimerWithTimeInterval: (1.0 / 60.0)
 	                                                    target: self
 	                                                    selector: @selector(timerFired:)
@@ -96,6 +131,7 @@
 - (void) applicationWillTerminate: (NSNotification*) notification
 {
 	[ timer release ];
+	CGColorSpaceRelease(colorSpace);
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) application
