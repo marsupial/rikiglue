@@ -1,0 +1,654 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C28564FA11F4CDCF00ABCD8A /* rikiPF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C28564F811F4CDCF00ABCD8A /* rikiPF.cpp */; };
+		C28564FB11F4CDCF00ABCD8A /* rikiStrings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C28564F911F4CDCF00ABCD8A /* rikiStrings.cpp */; };
+		C285652411F4CF6C00ABCD8A /* rsaEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52AF11EFD2810014E460 /* rsaEncrypt.cpp */; };
+		C285652511F4CF6C00ABCD8A /* rot13.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C0011F22F390014E460 /* rot13.cpp */; };
+		C285652611F4CF6C00ABCD8A /* errorCorrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52AD11EFD26E0014E460 /* errorCorrect.cpp */; };
+		C285652711F4CF6C00ABCD8A /* colorShift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA561011F0BDF60014E460 /* colorShift.cpp */; };
+		C285652811F4CF6C00ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C7A11F252530014E460 /* lut.cpp */; };
+		C285653C11F4CFEC00ABCD8A /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
+		C285653D11F4CFEC00ABCD8A /* ccsds_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514811EF913F0014E460 /* ccsds_tab.c */; };
+		C285653E11F4CFEC00ABCD8A /* ccsds_tal.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514911EF913F0014E460 /* ccsds_tal.c */; };
+		C285653F11F4CFEC00ABCD8A /* decode_rs_ccsds.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514A11EF913F0014E460 /* decode_rs_ccsds.c */; };
+		C285654011F4CFEC00ABCD8A /* decode_rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514B11EF913F0014E460 /* decode_rs.c */; };
+		C285654111F4CFEC00ABCD8A /* encode_rs_ccsds.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514C11EF913F0014E460 /* encode_rs_ccsds.c */; };
+		C285654211F4CFEC00ABCD8A /* encode_rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514D11EF913F0014E460 /* encode_rs.c */; };
+		C2FA506E11EF84880014E460 /* rikiGlue.r in Rez */ = {isa = PBXBuildFile; fileRef = C2FA506D11EF84880014E460 /* rikiGlue.r */; };
+		C2FA509511EF87470014E460 /* suites.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA509411EF87470014E460 /* suites.c */; };
+		C2FA50DA11EF8B6F0014E460 /* error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA50D911EF8B6F0014E460 /* error.cpp */; };
+		C2FA50E111EF8B890014E460 /* aegpError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA50E011EF8B890014E460 /* aegpError.cpp */; };
+		C2FA514E11EF913F0014E460 /* ccsds_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514811EF913F0014E460 /* ccsds_tab.c */; };
+		C2FA514F11EF913F0014E460 /* ccsds_tal.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514911EF913F0014E460 /* ccsds_tal.c */; };
+		C2FA515011EF913F0014E460 /* decode_rs_ccsds.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514A11EF913F0014E460 /* decode_rs_ccsds.c */; };
+		C2FA515111EF913F0014E460 /* decode_rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514B11EF913F0014E460 /* decode_rs.c */; };
+		C2FA515211EF913F0014E460 /* encode_rs_ccsds.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514C11EF913F0014E460 /* encode_rs_ccsds.c */; };
+		C2FA515311EF913F0014E460 /* encode_rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA514D11EF913F0014E460 /* encode_rs.c */; };
+		C2FA52AE11EFD26E0014E460 /* errorCorrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52AD11EFD26E0014E460 /* errorCorrect.cpp */; };
+		C2FA52B011EFD2810014E460 /* rsaEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52AF11EFD2810014E460 /* rsaEncrypt.cpp */; };
+		C2FA52B911EFD3180014E460 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
+		C2FA561111F0BDF60014E460 /* colorShift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA561011F0BDF60014E460 /* colorShift.cpp */; };
+		C2FA562411F0BFC00014E460 /* paramUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA562311F0BFC00014E460 /* paramUtils.cpp */; };
+		C2FA56E611F1E8330014E460 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA56E411F1E8330014E460 /* main.cpp */; };
+		C2FA56E711F1E8330014E460 /* screenshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA56E511F1E8330014E460 /* screenshot.cpp */; };
+		C2FA56FF11F1E9B20014E460 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FA56FE11F1E9B20014E460 /* QtGui.framework */; };
+		C2FA570311F1E9D80014E460 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FA570211F1E9D80014E460 /* QtCore.framework */; };
+		C2FA571511F1EAA50014E460 /* screenshot.moc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA571411F1EAA50014E460 /* screenshot.moc.cpp */; };
+		C2FA59FA11F213E00014E460 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FA59F911F213E00014E460 /* Carbon.framework */; };
+		C2FA5B0111F2202A0014E460 /* rsaEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52AF11EFD2810014E460 /* rsaEncrypt.cpp */; };
+		C2FA5B1311F220A20014E460 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
+		C2FA5C0111F22F390014E460 /* rot13.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C0011F22F390014E460 /* rot13.cpp */; };
+		C2FA5C0211F22F390014E460 /* rot13.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C0011F22F390014E460 /* rot13.cpp */; };
+		C2FA5C7B11F252530014E460 /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C7A11F252530014E460 /* lut.cpp */; };
+		C2FA5C7C11F252530014E460 /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C7A11F252530014E460 /* lut.cpp */; };
+		C2FA5D5F11F372630014E460 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5B11F372630014E460 /* InfoPlist.strings */; };
+		C2FA5D6011F372630014E460 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5D11F372630014E460 /* MainMenu.xib */; };
+		C2FA5D6711F372B60014E460 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5D6611F372B60014E460 /* main.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C28564FD11F4CE5300ABCD8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4E618CB095A3CE80012CA3F /* rikiGlue */;
+			remoteInfo = rikiGlue;
+		};
+		C2FA5C2E11F230D50014E460 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4E618CB095A3CE80012CA3F;
+			remoteInfo = rikiGlue;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8F1EE4810C51773600D27114 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C28564F811F4CDCF00ABCD8A /* rikiPF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rikiPF.cpp; path = ../src/plugin/rikiPF.cpp; sourceTree = SOURCE_ROOT; };
+		C28564F911F4CDCF00ABCD8A /* rikiStrings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rikiStrings.cpp; path = ../src/plugin/rikiStrings.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA506011EF81F70014E460 /* rikiGlue.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rikiGlue.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2FA506D11EF84880014E460 /* rikiGlue.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = rikiGlue.r; path = ../rsrc/rikiGlue.r; sourceTree = SOURCE_ROOT; };
+		C2FA509411EF87470014E460 /* suites.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = suites.c; path = "pica++/src/suites.c"; sourceTree = EXTERNALS; };
+		C2FA50AD11EF8A4F0014E460 /* rikiPF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rikiPF.h; path = ../include/rikiPF.h; sourceTree = SOURCE_ROOT; };
+		C2FA50AE11EF8A4F0014E460 /* rikiStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rikiStrings.h; path = ../include/rikiStrings.h; sourceTree = SOURCE_ROOT; };
+		C2FA50D911EF8B6F0014E460 /* error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = error.cpp; path = platform/src/error.cpp; sourceTree = EXTERNALS; };
+		C2FA50E011EF8B890014E460 /* aegpError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aegpError.cpp; path = "aegp++/src/aegpError.cpp"; sourceTree = EXTERNALS; };
+		C2FA514811EF913F0014E460 /* ccsds_tab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ccsds_tab.c; path = ../src/ec/rs/ccsds_tab.c; sourceTree = SOURCE_ROOT; };
+		C2FA514911EF913F0014E460 /* ccsds_tal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ccsds_tal.c; path = ../src/ec/rs/ccsds_tal.c; sourceTree = SOURCE_ROOT; };
+		C2FA514A11EF913F0014E460 /* decode_rs_ccsds.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = decode_rs_ccsds.c; path = ../src/ec/rs/decode_rs_ccsds.c; sourceTree = SOURCE_ROOT; };
+		C2FA514B11EF913F0014E460 /* decode_rs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decode_rs.c; path = ../src/ec/rs/decode_rs.c; sourceTree = SOURCE_ROOT; };
+		C2FA514C11EF913F0014E460 /* encode_rs_ccsds.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = encode_rs_ccsds.c; path = ../src/ec/rs/encode_rs_ccsds.c; sourceTree = SOURCE_ROOT; };
+		C2FA514D11EF913F0014E460 /* encode_rs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encode_rs.c; path = ../src/ec/rs/encode_rs.c; sourceTree = SOURCE_ROOT; };
+		C2FA52AD11EFD26E0014E460 /* errorCorrect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = errorCorrect.cpp; path = ../src/errorCorrect.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA52AF11EFD2810014E460 /* rsaEncrypt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rsaEncrypt.cpp; path = ../src/rsaEncrypt.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA52B811EFD3180014E460 /* rijndael.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = rijndael.c; path = ../src/rj/rijndael.c; sourceTree = SOURCE_ROOT; };
+		C2FA561011F0BDF60014E460 /* colorShift.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = colorShift.cpp; path = ../src/colorShift.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA562311F0BFC00014E460 /* paramUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = paramUtils.cpp; path = "aegp++/src/paramUtils.cpp"; sourceTree = EXTERNALS; };
+		C2FA56DA11F1E7FC0014E460 /* qtApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qtApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2FA56E411F1E8330014E460 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/qt/main.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA56E511F1E8330014E460 /* screenshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screenshot.cpp; path = ../src/qt/screenshot.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA56FE11F1E9B20014E460 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Library/Frameworks/QtGui.framework; sourceTree = SDKROOT; };
+		C2FA570211F1E9D80014E460 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Library/Frameworks/QtCore.framework; sourceTree = SDKROOT; };
+		C2FA571411F1EAA50014E460 /* screenshot.moc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screenshot.moc.cpp; path = ../src/qt/screenshot.moc.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA59F911F213E00014E460 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		C2FA5BCA11F22B300014E460 /* rikiFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rikiFrame.h; path = ../include/rikiFrame.h; sourceTree = SOURCE_ROOT; };
+		C2FA5C0011F22F390014E460 /* rot13.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rot13.cpp; path = ../src/rot13.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA5C7A11F252530014E460 /* lut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.cpp; path = ../src/lut.cpp; sourceTree = SOURCE_ROOT; };
+		C2FA5D2711F371190014E460 /* cocoaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocoaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2FA5D5C11F372630014E460 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = ../rsrc/cocoa/English.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		C2FA5D5E11F372630014E460 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ../rsrc/cocoa/English.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
+		C2FA5D6611F372B60014E460 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../src/cocoa/main.mm; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C2FA56D811F1E7FC0014E460 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2FA56FF11F1E9B20014E460 /* QtGui.framework in Frameworks */,
+				C2FA570311F1E9D80014E460 /* QtCore.framework in Frameworks */,
+				C2FA59FA11F213E00014E460 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2FA5D2511F371190014E460 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4E618CA095A3CE80012CA3F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C2F59935113CE59000B0FD05 /* rsrc */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA506D11EF84880014E460 /* rikiGlue.r */,
+				C2FA5D5B11F372630014E460 /* InfoPlist.strings */,
+				C2FA5D5D11F372630014E460 /* MainMenu.xib */,
+			);
+			name = rsrc;
+			sourceTree = "<group>";
+		};
+		C2F5993A113CE59800B0FD05 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA56FE11F1E9B20014E460 /* QtGui.framework */,
+				C2FA570211F1E9D80014E460 /* QtCore.framework */,
+				C2FA59F911F213E00014E460 /* Carbon.framework */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		C2FA507511EF87340014E460 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA562311F0BFC00014E460 /* paramUtils.cpp */,
+				C2FA50E011EF8B890014E460 /* aegpError.cpp */,
+				C2FA50D911EF8B6F0014E460 /* error.cpp */,
+				C2FA509411EF87470014E460 /* suites.c */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		C2FA50A411EF8A2E0014E460 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA50AD11EF8A4F0014E460 /* rikiPF.h */,
+				C2FA5BCA11F22B300014E460 /* rikiFrame.h */,
+				C2FA50AE11EF8A4F0014E460 /* rikiStrings.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		C2FA514111EF91370014E460 /* rs */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA514811EF913F0014E460 /* ccsds_tab.c */,
+				C2FA514911EF913F0014E460 /* ccsds_tal.c */,
+				C2FA514A11EF913F0014E460 /* decode_rs_ccsds.c */,
+				C2FA514B11EF913F0014E460 /* decode_rs.c */,
+				C2FA514C11EF913F0014E460 /* encode_rs_ccsds.c */,
+				C2FA514D11EF913F0014E460 /* encode_rs.c */,
+			);
+			name = rs;
+			sourceTree = "<group>";
+		};
+		C2FA52B711EFD3120014E460 /* rj */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA52B811EFD3180014E460 /* rijndael.c */,
+			);
+			name = rj;
+			sourceTree = "<group>";
+		};
+		C2FA56DF11F1E8060014E460 /* qt */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA571411F1EAA50014E460 /* screenshot.moc.cpp */,
+				C2FA56E411F1E8330014E460 /* main.cpp */,
+				C2FA56E511F1E8330014E460 /* screenshot.cpp */,
+			);
+			name = qt;
+			sourceTree = "<group>";
+		};
+		C2FA5D6111F372750014E460 /* operation */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA52B711EFD3120014E460 /* rj */,
+				C2FA514111EF91370014E460 /* rs */,
+				C2FA52AF11EFD2810014E460 /* rsaEncrypt.cpp */,
+				C2FA5C0011F22F390014E460 /* rot13.cpp */,
+				C2FA52AD11EFD26E0014E460 /* errorCorrect.cpp */,
+				C2FA561011F0BDF60014E460 /* colorShift.cpp */,
+				C2FA5C7A11F252530014E460 /* lut.cpp */,
+			);
+			name = operation;
+			sourceTree = "<group>";
+		};
+		C2FA5D6211F372810014E460 /* plugin */ = {
+			isa = PBXGroup;
+			children = (
+				C28564F811F4CDCF00ABCD8A /* rikiPF.cpp */,
+				C28564F911F4CDCF00ABCD8A /* rikiStrings.cpp */,
+				C2FA507511EF87340014E460 /* common */,
+			);
+			name = plugin;
+			sourceTree = "<group>";
+		};
+		C2FA5D6311F3729B0014E460 /* cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA5D6611F372B60014E460 /* main.mm */,
+			);
+			name = cocoa;
+			sourceTree = "<group>";
+		};
+		C4E6187C095A3C800012CA3F = {
+			isa = PBXGroup;
+			children = (
+				C2FA50A411EF8A2E0014E460 /* include */,
+				C2F59935113CE59000B0FD05 /* rsrc */,
+				D0FE57630993C4FD00139A60 /* src */,
+				C2F5993A113CE59800B0FD05 /* lib */,
+				C2FA506011EF81F70014E460 /* rikiGlue.plugin */,
+				C2FA56DA11F1E7FC0014E460 /* qtApp.app */,
+				C2FA5D2711F371190014E460 /* cocoaApp.app */,
+			);
+			sourceTree = "<group>";
+		};
+		D0FE57630993C4FD00139A60 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C2FA5D6111F372750014E460 /* operation */,
+				C2FA5D6211F372810014E460 /* plugin */,
+				C2FA56DF11F1E8060014E460 /* qt */,
+				C2FA5D6311F3729B0014E460 /* cocoa */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C2FA56D911F1E7FC0014E460 /* qtApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2FA56DE11F1E7FD0014E460 /* Build configuration list for PBXNativeTarget "qtApp" */;
+			buildPhases = (
+				C2FA56D611F1E7FC0014E460 /* Resources */,
+				C2FA56D711F1E7FC0014E460 /* Sources */,
+				C2FA56D811F1E7FC0014E460 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C2FA5C2F11F230D50014E460 /* PBXTargetDependency */,
+			);
+			name = qtApp;
+			productName = qtApp;
+			productReference = C2FA56DA11F1E7FC0014E460 /* qtApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C2FA5D2611F371190014E460 /* cocoaApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2FA5D2B11F3711B0014E460 /* Build configuration list for PBXNativeTarget "cocoaApp" */;
+			buildPhases = (
+				C2FA5D2311F371190014E460 /* Resources */,
+				C2FA5D2411F371190014E460 /* Sources */,
+				C2FA5D2511F371190014E460 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C28564FE11F4CE5300ABCD8A /* PBXTargetDependency */,
+			);
+			name = cocoaApp;
+			productName = cocoaApp;
+			productReference = C2FA5D2711F371190014E460 /* cocoaApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C4E618CB095A3CE80012CA3F /* rikiGlue */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4E618CE095A3CE90012CA3F /* Build configuration list for PBXNativeTarget "rikiGlue" */;
+			buildPhases = (
+				C4E618C8095A3CE80012CA3F /* Resources */,
+				C4E618C9095A3CE80012CA3F /* Sources */,
+				C4E618CA095A3CE80012CA3F /* Frameworks */,
+				C4E618EA095A3E040012CA3F /* Rez */,
+				8F1EE4810C51773600D27114 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rikiGlue;
+			productName = fbxRender.plugin;
+			productReference = C2FA506011EF81F70014E460 /* rikiGlue.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C4E6187E095A3C800012CA3F /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C4E6187F095A3C800012CA3F /* Build configuration list for PBXProject "rikiGlue" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 0;
+			mainGroup = C4E6187C095A3C800012CA3F;
+			productRefGroup = C4E6187C095A3C800012CA3F;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C4E618CB095A3CE80012CA3F /* rikiGlue */,
+				C2FA56D911F1E7FC0014E460 /* qtApp */,
+				C2FA5D2611F371190014E460 /* cocoaApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C2FA56D611F1E7FC0014E460 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2FA5D2311F371190014E460 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2FA5D5F11F372630014E460 /* InfoPlist.strings in Resources */,
+				C2FA5D6011F372630014E460 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4E618C8095A3CE80012CA3F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		C4E618EA095A3E040012CA3F /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2FA506E11EF84880014E460 /* rikiGlue.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C2FA56D711F1E7FC0014E460 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2FA56E611F1E8330014E460 /* main.cpp in Sources */,
+				C2FA56E711F1E8330014E460 /* screenshot.cpp in Sources */,
+				C2FA571511F1EAA50014E460 /* screenshot.moc.cpp in Sources */,
+				C2FA5B0111F2202A0014E460 /* rsaEncrypt.cpp in Sources */,
+				C2FA5B1311F220A20014E460 /* rijndael.c in Sources */,
+				C2FA5C0111F22F390014E460 /* rot13.cpp in Sources */,
+				C2FA5C7B11F252530014E460 /* lut.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2FA5D2411F371190014E460 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2FA5D6711F372B60014E460 /* main.mm in Sources */,
+				C285652411F4CF6C00ABCD8A /* rsaEncrypt.cpp in Sources */,
+				C285652511F4CF6C00ABCD8A /* rot13.cpp in Sources */,
+				C285652611F4CF6C00ABCD8A /* errorCorrect.cpp in Sources */,
+				C285652711F4CF6C00ABCD8A /* colorShift.cpp in Sources */,
+				C285652811F4CF6C00ABCD8A /* lut.cpp in Sources */,
+				C285653C11F4CFEC00ABCD8A /* rijndael.c in Sources */,
+				C285653D11F4CFEC00ABCD8A /* ccsds_tab.c in Sources */,
+				C285653E11F4CFEC00ABCD8A /* ccsds_tal.c in Sources */,
+				C285653F11F4CFEC00ABCD8A /* decode_rs_ccsds.c in Sources */,
+				C285654011F4CFEC00ABCD8A /* decode_rs.c in Sources */,
+				C285654111F4CFEC00ABCD8A /* encode_rs_ccsds.c in Sources */,
+				C285654211F4CFEC00ABCD8A /* encode_rs.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4E618C9095A3CE80012CA3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2FA509511EF87470014E460 /* suites.c in Sources */,
+				C2FA50DA11EF8B6F0014E460 /* error.cpp in Sources */,
+				C2FA50E111EF8B890014E460 /* aegpError.cpp in Sources */,
+				C2FA514E11EF913F0014E460 /* ccsds_tab.c in Sources */,
+				C2FA514F11EF913F0014E460 /* ccsds_tal.c in Sources */,
+				C2FA515011EF913F0014E460 /* decode_rs_ccsds.c in Sources */,
+				C2FA515111EF913F0014E460 /* decode_rs.c in Sources */,
+				C2FA515211EF913F0014E460 /* encode_rs_ccsds.c in Sources */,
+				C2FA515311EF913F0014E460 /* encode_rs.c in Sources */,
+				C2FA52AE11EFD26E0014E460 /* errorCorrect.cpp in Sources */,
+				C2FA52B011EFD2810014E460 /* rsaEncrypt.cpp in Sources */,
+				C2FA52B911EFD3180014E460 /* rijndael.c in Sources */,
+				C2FA561111F0BDF60014E460 /* colorShift.cpp in Sources */,
+				C2FA562411F0BFC00014E460 /* paramUtils.cpp in Sources */,
+				C2FA5C0211F22F390014E460 /* rot13.cpp in Sources */,
+				C2FA5C7C11F252530014E460 /* lut.cpp in Sources */,
+				C28564FA11F4CDCF00ABCD8A /* rikiPF.cpp in Sources */,
+				C28564FB11F4CDCF00ABCD8A /* rikiStrings.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C28564FE11F4CE5300ABCD8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4E618CB095A3CE80012CA3F /* rikiGlue */;
+			targetProxy = C28564FD11F4CE5300ABCD8A /* PBXContainerItemProxy */;
+		};
+		C2FA5C2F11F230D50014E460 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4E618CB095A3CE80012CA3F /* rikiGlue */;
+			targetProxy = C2FA5C2E11F230D50014E460 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C2FA5D5B11F372630014E460 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2FA5D5C11F372630014E460 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = SOURCE_ROOT;
+		};
+		C2FA5D5D11F372630014E460 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2FA5D5E11F372630014E460 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C2FA56DD11F1E7FC0014E460 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"BS_GLOBAL_SP=1",
+					"QT_MAC_USE_COCOA=1",
+				);
+				INFOPLIST_FILE = ../rsrc/qtqtApp.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = qtApp;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C2FA5D2A11F3711B0014E460 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/cocoaApp.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = cocoaApp;
+			};
+			name = Debug;
+		};
+		C4E61880095A3C800012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				AESDK = "$(SDKs)/AfterEffects/CS4";
+				"AESDK[arch=x86_64]" = "$(SDKs)/AfterEffects/CS5";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				COPY_PHASE_STRIP = NO;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../include/rikiGlue.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"BS_GLOBAL_SP=1",
+					KFBX_PLUGIN,
+				);
+				GCC_REUSE_STRINGS = NO;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = ../rsrc/rikiGlue.plist;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = rikiGlue;
+				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = ../build;
+				USER_HEADER_SEARCH_PATHS = "../include/** $(EXTERNALS)/**";
+				VALID_ARCHS = "i386 ppc x86_64";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C4E618CF095A3CE90012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=i386]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=7",
+					PLEXUS_CARBON,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=ppc]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=7",
+					PLEXUS_CARBON,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=10",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(AESDK)/include/**",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "$(inherited) -i \"$(AESDK)/include\" -i \"$(AESDK)/rsrc\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C2FA56DE11F1E7FD0014E460 /* Build configuration list for PBXNativeTarget "qtApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2FA56DD11F1E7FC0014E460 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C2FA5D2B11F3711B0014E460 /* Build configuration list for PBXNativeTarget "cocoaApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2FA5D2A11F3711B0014E460 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C4E6187F095A3C800012CA3F /* Build configuration list for PBXProject "rikiGlue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4E61880095A3C800012CA3F /* Debug */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+		C4E618CE095A3CE90012CA3F /* Build configuration list for PBXNativeTarget "rikiGlue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4E618CF095A3CE90012CA3F /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4E6187E095A3C800012CA3F /* Project object */;
+}
