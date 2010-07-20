@@ -28,7 +28,7 @@ public:
 	virtual void
 	run() = 0;
 
-private:
+protected:
 
 	thread_t   mThread;
 };
@@ -86,8 +86,6 @@ struct ThreadBlock
 	{
 		kWaiting     = 0,
 		kProcessing  = 1,
-		kSetBack     = 2,
-		kDone        = 3
 	};
 
 	ThreadBlock( Frame                *frame  = NULL,
@@ -114,15 +112,14 @@ class DecodeThread : public threads::Thread
 public:
 
 	DecodeThread() :
-		mSetting(true),
 		mExit(false)
 	{}
 
 	virtual ~DecodeThread();
 
-	// mutex must be locked before calling, and is locked on exit
+	// mutex must be locked before calling, and is unlocked on exit
 	void
-	decode( bool    setting );
+	decode();
 
 	virtual void
 	run();
@@ -162,9 +159,7 @@ private:
 	threads::Mutex      mMutex;
 	threads::Condition  mCondition;
 	BlockQueue          mBlocks;
-
-	bool                mSetting,
-	                    mExit;
+	bool                mExit;
 };
 
 } /* namespace rikiGlue */

@@ -79,8 +79,10 @@ Frame::operate( operation_t    *ops,
 
 		decoder.lock();
 		while ( decoder.queue().size() )
-			decoder.decode(true);
-
+		{
+			decoder.decode();
+			decoder.lock();
+		}
 		decoder.unlock();
 	}
 	else

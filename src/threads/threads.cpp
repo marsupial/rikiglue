@@ -38,10 +38,7 @@ Thread::Thread() :
 Thread::~Thread()
 {
 	if ( ! pthread_equal(mThread, pthread_self()) )
-	{
-		pthread_cancel(mThread);
 		pthread_join(mThread, NULL);
-	}
 }
 
 register_t
@@ -117,15 +114,22 @@ Condition::wait( mutex_t    *mutex )
 namespace rikiGlue
 {
 
-// 	
-
 DecodeThread::~DecodeThread()
 {
+	mMutex.lock();
+	if ( mExit != true )
+		mExit = true;
+	mMutex.unlock();
+	
 	mCondition.signal();
+	
+	mMutex.lock();
+		pthread_cancel(mThread);
+	mMutex.unlock();
 }
 
 void
-DecodeThread::decode( bool    setting )
+DecodeThread::decode()
 {
 	BlockQueue::iterator itr = mBlocks.begin();
 	ThreadBlock  &block = itr->second;
@@ -141,23 +145,11 @@ DecodeThread::decode( bool    setting )
 		}		
 
 		mMutex.lock();
-		block.mProcess = ThreadBlock::kSetBack;
-	}
-
-	if ( block.mProcess == ThreadBlock::kSetBack && setting )
-	{
-		block.mProcess = ThreadBlock::kDone;
-		mMutex.unlock();
-
 		block.mFrame->setBlock(itr->first, block.mBlock);
-		mMutex.lock();
 		mBlocks.erase(itr);
 	}
-	else
-	{
-		mMutex.unlock();
-		mMutex.lock();
-	}
+
+	mMutex.unlock();
 }
 
 void
@@ -177,7 +169,8 @@ DecodeThread::run()
 			}
 		}
 
-		decode(mSetting);
+		decode();
+		mMutex.lock();
 	}
 }
 
