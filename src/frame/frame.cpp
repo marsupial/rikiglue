@@ -17,10 +17,16 @@ Frame::getBlock( size_t    i )
 	uint8_t *dstData = &mBlock[0];
 	for ( register_t x = 0; x < mWidth; ++x)
 	{
+#if defined(RUNROLL)
 		++srcData;
 		*dstData++ = *srcData++;
 		*dstData++ = *srcData++;
 		*dstData++ = *srcData++;
+#else
+		memcpy(dstData, &srcData[1], 3);
+		dstData += 3;
+		srcData += 4;
+#endif
 	}
 
 	return ( mBlock );
@@ -37,9 +43,15 @@ Frame::setBlock( size_t    i,
 	for ( register_t x = 0; x < mWidth; ++x )
 	{
 		*dstData++ = 255;
+#if defined(RUNROLL)
 		*dstData++ = *srcData++;
 		*dstData++ = *srcData++;
 		*dstData++ = *srcData++;
+#else
+		memcpy(dstData, srcData, 3);
+		dstData += 3;
+		srcData += 3;
+#endif
 	}
 }
 
