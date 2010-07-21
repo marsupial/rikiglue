@@ -32,15 +32,24 @@ public:
 	typedef std::vector<uint8_t> Block;
 	typedef register_t (*operation_t) ( Frame::Block     &block );
 
+	enum
+	{
+		kFormatARGB   = 0,
+		kFormatBGRA   = 1,
+		kFormatEnd
+	};
+
 	Frame( void    *data,
 	       size_t  rowbytes,
 	       size_t  width,
-	       size_t  height ) :
+	       size_t  height,
+	       uint8_t format = kFormatARGB ) :
 		mData(reinterpret_cast<uint8_t*>(data)),
 		mWidth(width),
 		mHeight(height),
 		mRowbytes(rowbytes),
-		mBlock(width*3)
+		mBlock(width*3),
+		mFormat(format)
 	{
 	}
 
@@ -73,11 +82,12 @@ private:
 
 	uint8_t       *mData;
 
-	const size_t  mWidth,
-	              mHeight,
-	              mRowbytes;
+	const size_t   mWidth,
+	               mHeight,
+	               mRowbytes;
 
-	Block         mBlock;
+	Block          mBlock;
+	const uint8_t  mFormat;
 };
 
 register_t 

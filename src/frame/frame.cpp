@@ -13,22 +13,39 @@ Frame::Block&
 Frame::getBlock( size_t    i )
 {
 	assert( i < mHeight );
+	assert(mFormat < kFormatEnd);
 
 	const uint8_t *srcData = mData + (mRowbytes * i);
 	uint8_t *dstData = &mBlock[0];
-	for ( register_t x = 0; x < mWidth; ++x)
+
+	if ( mFormat == kFormatARGB )
 	{
-#if defined(RUNROLL)
-		++srcData;
-		*dstData++ = *srcData++;
-		*dstData++ = *srcData++;
-		*dstData++ = *srcData++;
-#else
-		memcpy(dstData, &srcData[1], 3);
-		dstData += 3;
-		srcData += 4;
-#endif
+		for ( register_t x = 0; x < mWidth; ++x)
+		{
+	#if defined(RUNROLL)
+			++srcData;
+			*dstData++ = *srcData++;
+			*dstData++ = *srcData++;
+			*dstData++ = *srcData++;
+	#else
+			memcpy(dstData, &srcData[1], 3);
+			dstData += 3;
+			srcData += 4;
+	#endif
+		}
 	}
+	else
+	{
+		for ( register_t x = 0; x < mWidth; ++x )
+		{
+			dstData[0] = srcData[2];
+			dstData[1] = srcData[1];
+			dstData[2] = srcData[0];
+			srcData += 4;
+			dstData += 3;
+		}
+	}
+
 
 	return ( mBlock );
 }
@@ -38,21 +55,37 @@ Frame::setBlock( size_t    i,
 	             Block     &block )
 {
 	assert( i < mHeight );
+	assert(mFormat < kFormatEnd);
 
 	const uint8_t *srcData = &block[0];
 	uint8_t *dstData = mData + (mRowbytes * i);
-	for ( register_t x = 0; x < mWidth; ++x )
+
+	if ( mFormat == kFormatARGB )
 	{
-		*dstData++ = 255;
-#if defined(RUNROLL)
-		*dstData++ = *srcData++;
-		*dstData++ = *srcData++;
-		*dstData++ = *srcData++;
-#else
-		memcpy(dstData, srcData, 3);
-		dstData += 3;
-		srcData += 3;
-#endif
+		for ( register_t x = 0; x < mWidth; ++x )
+		{
+			*dstData++ = 255;
+	#if defined(RUNROLL)
+			*dstData++ = *srcData++;
+			*dstData++ = *srcData++;
+			*dstData++ = *srcData++;
+	#else
+			memcpy(dstData, srcData, 3);
+			dstData += 3;
+			srcData += 3;
+	#endif
+		}
+	}
+	else
+	{
+		for ( register_t x = 0; x < mWidth; ++x )
+		{
+			dstData[0] = srcData[2];
+			dstData[1] = srcData[1];
+			dstData[2] = srcData[0];
+			srcData += 3;
+			dstData += 4;
+		}
 	}
 }
 

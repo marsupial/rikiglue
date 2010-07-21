@@ -27,8 +27,8 @@
 		C2856B1511F6107300ABCD8A /* rsa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1311F6107300ABCD8A /* rsa.cpp */; };
 		C2856B1C11F6116E00ABCD8A /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1B11F6116E00ABCD8A /* channel.cpp */; };
 		C2856B1D11F6116E00ABCD8A /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1B11F6116E00ABCD8A /* channel.cpp */; };
-		C2856BE011F6249B00ABCD8A /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856BDF11F6249B00ABCD8A /* threads.cpp */; };
-		C2856BE611F624B400ABCD8A /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856BDF11F6249B00ABCD8A /* threads.cpp */; };
+		C2856BE011F6249B00ABCD8A /* threads.pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */; };
+		C2856BE611F624B400ABCD8A /* threads.pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */; };
 		C2FA52B911EFD3180014E460 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
 		C2FA5D5F11F372630014E460 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5B11F372630014E460 /* InfoPlist.strings */; };
 		C2FA5D6011F372630014E460 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5D11F372630014E460 /* MainMenu.xib */; };
@@ -76,7 +76,7 @@
 		C285684C11F55B5300ABCD8A /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = ../src/frame/frame.cpp; sourceTree = SOURCE_ROOT; };
 		C2856B1311F6107300ABCD8A /* rsa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rsa.cpp; path = ../src/frame/rsa.cpp; sourceTree = SOURCE_ROOT; };
 		C2856B1B11F6116E00ABCD8A /* channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = channel.cpp; path = ../src/frame/channel.cpp; sourceTree = SOURCE_ROOT; };
-		C2856BDF11F6249B00ABCD8A /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threads.cpp; path = ../src/threads/threads.cpp; sourceTree = SOURCE_ROOT; };
+		C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threads.pthreads.cpp; path = ../src/threads/threads.pthreads.cpp; sourceTree = SOURCE_ROOT; };
 		C2FA506011EF81F70014E460 /* glue.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glue.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2FA52B811EFD3180014E460 /* rijndael.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = rijndael.c; path = ../src/rj/rijndael.c; sourceTree = SOURCE_ROOT; };
 		C2FA56FE11F1E9B20014E460 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Library/Frameworks/QtGui.framework; sourceTree = SDKROOT; };
@@ -229,7 +229,7 @@
 		D0FE57630993C4FD00139A60 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C2856BDF11F6249B00ABCD8A /* threads.cpp */,
+				C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */,
 				C2FA5D6111F372750014E460 /* frame */,
 				C2FA52B711EFD3120014E460 /* rj */,
 				C285674411F54F9F00ABCD8A /* ec */,
@@ -343,7 +343,7 @@
 				C285684E11F55B5300ABCD8A /* frame.cpp in Sources */,
 				C2856B1511F6107300ABCD8A /* rsa.cpp in Sources */,
 				C2856B1D11F6116E00ABCD8A /* channel.cpp in Sources */,
-				C2856BE011F6249B00ABCD8A /* threads.cpp in Sources */,
+				C2856BE011F6249B00ABCD8A /* threads.pthreads.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +362,7 @@
 				C285684D11F55B5300ABCD8A /* frame.cpp in Sources */,
 				C2856B1411F6107300ABCD8A /* rsa.cpp in Sources */,
 				C2856B1C11F6116E00ABCD8A /* channel.cpp in Sources */,
-				C2856BE611F624B400ABCD8A /* threads.cpp in Sources */,
+				C2856BE611F624B400ABCD8A /* threads.pthreads.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
