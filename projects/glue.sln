@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glue", "glue.vcproj", "{F76823BC-C2E7-46D6-9613-04893A70B565}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F76823BC-C2E7-46D6-9613-04893A70B565}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F76823BC-C2E7-46D6-9613-04893A70B565}.Debug|Win32.Build.0 = Debug|Win32
+		{F76823BC-C2E7-46D6-9613-04893A70B565}.Release|Win32.ActiveCfg = Release|Win32
+		{F76823BC-C2E7-46D6-9613-04893A70B565}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
