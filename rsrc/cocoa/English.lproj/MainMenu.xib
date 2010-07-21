@@ -406,7 +406,7 @@
 						<object class="NSCustomView" id="476392153">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">274</int>
-							<string key="NSFrame">{{15, 15}, {770, 470}}</string>
+							<string key="NSFrame">{{1, 1}, {798, 498}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<string key="NSClassName">Dabba</string>
 						</object>
