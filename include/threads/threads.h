@@ -11,22 +11,23 @@
 	#include "glue.pch"
 	#include <windows.h>
 	#define USE_WINTHREADS   1
-
-	struct thread_t { HANDLE    handle; DWORD  id; };
-	typedef HANDLE          mutex_t;
-	typedef HANDLE          condition_t;
-
 #else
 	#include <pthread.h>
 	#define USE_PTHREADS   1
-
-	typedef pthread_t       thread_t;
-	typedef pthread_mutex_t mutex_t;
-	typedef pthread_cond_t  condition_t;
 #endif
 
 namespace threads
 {
+
+#if defined(USE_PTHREADS)
+	typedef pthread_t       thread_t;
+	typedef pthread_mutex_t mutex_t;
+	typedef pthread_cond_t  condition_t;
+#else
+	struct thread_t { HANDLE    handle; DWORD  id; };
+	typedef HANDLE          mutex_t;
+	typedef HANDLE          condition_t;
+#endif
 
 class Thread
 {
