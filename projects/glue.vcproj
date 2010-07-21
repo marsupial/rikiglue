@@ -186,7 +186,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\frame\frame.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\frame\lut.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="threads"
+				>
+				<File
+					RelativePath="..\src\threads\threads.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\threads\threads.windows.cpp"
 					>
 				</File>
 			</Filter>

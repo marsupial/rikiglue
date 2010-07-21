@@ -8,22 +8,50 @@
 
 #include "windows/resource.h"
 #include "frame/frame.h"
+#include "threads/threads.h"
 
+namespace rikiGlue
+{
+	typedef std::deque<HWND>  list_t;
 
-typedef std::deque<HWND>  list_t;
+	static const TCHAR
+		kWindowTitle[] = L"glue",
+		kWindowClass[] = L"gabba",
+		kBitmapProperty[] = L"gabbaBitmap";
 
-static const TCHAR
-	kWindowTitle[] = L"glue",
-	kWindowClass[] = L"gabba",
-	kBitmapProperty[] = L"gabbaBitmap";
+	static DecodeThread
+		*sDecodeThread = NULL;
 
-static ATOM
-registerClass( HINSTANCE     hInstance );
+	static LRESULT CALLBACK
+	windowProc( HWND      window,
+				UINT      message,
+				WPARAM    wParam,
+				LPARAM    lParam );
+}
 
 static HWND
 initInstance( HINSTANCE    instance,
               int          show )
 {
+	using namespace rikiGlue;
+
+	WNDCLASSEX wcex;
+	wcex.cbSize         = sizeof(WNDCLASSEX);
+	wcex.style			= CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc	= rikiGlue::windowProc;
+	wcex.cbClsExtra		= 0;
+	wcex.cbWndExtra		= 0;
+	wcex.hInstance		= instance;
+	wcex.hIcon			= ::LoadIcon(instance, MAKEINTRESOURCE(IDI_ICON));
+	wcex.hCursor		= ::LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
+	wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_APP);
+	wcex.lpszClassName	= kWindowClass;
+	wcex.hIconSm		= ::LoadIcon(instance, MAKEINTRESOURCE(IDI_SMALL));
+
+	if ( ::RegisterClassEx(&wcex) == 0 )
+		return ( NULL );
+
 	HWND window = ::CreateWindow(kWindowClass, kWindowTitle, WS_OVERLAPPEDWINDOW,
 	                             CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, instance, NULL);
 
@@ -42,7 +70,9 @@ WinMain( HINSTANCE    instance,
          LPSTR        cmdLine,
          int          show )
 {
-	registerClass(instance);
+	rikiGlue::DecodeThread  thread;
+	if ( thread.create() == 0 )
+		rikiGlue::sDecodeThread = &thread;
 
 	// Perform application initialization:
 	HWND window = initInstance(instance, show);
@@ -66,6 +96,9 @@ WinMain( HINSTANCE    instance,
 
 	return ( msg.wParam );
 }
+
+namespace rikiGlue
+{
 
 class Gabba
 {
@@ -146,7 +179,7 @@ public:
 	}
 
 	void
-	editBitmap()
+		editBitmap( rikiGlue::DecodeThread    *thread )
 	{
 		BITMAP bitmap;
 		::GetObject(mBitmap, sizeof(bitmap), &bitmap);
@@ -174,37 +207,9 @@ public:
 		
 		::GetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bytes[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 
-		rikiGlue::Frame::Block  block(bitmap.bmWidth*3);
-
-		for ( register_t y = 0; y < bitmap.bmHeight; ++y )
-		{
-			buffer_t::value_type *srcData = &bytes[0] + (rowBytes * y),
-			                     *dstData = &block[0];
-
-			for ( register_t x = 0; x < bitmap.bmWidth; ++x )
-			{
-				dstData[0] = srcData[2];
-				dstData[1] = srcData[1];
-				dstData[2] = srcData[0];
-				srcData += 4;
-				dstData += 3;
-			}
-
-			rikiGlue::lutDecrypt(block);
-			rikiGlue::bChannel(block);
-
-			srcData = &block[0];
-			dstData = &bytes[0] + (rowBytes * y);
-
-			for ( register_t x = 0; x < bitmap.bmWidth; ++x )
-			{
-				dstData[0] = srcData[2];
-				dstData[1] = srcData[1];
-				dstData[2] = srcData[0];
-				srcData += 3;
-				dstData += 4;
-			}
-		}
+		Frame   frame(&bytes[0], rowBytes, bitmap.bmWidth, bitmap.bmHeight, Frame::kFormatBGRA);
+		Frame::operation_t ops[] = { lutDecrypt, bChannel };
+		frame.operate(ops, 2, thread);
 
 		::SetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bytes[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 	}
@@ -232,7 +237,8 @@ enumWindowProc( HWND    window,
 
 
 static void
-saveScreen( HWND    window )
+saveScreen( HWND            window,
+            DecodeThread    *thread )
 {
 	list_t windows;
 	::EnumWindows(enumWindowProc, reinterpret_cast<LPARAM>(&windows));
@@ -250,7 +256,7 @@ saveScreen( HWND    window )
 			++itr;
 		}
 
-		gabba.editBitmap();
+		gabba.editBitmap(thread);
 
 		HBITMAP newBitmap = gabba.bitmap();
 		HANDLE oldBitmap = ::GetProp(window, kBitmapProperty);
@@ -307,7 +313,7 @@ windowProc( HWND      window,
 			break;
 
 		case WM_TIMER:
-			saveScreen(window);
+			saveScreen(window, sDecodeThread);
 
 		case WM_MOVE:
 		case WM_SIZE:
@@ -346,23 +352,4 @@ windowProc( HWND      window,
 	return ( 0 );
 }
 
-static ATOM
-registerClass( HINSTANCE     hInstance )
-{
-	WNDCLASSEX wcex;
-
-	wcex.cbSize         = sizeof(WNDCLASSEX);
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc	= windowProc;
-	wcex.cbClsExtra		= 0;
-	wcex.cbWndExtra		= 0;
-	wcex.hInstance		= hInstance;
-	wcex.hIcon			= ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON));
-	wcex.hCursor		= ::LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_APP);
-	wcex.lpszClassName	= kWindowClass;
-	wcex.hIconSm		= ::LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
-
-	return ( ::RegisterClassEx(&wcex) );
-}
+} /* namespace rikiGlue */
