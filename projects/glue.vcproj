@@ -178,6 +178,18 @@
 				RelativePath="..\src\windows\main.cpp"
 				>
 			</File>
+			<Filter
+				Name="frame"
+				>
+				<File
+					RelativePath="..\src\frame\channel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\frame\lut.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="include"
