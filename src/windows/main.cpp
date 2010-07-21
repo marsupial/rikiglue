@@ -4,8 +4,10 @@
 
 #include <windows.h>
 #include <deque>
+#include <vector>
 
 #include "windows/resource.h"
+#include "frame/frame.h"
 
 
 typedef std::deque<HWND>  list_t;
@@ -103,16 +105,16 @@ public:
 		::ReleaseDC(mWindow, mDC);
 	}
 
-	void
+	bool
 	operator () ( HWND    window )
 	{
 		if ( window == mWindow )
-			return;
+			return ( false );
 
 		RECT srcRect, iRect;
 		::GetWindowRect(window, &srcRect);
 		if ( !IntersectRect(&iRect, &mRect, &srcRect) )
-			return;
+			return ( true );
 		
 		RECT dstRect = iRect;
 		srcRect = iRect;
@@ -127,6 +129,7 @@ public:
 		              SRCCOPY );
 
 		::ReleaseDC(window, winDC);
+		return ( true );
 	}
 
 	HBITMAP
@@ -143,18 +146,16 @@ public:
 	}
 
 	void
-	saveBitmap( const TCHAR    *filePath )
+	editBitmap()
 	{
-		BITMAP bmpScreen;
-		// Get the BITMAP from the HBITMAP
-		GetObject(mBitmap, sizeof(BITMAP), &bmpScreen);
-		 
-		BITMAPFILEHEADER   bmfHeader;    
+		BITMAP bitmap;
+		::GetObject(mBitmap, sizeof(bitmap), &bitmap);
+ 
 		BITMAPINFOHEADER   bi;
-		 
+
 		bi.biSize = sizeof(BITMAPINFOHEADER);    
-		bi.biWidth = bmpScreen.bmWidth;    
-		bi.biHeight = bmpScreen.bmHeight;  
+		bi.biWidth = bitmap.bmWidth;    
+		bi.biHeight = bitmap.bmHeight;  
 		bi.biPlanes = 1;    
 		bi.biBitCount = 32;    
 		bi.biCompression = BI_RGB;    
@@ -164,51 +165,48 @@ public:
 		bi.biClrUsed = 0;    
 		bi.biClrImportant = 0;
 
-		DWORD dwBmpSize = ((bmpScreen.bmWidth * bi.biBitCount + 31) / 32) * 4 * bmpScreen.bmHeight;
+		const size_t rowBytes = bitmap.bmWidth * 4, //((bitmap.bmWidth * bi.biBitCount + 23) / 24) * 3,
+		             dwBmpSize = rowBytes * bitmap.bmHeight;
 
-		// Starting with 32-bit Windows, GlobalAlloc and LocalAlloc are implemented as wrapper functions that 
-		// call HeapAlloc using a handle to the process's default heap. Therefore, GlobalAlloc and LocalAlloc 
-		// have greater overhead than HeapAlloc.
-		HANDLE hDIB = GlobalAlloc(GHND,dwBmpSize); 
-		char *lpbitmap = (char *)GlobalLock(hDIB);    
+		typedef std::vector<uint8_t> buffer_t;
 
-		// Gets the "bits" from the bitmap and copies them into a buffer 
-		// which is pointed to by lpbitmap.
-		GetDIBits(mDC, mBitmap, 0, (UINT)bmpScreen.bmHeight, lpbitmap, (BITMAPINFO *)&bi, DIB_RGB_COLORS);
+		buffer_t bytes(dwBmpSize);
+		
+		::GetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bytes[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 
-		// A file is created, this is where we will save the screen capture.
-		HANDLE hFile = CreateFile(filePath, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);   
+		rikiGlue::Frame::Block  block(bitmap.bmWidth*3);
 
-		// Add the size of the headers to the size of the bitmap to get the total file size
-		DWORD dwSizeofDIB = dwBmpSize + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+		for ( register_t y = 0; y < bitmap.bmHeight; ++y )
+		{
+			buffer_t::value_type *srcData = &bytes[0] + (rowBytes * y),
+			                     *dstData = &block[0];
 
-		//Offset to where the actual bitmap bits start.
-		bmfHeader.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(BITMAPINFOHEADER); 
+			for ( register_t x = 0; x < bitmap.bmWidth; ++x )
+			{
+				dstData[0] = srcData[2];
+				dstData[1] = srcData[1];
+				dstData[2] = srcData[0];
+				srcData += 4;
+				dstData += 3;
+			}
 
-		//Size of the file
-		bmfHeader.bfSize = dwSizeofDIB; 
+			rikiGlue::lutDecrypt(block);
+			rikiGlue::bChannel(block);
 
-		//bfType must always be BM for Bitmaps
-		bmfHeader.bfType = 0x4D42; //BM   
+			srcData = &block[0];
+			dstData = &bytes[0] + (rowBytes * y);
 
-		DWORD dwBytesWritten = 0;
-		WriteFile(hFile, (LPSTR)&bmfHeader, sizeof(BITMAPFILEHEADER), &dwBytesWritten, NULL);
-		WriteFile(hFile, (LPSTR)&bi, sizeof(BITMAPINFOHEADER), &dwBytesWritten, NULL);
-		WriteFile(hFile, (LPSTR)lpbitmap, dwBmpSize, &dwBytesWritten, NULL);
+			for ( register_t x = 0; x < bitmap.bmWidth; ++x )
+			{
+				dstData[0] = srcData[2];
+				dstData[1] = srcData[1];
+				dstData[2] = srcData[0];
+				srcData += 3;
+				dstData += 4;
+			}
+		}
 
-		//Unlock and Free the DIB from the heap
-		GlobalUnlock(hDIB);    
-		GlobalFree(hDIB);
-
-		//Close the handle for the file that was created
-		CloseHandle(hFile);
-
-	}
-
-	void
-	blit( HDC    dstDC )
-	{
-		::BitBlt(dstDC, 0,0, mRect.right-mRect.left, mRect.bottom-mRect.top, mDC, 0,0, SRCCOPY);
+		::SetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bytes[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 	}
 
 private:
@@ -231,6 +229,8 @@ enumWindowProc( HWND    window,
 	return ( TRUE );
 }
 
+
+
 static void
 saveScreen( HWND    window )
 {
@@ -245,9 +245,12 @@ saveScreen( HWND    window )
 		                          end = windows.rend();
 		while ( itr != end )
 		{
-			gabba( *itr );
+			if ( gabba( *itr ) == false )
+				break;
 			++itr;
 		}
+
+		gabba.editBitmap();
 
 		HBITMAP newBitmap = gabba.bitmap();
 		HANDLE oldBitmap = ::GetProp(window, kBitmapProperty);

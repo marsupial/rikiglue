@@ -7,6 +7,7 @@
 #ifndef _frame_h__
 #define _frame_h__
 
+#include "glue.pch"
 #include <vector>
 
 namespace rikiGlue
