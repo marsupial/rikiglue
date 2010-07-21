@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C22EF12811F7910F0002FB9E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C22EF12711F7910F0002FB9E /* threads.cpp */; };
+		C22EF12911F7910F0002FB9E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C22EF12711F7910F0002FB9E /* threads.cpp */; };
 		C285653C11F4CFEC00ABCD8A /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
 		C285673111F54F0200ABCD8A /* errorCorrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672C11F54F0200ABCD8A /* errorCorrect.cpp */; };
 		C285673211F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
@@ -58,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C22EF12711F7910F0002FB9E /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threads.cpp; path = ../src/threads/threads.cpp; sourceTree = SOURCE_ROOT; };
 		C285672C11F54F0200ABCD8A /* errorCorrect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = errorCorrect.cpp; path = ../src/frame/errorCorrect.cpp; sourceTree = SOURCE_ROOT; };
 		C285672D11F54F0200ABCD8A /* lut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.cpp; path = ../src/frame/lut.cpp; sourceTree = SOURCE_ROOT; };
 		C285674611F54FAF00ABCD8A /* ccsds_tab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ccsds_tab.c; path = ../src/ec/ccsds_tab.c; sourceTree = SOURCE_ROOT; };
@@ -229,6 +232,7 @@
 		D0FE57630993C4FD00139A60 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				C22EF12711F7910F0002FB9E /* threads.cpp */,
 				C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */,
 				C2FA5D6111F372750014E460 /* frame */,
 				C2FA52B711EFD3120014E460 /* rj */,
@@ -344,6 +348,7 @@
 				C2856B1511F6107300ABCD8A /* rsa.cpp in Sources */,
 				C2856B1D11F6116E00ABCD8A /* channel.cpp in Sources */,
 				C2856BE011F6249B00ABCD8A /* threads.pthreads.cpp in Sources */,
+				C22EF12811F7910F0002FB9E /* threads.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +368,7 @@
 				C2856B1411F6107300ABCD8A /* rsa.cpp in Sources */,
 				C2856B1C11F6116E00ABCD8A /* channel.cpp in Sources */,
 				C2856BE611F624B400ABCD8A /* threads.pthreads.cpp in Sources */,
+				C22EF12911F7910F0002FB9E /* threads.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
