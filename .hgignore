@@ -12,3 +12,5 @@ syntax: regexp
 
 # visual studio
 ^projects/.*\.(ncb|suo|user)
+
+^data/.*\.mov

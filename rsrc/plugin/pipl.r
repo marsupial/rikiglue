@@ -29,7 +29,7 @@
 
 
 
-#define RNAME  "Lut Encode"
+#define RNAME  "LUT Encode"
 #define RENTRY "rikiEncLut"
 #define RPIPL  1800
 #include "pipl.i.r"
@@ -37,4 +37,10 @@
 #define RNAME  "LUT Decode"
 #define RENTRY "rikiDecLut"
 #define RPIPL  1810
+#include "pipl.i.r"
+
+
+#define RNAME  "REC 709"
+#define RENTRY "riki709"
+#define RPIPL  1900
 #include "pipl.i.r"
