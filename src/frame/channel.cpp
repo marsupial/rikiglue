@@ -30,6 +30,18 @@ chOperation( uint8_t         c,
 }
 
 register_t
+rChannel( Frame::Block    &block )
+{
+	return ( chOperation(0, block) );
+}
+
+register_t
+gChannel( Frame::Block    &block )
+{
+	return ( chOperation(1, block) );
+}
+
+register_t
 bChannel( Frame::Block    &block )
 {
 	return ( chOperation(2, block) );

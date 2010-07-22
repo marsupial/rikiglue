@@ -201,6 +201,9 @@ rikiGlue( PF_Cmd        cmd,
 								err = frame.operate(&lutDecrypt);
 								break;
 
+							case kRec709:
+								err = frame.operate(&rec709);
+								break;
 						}
 					}
 				}
@@ -287,6 +290,17 @@ rikiDecLut( PF_Cmd        cmd,
            void          *extra )
 {	
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecryptLut) );
+}
+
+DllExport A_Err
+riki709( PF_Cmd        cmd,
+           PF_InData     *in_data,
+           PF_OutData    *out_data,
+           PF_ParamDef   *params[],
+           PF_LayerDef   *output,
+           void          *extra )
+{	
+	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kRec709) );
 }
 
 }

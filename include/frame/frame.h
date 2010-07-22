@@ -109,7 +109,16 @@ register_t
 lutDecrypt( Frame::Block    &block );
 
 register_t
+rChannel( Frame::Block    &block );
+
+register_t
+gChannel( Frame::Block    &block );
+
+register_t
 bChannel( Frame::Block    &block );
+
+register_t
+rec709( Frame::Block     &block );
 
 } /* namespace rikiGlue */
 

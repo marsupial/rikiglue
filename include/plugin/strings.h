@@ -40,6 +40,10 @@ typedef enum
 	kStrID_DLutName,
 	kStrID_DLutDescription,
 
+	kRec709,
+	kStrID_Rec709Name,
+	kStrID_Rec709Description,
+
 	kStrID_Exception,
 	kStrID_NUMTYPES
 

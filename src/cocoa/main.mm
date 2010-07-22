@@ -6,7 +6,7 @@
 #import "frame/frame.h"
 
 static const rikiGlue::Frame::operation_t
-	kOperations[] = { rikiGlue::lutDecrypt, rikiGlue::bChannel };
+	kOperations[] = { rikiGlue::lutDecrypt, rikiGlue::gChannel };
 
 @implementation Dabba
 

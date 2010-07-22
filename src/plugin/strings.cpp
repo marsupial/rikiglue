@@ -32,6 +32,10 @@ static const char*
 	"Riki Decode LUT",
 	"Decode a frame with a lut",
 
+	"Rec 709",
+	"Riki Encode in Rec709",
+	"Move colors into Rec709",
+
 	"Exception caught"
 };
 
