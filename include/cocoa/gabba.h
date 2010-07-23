@@ -24,4 +24,8 @@
 
 	double interval, nIntervals;
 }
+
+- (IBAction) setPaused: (id) sender;
+- (IBAction) setFloating: (id) sender;
+
 @end

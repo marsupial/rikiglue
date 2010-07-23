@@ -22,6 +22,10 @@ namespace rikiGlue
 	static DecodeThread
 		*sDecodeThread = NULL;
 
+	static void
+	setCapture( HWND     window,
+				bool     enable );
+
 	static LRESULT CALLBACK
 	windowProc( HWND      window,
 				UINT      message,
@@ -79,7 +83,7 @@ WinMain( HINSTANCE    instance,
 	if ( window == NULL )
 		return FALSE;
 
-	::SetTimer(window, 1, 1000/25, NULL);
+	setCapture(window, true);
 
 	MSG    msg;
 	HACCEL accelTable = ::LoadAccelerators(instance, MAKEINTRESOURCE(IDC_APP));
@@ -234,8 +238,6 @@ enumWindowProc( HWND    window,
 	return ( TRUE );
 }
 
-
-
 static void
 saveScreen( HWND            window,
             DecodeThread    *thread )
@@ -289,6 +291,46 @@ aboutProc( HWND      window,
 	return ( FALSE  );
 }
 
+static void
+setCapture( HWND     window,
+            bool     enable )
+{
+	static UINT_PTR sTimerID = 0;
+	if ( enable )
+		::KillTimer(window, sTimerID);
+	else
+		sTimerID = ::SetTimer(window, 1, 1000/25, NULL);
+}
+
+static void
+floatCheck( HWND     window,
+            bool     enable )
+{
+	HWND topMost = ( enable ? HWND_TOPMOST : HWND_NOTOPMOST );
+	::SetWindowPos(window, topMost, 0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE);
+}
+
+static void
+checkCommand( HWND     window,
+              UNIT     command,
+              void (*operation) (HWND, bool) )
+{
+	HMENU  menu = ::GetMenu(window);
+	if ( menu == NULL )
+		return;
+
+	if ( ::GetMenuState(menu, command, MF_BYCOMMAND) & MF_CHECKED )
+	{
+		operation(window, false);
+		::CheckMenuItem(menu, command, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+	else
+	{
+		operation(window, true);
+		::CheckMenuItem(menu, command, MF_BYCOMMAND | MF_CHECKED);
+	}
+}
+
 static LRESULT CALLBACK
 windowProc( HWND      window,
             UINT      message,
@@ -300,15 +342,21 @@ windowProc( HWND      window,
 		case WM_COMMAND:
 			switch ( LOWORD(wParam) )
 			{
-			case IDM_ABOUT:
-				::DialogBox( reinterpret_cast<HINSTANCE>(::GetWindowLong(window, GWL_HINSTANCE)),
-				             MAKEINTRESOURCE(IDD_ABOUTBOX), window, aboutProc );
-				break;
-			case IDM_EXIT:
-				::DestroyWindow(window);
-				break;
-			default:
-				return ( ::DefWindowProc(window, message, wParam, lParam) );
+				case IDM_ABOUT:
+					::DialogBox( reinterpret_cast<HINSTANCE>(::GetWindowLong(window, GWL_HINSTANCE)),
+								 MAKEINTRESOURCE(IDD_ABOUTBOX), window, aboutProc );
+					break;
+				case IDM_EXIT:
+					::DestroyWindow(window);
+					break;
+				case IDM_PAUSE:
+					checkCommand(window, IDM_PAUSE, pauseCheck);
+					break;
+				case IDM_FLOAT:
+					checkCommand(window, IDM_FLOAT, floatCheck);
+					break;
+				default:
+					return ( ::DefWindowProc(window, message, wParam, lParam) );
 			}
 			break;
 
