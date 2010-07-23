@@ -115,14 +115,52 @@ static const rikiGlue::Frame::operation_t
 	}
 }
 
+- (void) setItem: (id) sender check: (BOOL) b
+{
+	if ( sender && [ sender respondsToSelector: @selector(setState:) ] )
+		[ sender setState: b ];
+}
+
+- (IBAction) setPaused: (id) sender
+{
+	if ( timer != nil )
+	{
+		NSUInteger rc = [ timer retainCount ];
+		[ timer invalidate ];
+		rc = [ timer retainCount ];
+		[ timer release ];
+		timer = nil;
+		[ self setItem: sender check: TRUE ];
+	}
+	else
+	{
+		timer = [ [ NSTimer scheduledTimerWithTimeInterval: (1.0 / 30.0)
+															target: self
+															selector: @selector(timerFired:)
+															userInfo: nil
+															repeats: YES ] retain ];
+		[ self setItem: sender check: FALSE ];
+	}
+}
+
+- (IBAction) setFloating: (id) sender
+{
+	if ( [ window level ] == NSNormalWindowLevel )
+	{
+		[ window setLevel: NSFloatingWindowLevel ];
+		[ self setItem: sender check: TRUE ];
+	}
+	else
+	{
+		[ window setLevel: NSNormalWindowLevel ];
+		[ self setItem: sender check: FALSE ];
+	}
+}
+
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
 {
 	colorSpace = CGColorSpaceCreateDeviceRGB();
-	timer = [ [ NSTimer scheduledTimerWithTimeInterval: (1.0 / 30.0)
-	                                                    target: self
-	                                                    selector: @selector(timerFired:)
-	                                                    userInfo: nil
-	                                                    repeats: YES ] retain];
+	[ self setPaused: nil ];
 	decoder.create();
 	interval = 0;
 	nIntervals = 0;
@@ -135,6 +173,7 @@ static const rikiGlue::Frame::operation_t
 	decoder.unlock();
 	decoder.signal();
 	
+	[ timer invalidate ];
 	[ timer release ];
 	CGColorSpaceRelease(colorSpace);
 
