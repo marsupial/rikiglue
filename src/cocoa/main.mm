@@ -123,13 +123,14 @@ static const rikiGlue::Frame::operation_t
 
 - (IBAction) setPaused: (id) sender
 {
-	if ( timer != nil )
+	if ( timer != nil || [ window isMiniaturized ] )
 	{
-		NSUInteger rc = [ timer retainCount ];
-		[ timer invalidate ];
-		rc = [ timer retainCount ];
-		[ timer release ];
-		timer = nil;
+		if ( timer )
+		{
+			[ timer invalidate ];
+			[ timer release ];
+			timer = nil;
+		}
 		[ self setItem: sender check: TRUE ];
 	}
 	else
@@ -141,6 +142,18 @@ static const rikiGlue::Frame::operation_t
 															repeats: YES ] retain ];
 		[ self setItem: sender check: FALSE ];
 	}
+}
+
+- (void) windowDidMiniaturize: (NSNotification*) notification
+{
+	if ( timer )
+		[ self setPaused: pauseItem ];
+}
+- (void) windowDidDeminiaturize: (NSNotification*) notification
+{
+	if ( [ pauseItem state ] )
+		[ self setPaused: pauseItem ];
+
 }
 
 - (IBAction) setFloating: (id) sender
@@ -160,6 +173,7 @@ static const rikiGlue::Frame::operation_t
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
 {
 	colorSpace = CGColorSpaceCreateDeviceRGB();
+	[ window setDelegate: self ];
 	[ self setPaused: nil ];
 	decoder.create();
 	interval = 0;
@@ -173,6 +187,7 @@ static const rikiGlue::Frame::operation_t
 	decoder.unlock();
 	decoder.signal();
 	
+	[ window setDelegate: nil ];
 	[ timer invalidate ];
 	[ timer release ];
 	CGColorSpaceRelease(colorSpace);
