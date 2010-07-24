@@ -297,8 +297,14 @@ setCapture( HWND     window,
 {
 	static UINT_PTR sTimerID = 0;
 	if ( enable )
-		::KillTimer(window, sTimerID);
-	else
+	{
+		if ( sTimerID )
+		{
+			::KillTimer(window, sTimerID);
+			sTimerID = 0;
+		}
+	}
+	else if ( sTimerID == 0 )
 		sTimerID = ::SetTimer(window, 1, 1000/25, NULL);
 }
 
@@ -362,9 +368,23 @@ windowProc( HWND      window,
 
 		case WM_TIMER:
 			saveScreen(window, sDecodeThread);
+			::RedrawWindow(window, NULL, NULL, RDW_INVALIDATE);
+			break;
 
-		case WM_MOVE:
 		case WM_SIZE:
+			switch ( wParam )
+			{
+				case SIZE_MINIMIZED:
+					setCapture(window, false);
+					return ( ::DefWindowProc(window, message, wParam, lParam) );
+				case SIZE_MAXIMIZED:
+					setCapture(window, true);
+					return ( ::DefWindowProc(window, message, wParam, lParam) );
+
+				default:
+					break;
+			}
+		case WM_MOVE:
 			::RedrawWindow(window, NULL, NULL, RDW_INVALIDATE);
 			break;
 

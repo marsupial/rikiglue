@@ -13,9 +13,13 @@
 @end
 
 @interface Gabba : NSObject
+#ifdef MAC_OS_X_VERSION_10_6
+<NSWindowDelegate>
+#endif
 {
 	IBOutlet NSWindow       *window;
 	IBOutlet Dabba          *imageView;
+	IBOutlet NSMenuItem     *pauseItem;
 
 	CGColorSpaceRef         colorSpace;
 	NSTimer                 *timer;
@@ -27,5 +31,7 @@
 
 - (IBAction) setPaused: (id) sender;
 - (IBAction) setFloating: (id) sender;
+- (void) windowDidMiniaturize: (NSNotification*) notification;
+- (void) windowDidDeminiaturize: (NSNotification*) notification;
 
 @end
