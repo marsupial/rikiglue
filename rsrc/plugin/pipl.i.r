@@ -32,8 +32,8 @@
 
 			/* [7] */
 			AE_Effect_Spec_Version {
-				PF_PLUG_IN_VERSION,
-				PF_PLUG_IN_SUBVERS
+				13,
+				0
 			},
 
 			/* [8] */

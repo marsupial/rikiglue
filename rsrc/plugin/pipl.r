@@ -1,7 +1,9 @@
 
 #include <AEConfig.h>
 #include <AE_EffectVers.h>
-	
+
+// #define AE_PROC_INTELx64
+
 #ifndef AE_OS_WIN
 	#include <AE_General.r>
 #endif
