@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C22EF12811F7910F0002FB9E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C22EF12711F7910F0002FB9E /* threads.cpp */; };
 		C22EF12911F7910F0002FB9E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C22EF12711F7910F0002FB9E /* threads.cpp */; };
+		C25DA7B411FB5AF60025BB8C /* pipl.64.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = C25DA7B311FB5AF60025BB8C /* pipl.64.rsrc */; };
 		C285653C11F4CFEC00ABCD8A /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C2FA52B811EFD3180014E460 /* rijndael.c */; };
 		C285673111F54F0200ABCD8A /* errorCorrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672C11F54F0200ABCD8A /* errorCorrect.cpp */; };
 		C285673211F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
@@ -39,6 +40,16 @@
 		C2FA5D6711F372B60014E460 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5D6611F372B60014E460 /* main.mm */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C248579911FAAD1700786590 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4E618CB095A3CE80012CA3F;
+			remoteInfo = glue;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		8F1EE4810C51773600D27114 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -53,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		C22EF12711F7910F0002FB9E /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threads.cpp; path = ../src/threads/threads.cpp; sourceTree = SOURCE_ROOT; };
+		C25DA7B311FB5AF60025BB8C /* pipl.64.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = pipl.64.rsrc; path = ../rsrc/plugin/pipl.64.rsrc; sourceTree = SOURCE_ROOT; };
 		C285672C11F54F0200ABCD8A /* errorCorrect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = errorCorrect.cpp; path = ../src/frame/errorCorrect.cpp; sourceTree = SOURCE_ROOT; };
 		C285672D11F54F0200ABCD8A /* lut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.cpp; path = ../src/frame/lut.cpp; sourceTree = SOURCE_ROOT; };
 		C285674611F54FAF00ABCD8A /* ccsds_tab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ccsds_tab.c; path = ../src/ec/ccsds_tab.c; sourceTree = SOURCE_ROOT; };
@@ -146,6 +158,7 @@
 		C2F59935113CE59000B0FD05 /* rsrc */ = {
 			isa = PBXGroup;
 			children = (
+				C25DA7B311FB5AF60025BB8C /* pipl.64.rsrc */,
 				C28567C511F5548C00ABCD8A /* pipl.r */,
 				C2FA5D5B11F372630014E460 /* InfoPlist.strings */,
 				C2FA5D5D11F372630014E460 /* MainMenu.xib */,
@@ -251,6 +264,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C248579A11FAAD1700786590 /* PBXTargetDependency */,
 			);
 			name = glueApp;
 			productName = cocoaApp;
@@ -320,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C28567C611F5548C00ABCD8A /* pipl.r in Rez */,
+				C25DA7B411FB5AF60025BB8C /* pipl.64.rsrc in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +383,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C248579A11FAAD1700786590 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4E618CB095A3CE80012CA3F /* glue */;
+			targetProxy = C248579911FAAD1700786590 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C2FA5D5B11F372630014E460 /* InfoPlist.strings */ = {
@@ -448,6 +471,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = ../rsrc/rikiGlue.plist;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_REZFLAGS = "$(inherited) -i \"$(AESDK)/include\" -i \"$(AESDK)/rsrc\"";
 				PRODUCT_NAME = glue;
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
@@ -488,7 +512,6 @@
 					"-framework",
 					Carbon,
 				);
-				OTHER_REZFLAGS = "$(inherited) -i \"$(AESDK)/include\" -i \"$(AESDK)/rsrc\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
