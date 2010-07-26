@@ -1218,7 +1218,7 @@ static void rijndaelDecrypt(const u32 rk[/*4*(Nr + 1)*/], int Nr, const u8 ct[16
 }
 
 void
-rijndael_set_key(rijndael_ctx *ctx, u_char *key, int bits, int do_encrypt)
+rijndael_set_key0(rijndael_ctx *ctx, u_char *key, int bits, int do_encrypt)
 {
 	ctx->Nr = rijndaelKeySetupEnc(ctx->ek, key, bits);
 	if (do_encrypt) {
@@ -1232,13 +1232,13 @@ rijndael_set_key(rijndael_ctx *ctx, u_char *key, int bits, int do_encrypt)
 }
 
 void
-rijndael_decrypt(rijndael_ctx *ctx, u_char *src, u_char *dst)
+rijndael_decrypt0(rijndael_ctx *ctx, const u_char *src, u_char *dst)
 {
 	rijndaelDecrypt(ctx->dk, ctx->Nr, src, dst);
 }
 
 void
-rijndael_encrypt(rijndael_ctx *ctx, u_char *src, u_char *dst)
+rijndael_encrypt0(rijndael_ctx *ctx, const u_char *src, u_char *dst)
 {
 	rijndaelEncrypt(ctx->ek, ctx->Nr, src, dst);
 }

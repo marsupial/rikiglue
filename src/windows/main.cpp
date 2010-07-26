@@ -205,17 +205,17 @@ public:
 		const size_t rowBytes = bitmap.bmWidth * 4, //((bitmap.bmWidth * bi.biBitCount + 23) / 24) * 3,
 		             dwBmpSize = rowBytes * bitmap.bmHeight;
 
-		typedef std::vector<uint8_t> buffer_t;
+		std::vector<uint8_t> bgra(dwBmpSize);
+		::GetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bgra[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 
-		buffer_t bytes(dwBmpSize);
-		
-		::GetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bytes[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
+		Frame  frame(bitmap.bmWidth, bitmap.bmHeight, thread);
 
-		Frame   frame(&bytes[0], rowBytes, bitmap.bmWidth, bitmap.bmHeight, Frame::kFormatBGRA);
-		Frame::operation_t ops[] = { lutDecrypt, bChannel };
-		frame.operate(ops, 2, thread);
+		const Frame::operation_t ops[4] = { bgraToRGB, lutDecrypt, gChannel, rgbToBGRA };
+		frame.operate(&ops[0], 1, &bgra[0], rowBytes);
+		frame.operate(&ops[1], 2, frame.bytes(), frame.rowBytes());
+		frame.operate(&ops[3], 1, frame.bytes(), frame.rowBytes(), &bgra[0], rowBytes);
 
-		::SetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bytes[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
+		::SetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bgra[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 	}
 
 private:

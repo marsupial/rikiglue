@@ -78,6 +78,9 @@ public:
 	signal();
 
 	void
+	broadcast();
+
+	void
 	wait( mutex_t    *mutex );
 
 private:
@@ -88,44 +91,43 @@ private:
 } /* namespace threads */
 
 #include "frame/frame.h"
-#include <map>
+#include <vector>
 
 namespace rikiGlue
 {
 
-struct ThreadBlock
+struct ThreadBlock : public Frame::Block
 {
-	enum
-	{
-		kWaiting     = 0,
-		kProcessing  = 1,
-	};
-
-	ThreadBlock( Frame                *frame  = NULL,
-	             Frame::operation_t   *ops = NULL,
-	             size_t               numOps = 0 ) :
-		mProcess(kWaiting),
-		mFrame(frame),
-		mOps(ops),
-		mNumOps(numOps)
+	ThreadBlock( const uint8_t   *src,
+	             size_t          srcSz,
+	             uint8_t         *dst,
+	             size_t          dstSz,
+	             const Frame::operation_t *opers,
+	             size_t                   nOpers ) :
+		Block(src, srcSz, dst, dstSz),
+		ops(opers),
+		numOps(nOpers)
 	{}
-
-		
-	uint8_t            mProcess;
-	Frame              *mFrame;
-	Frame::operation_t *mOps;
-	size_t             mNumOps;
-	Frame::Block       mBlock;
+	
+	const Frame::operation_t *ops;
+	size_t                   numOps;
 };
 
-typedef std::map<int, ThreadBlock>   BlockQueue;
+typedef std::vector<ThreadBlock>   BlockQueue;
 
 class DecodeThread : public threads::Thread
 {
 public:
 
+	enum
+	{
+		kWaiting  = 0,
+		kActive   = 1,
+		kExit     = 2
+	};
+
 	DecodeThread() :
-		mExit(false)
+		mState(kActive)
 	{}
 
 	virtual ~DecodeThread();
@@ -140,7 +142,13 @@ public:
 	void
 	exit()
 	{
-		mExit = true;
+		mState = kExit;
+	}
+
+	uint8_t
+	state() const
+	{
+		return ( mState );
 	}
 
 	void
@@ -161,10 +169,16 @@ public:
 		mCondition.signal();
 	}
 
+	void
+	broadcast()
+	{
+		mCondition.broadcast();
+	}
+
 	BlockQueue&
 	queue()
 	{
-		return (mBlocks );
+		return ( mBlocks );
 	}
 
 private:
@@ -172,7 +186,7 @@ private:
 	threads::Mutex      mMutex;
 	threads::Condition  mCondition;
 	BlockQueue          mBlocks;
-	bool                mExit;
+	volatile uint8_t             mState;
 };
 
 } /* namespace rikiGlue */

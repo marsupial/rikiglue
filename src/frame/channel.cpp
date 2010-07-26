@@ -8,21 +8,24 @@ namespace rikiGlue
 {
 
 static register_t
-chOperation( uint8_t         c,
-             Frame::Block    &block )
+chOperation( uint8_t               c,
+             const Frame::Block    &block )
 {
-	const register_t n = block.size() / 3;
-	uint8_t *data = &block[0];
+	const register_t n = block.dstSize / 3;
+	const uint8_t *srcData = block.srcData;
+	uint8_t *dstData = block.dstData;
+
 	for ( register_t i = 0; i < n; ++i )
 	{
 #if defined(RUNROLL)
-		const uint8_t val = data[c];
-		*data++ = val;
-		*data++ = val;
-		*data++ = val;
+		const uint8_t val = block.srcData[c];
+		*dstData++ = val;
+		*dstData++ = val;
+		*dstData++ = val;
 #else
-		memset(&data[0], data[c], 3);
-		data += 3;
+		memset(dstData, srcData[c], 3);
+		dstData += 3;
+		srcData += 3;
 #endif
 	}
 
@@ -30,19 +33,19 @@ chOperation( uint8_t         c,
 }
 
 register_t
-rChannel( Frame::Block    &block )
+rChannel( const Frame::Block    &block )
 {
 	return ( chOperation(0, block) );
 }
 
 register_t
-gChannel( Frame::Block    &block )
+gChannel( const Frame::Block    &block )
 {
 	return ( chOperation(1, block) );
 }
 
 register_t
-bChannel( Frame::Block    &block )
+bChannel( const Frame::Block    &block )
 {
 	return ( chOperation(2, block) );
 }

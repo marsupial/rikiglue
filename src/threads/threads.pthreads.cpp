@@ -104,6 +104,13 @@ Condition::signal()
 }
 
 void
+Condition::broadcast()
+{
+	if ( pthread_cond_broadcast(&mCondition) != 0 )
+		throw ( std::runtime_error("pthread_cond_broadcast") );
+}
+
+void
 Condition::wait( mutex_t    *mutex )
 {
 	if ( int rval = pthread_cond_wait(&mCondition, mutex) )

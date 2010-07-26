@@ -9,61 +9,59 @@
 namespace rikiGlue
 {
 
-Frame::Block&
-Frame::getBlock( size_t    i )
+register_t
+argbToRGB( const Frame::Block    &block )
 {
-	assert( i < mHeight );
-	assert(mFormat < kFormatEnd);
+	assert(block.dstSize < block.srcSize );
 
-	const uint8_t *srcData = mData + (mRowbytes * i);
-	uint8_t *dstData = &mBlock[0];
+	const uint8_t  *srcData = block.srcData;
+	uint8_t *dstData = block.dstData;
 
-	if ( mFormat == kFormatARGB )
+	for ( register_t i = 0; i < block.dstSize; i += 3 )
 	{
-		for ( register_t x = 0; x < mWidth; ++x)
-		{
-	#if defined(RUNROLL)
-			++srcData;
-			*dstData++ = *srcData++;
-			*dstData++ = *srcData++;
-			*dstData++ = *srcData++;
-	#else
-			memcpy(dstData, &srcData[1], 3);
-			dstData += 3;
-			srcData += 4;
-	#endif
-		}
+		srcData++;
+#if defined(RUNROLL)
+		*dstData++ = *srcData++;
+		*dstData++ = *srcData++;
+		*dstData++ = *srcData++;
+#else
+		memcpy(dstData, srcData, 3);
+		dstData += 3;
+		srcData += 3;
+#endif
 	}
-	else
-	{
-		for ( register_t x = 0; x < mWidth; ++x )
-		{
-			dstData[0] = srcData[2];
-			dstData[1] = srcData[1];
-			dstData[2] = srcData[0];
-			srcData += 4;
-			dstData += 3;
-		}
-	}
-
-
-	return ( mBlock );
+	return ( 0 );
 }
 
-void
-Frame::setBlock( size_t    i,
-	             Block     &block )
+register_t
+bgraToRGB( const Frame::Block    &block )
 {
-	assert( i < mHeight );
-	assert(mFormat < kFormatEnd);
+	assert(block.dstSize < block.srcSize );
 
-	const uint8_t *srcData = &block[0];
-	uint8_t *dstData = mData + (mRowbytes * i);
+	const uint8_t  *srcData = block.srcData;
+	uint8_t *dstData = block.dstData;
 
-	if ( mFormat == kFormatARGB )
+	for ( register_t i = 0; i < block.dstSize; i += 3 )
 	{
-		for ( register_t x = 0; x < mWidth; ++x )
-		{
+		dstData[0] = srcData[2];
+		dstData[1] = srcData[1];
+		dstData[2] = srcData[0];
+		srcData += 4;
+		dstData += 3;
+	}
+	return ( 0 );
+}
+
+register_t
+rgbToARGB( const Frame::Block    &block )
+{
+	assert(block.dstSize > block.srcSize );
+
+	const uint8_t  *srcData = block.srcData;
+	uint8_t *dstData = block.dstData;
+
+	for ( register_t i = 0; i < block.srcSize; i += 3 )
+	{
 			*dstData++ = 255;
 	#if defined(RUNROLL)
 			*dstData++ = *srcData++;
@@ -74,55 +72,67 @@ Frame::setBlock( size_t    i,
 			dstData += 3;
 			srcData += 3;
 	#endif
-		}
 	}
-	else
-	{
-		for ( register_t x = 0; x < mWidth; ++x )
-		{
-			dstData[0] = srcData[2];
-			dstData[1] = srcData[1];
-			dstData[2] = srcData[0];
-			srcData += 3;
-			dstData += 4;
-		}
-	}
+	return ( 0 );
 }
 
 register_t
+rgbToBGRA( const Frame::Block    &block )
+{
+	assert(block.dstSize > block.srcSize );
+
+	const uint8_t  *srcData = block.srcData;
+	uint8_t *dstData = block.dstData;
+
+	for ( register_t i = 0; i < block.srcSize; i += 3 )
+	{
+		dstData[0] = srcData[2];
+		dstData[1] = srcData[1];
+		dstData[2] = srcData[0];
+		srcData += 3;
+		dstData += 4;
+	}
+	return ( 0 );
+}
+		  
+register_t
 Frame::operate( operation_t    *ops,
                 size_t         numOps,
-                DecodeThread   *inDecoder )
+                const uint8_t  *srcData,
+                size_t         srcRowbytes,
+                uint8_t        *dstData,
+                size_t         dstRowbytes )
+
 {
-	if ( inDecoder )
+	if ( mDecoder )
 	{
-		DecodeThread &decoder = *inDecoder;
-
-		for ( register_t i = 0; i < numBlocks(); ++i )
+		for ( register_t i = 0; i < mHeight; ++i )
 		{
-			const Block &block = getBlock(i);
+			ThreadBlock block(srcData, srcRowbytes, dstData, dstRowbytes, ops, numOps);
 
-			decoder.lock();
-			decoder.queue()[i] = ThreadBlock(this, ops, numOps);
-			decoder.queue()[i].mBlock = block;
-			decoder.unlock();
+			mDecoder->lock();
+			mDecoder->queue().push_back(block);
+			mDecoder->unlock();
 
-			decoder.signal();
+			mDecoder->signal();
+
+			srcData += srcRowbytes;
+			dstData += dstRowbytes;
 		}
 
-		decoder.lock();
-		while ( decoder.queue().size() )
+		mDecoder->lock();
+		while ( mDecoder->queue().size() || mDecoder->state() == DecodeThread::kActive )
 		{
-			decoder.decode();
-			decoder.lock();
+			mDecoder->decode();
+			mDecoder->lock();
 		}
-		decoder.unlock();
+		mDecoder->unlock();
 	}
 	else
 	{
-		for ( register_t i = 0; i < numBlocks(); ++i )
+		for ( register_t i = 0; i < mHeight; ++i )
 		{
-			Block &block = getBlock(i);
+			Block block(srcData, srcRowbytes, dstData, dstRowbytes);
 
 			for ( register_t o = 0; o < numOps; ++o )
 			{
@@ -130,7 +140,8 @@ Frame::operate( operation_t    *ops,
 					return ( rval );
 			}
 
-			setBlock(i, block);
+			srcData += srcRowbytes;
+			dstData += dstRowbytes;
 		}
 	}
 

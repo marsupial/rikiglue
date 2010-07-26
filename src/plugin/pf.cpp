@@ -170,42 +170,40 @@ rikiGlue( PF_Cmd        cmd,
 
 			case PF_Cmd_RENDER:
 				{
-					err = copyInput(in_data, &params[kInputParam]->u.ld, output, NULL);
-					if ( err == PF_Err_NONE )
+					Frame::operation_t  ops[3] = { argbToRGB, NULL, rgbToARGB };
+					Frame  frame(output->width, output->height);
+
+					switch ( selector )
 					{
-						Frame  frame(output->data, output->rowbytes, output->width, output->height);
+						case kEncrypt:
+							ops[1] = rsaEncrypt;
+							break;
 
-						switch ( selector )
+						case kDecrypt:
+							ops[1] = rsaDecrypt;
+							break;
+
+						case kEncryptLut:
+							ops[1] = lutEncrypt;
+							break;
+
+						case kDecryptLut:
+							ops[1] = lutDecrypt;
+							break;
+					}
+					if ( ops[1] )
+					{
+						err = frame.operate(&ops[0], 1, (uint8_t*)params[kInputParam]->u.ld.data, params[kInputParam]->u.ld.rowbytes);
+						if ( err == PF_Err_NONE )
 						{
-							case kEncode:
-								err = frame.operate(&ecEncode);
-								break;
-
-							case kDecode:
-								err = frame.operate(&ecDecode);
-								break;
-
-							case kEncrypt:
-								err = frame.operate(&rsaEncrypt);
-								break;
-
-							case kDecrypt:
-								err = frame.operate(&rsaDecrypt);
-								break;
-
-							case kEncryptLut:
-								err = frame.operate(&lutEncrypt);
-								break;
-
-							case kDecryptLut:
-								err = frame.operate(&lutDecrypt);
-								break;
-
-							case kRec709:
-								err = frame.operate(&rec709);
-								break;
+							err = frame.operate(&ops[1], 1, frame.bytes(), frame.rowBytes());
+							if ( err == PF_Err_NONE )
+								err = frame.operate(&ops[2], 1, frame.bytes(), frame.rowBytes(), (uint8_t*)output->data, output->rowbytes);
 						}
 					}
+					else
+						err = copyInput(in_data, &params[kInputParam]->u.ld, output, NULL);
+
 				}
 				break;
 		}
@@ -249,28 +247,6 @@ rikiDecrypt( PF_Cmd        cmd,
 }
 
 DllExport A_Err
-rikiEncode( PF_Cmd        cmd,
-            PF_InData     *in_data,
-            PF_OutData    *out_data,
-            PF_ParamDef   *params[],
-            PF_LayerDef   *output,
-            void          *extra )
-{	
-	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kEncode) );
-}
-
-DllExport A_Err
-rikiDecode( PF_Cmd        cmd,
-            PF_InData     *in_data,
-            PF_OutData    *out_data,
-            PF_ParamDef   *params[],
-            PF_LayerDef   *output,
-            void          *extra )
-{	
-	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecode) );
-}
-
-DllExport A_Err
 rikiEncLut( PF_Cmd        cmd,
            PF_InData     *in_data,
            PF_OutData    *out_data,
@@ -290,17 +266,6 @@ rikiDecLut( PF_Cmd        cmd,
            void          *extra )
 {	
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecryptLut) );
-}
-
-DllExport A_Err
-riki709( PF_Cmd        cmd,
-           PF_InData     *in_data,
-           PF_OutData    *out_data,
-           PF_ParamDef   *params[],
-           PF_LayerDef   *output,
-           void          *extra )
-{	
-	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kRec709) );
 }
 
 }
