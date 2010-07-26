@@ -5,9 +5,6 @@
 #import "cocoa/gabba.h"
 #import "frame/frame.h"
 
-static const rikiGlue::Frame::operation_t
-	kOperations[] = { rikiGlue::lutDecrypt, rikiGlue::gChannel };
-
 @implementation Dabba
 
 - (id) initWithFrame: (NSRect) frameRect
@@ -50,6 +47,7 @@ static const rikiGlue::Frame::operation_t
 
 @end
 
+				
 @implementation Gabba
 
 - (CGImageRef) imageBelowWindow: (NSWindow *) inWindow withRect: (NSRect) inRect
@@ -89,10 +87,13 @@ static const rikiGlue::Frame::operation_t
 	CGContextDrawImage(contextRef, imageRect, capturedImage); 
 	CGImageRelease(capturedImage);
 
-	rikiGlue::Frame  frame(&argb[0], rowBytes, imageRect.size.width, imageRect.size.height);	
+	using namespace rikiGlue;
+	Frame  frame(imageRect.size.width, imageRect.size.height, &decoder);	
 
-	frame.operate(kOperations, 2, &decoder);
-//	frame.operate(kOperations, 2 );
+	const Frame::operation_t  rgbOps[4] = { argbToRGB, lutDecrypt, gChannel, rgbToARGB };
+	frame.operate(&rgbOps[0], 1, &argb[0], rowBytes);
+	frame.operate(&rgbOps[1], 2, frame.bytes(), frame.rowBytes());
+	frame.operate(&rgbOps[3], 1, frame.bytes(), frame.rowBytes(), &argb[0], rowBytes);
 
 	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);
@@ -149,6 +150,7 @@ static const rikiGlue::Frame::operation_t
 	if ( timer )
 		[ self setPaused: pauseItem ];
 }
+
 - (void) windowDidDeminiaturize: (NSNotification*) notification
 {
 	if ( [ pauseItem state ] )
@@ -192,7 +194,8 @@ static const rikiGlue::Frame::operation_t
 	[ timer release ];
 	CGColorSpaceRelease(colorSpace);
 
-	printf("t: %f\n", interval/nIntervals);
+	interval /= -nIntervals;
+	printf("t: %f, %f fps\n", interval, 1.0/interval);
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) application

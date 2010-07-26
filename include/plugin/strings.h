@@ -24,14 +24,6 @@ typedef enum
 	kStrID_DecryptName,
 	kStrID_DecryptDescription,
 
-	kEncode,
-	kStrID_EncodeName,
-	kStrID_EncodeDescription,
-
-	kDecode,
-	kStrID_DecodeName,
-	kStrID_DecodeDescription,
-
 	kEncryptLut,
 	kStrID_ELutName,
 	kStrID_ELutDescription,
@@ -39,10 +31,6 @@ typedef enum
 	kDecryptLut,
 	kStrID_DLutName,
 	kStrID_DLutDescription,
-
-	kRec709,
-	kStrID_Rec709Name,
-	kStrID_Rec709Description,
 
 	kStrID_Exception,
 	kStrID_NUMTYPES

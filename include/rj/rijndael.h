@@ -46,8 +46,8 @@ typedef struct {
 	u32	dk[4*(MAXNR + 1)];	/* decrypt key schedule */
 } rijndael_ctx;
 
-void	 rijndael_set_key(rijndael_ctx *, u_char *, int, int);
-void	 rijndael_decrypt(rijndael_ctx *, u_char *, u_char *);
-void	 rijndael_encrypt(rijndael_ctx *, u_char *, u_char *);
+void	 rijndael_set_key0(rijndael_ctx *, u_char *, int, int);
+void	 rijndael_decrypt0(rijndael_ctx *, const u_char *, u_char *);
+void	 rijndael_encrypt0(rijndael_ctx *, const u_char *, u_char *);
 
 #endif /* __RIJNDAEL_H */

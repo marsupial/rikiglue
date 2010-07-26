@@ -58,10 +58,10 @@ extern "C" {
 #define DMTX_DISPLAY_POINT             2
 #define DMTX_DISPLAY_CIRCLE            3
 
-#define DMTX_REGION_FOUND              0
-#define DMTX_REGION_NOT_FOUND          1
-#define DMTX_REGION_TIMEOUT            2
-#define DMTX_REGION_EOF                3
+#define DMTX_REGION_NOT_FOUND          0
+#define DMTX_REGION_TIMEOUT            1
+#define DMTX_REGION_EOF                2
+#define DMTX_REGION_FOUND              3
 #define DMTX_REGION_DROPPED_EDGE       4
 #define DMTX_REGION_DROPPED_1ST        5
 #define DMTX_REGION_DROPPED_2ND        6

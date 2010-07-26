@@ -29,32 +29,32 @@ static const char *kKey =
 
 static register_t
 rsaOperation( uint8_t         flag,
-              void (*op) (rijndael_ctx *ctx, u_char *src, u_char *dst),
-              Frame::Block    &block )
+              void (*op) (rijndael_ctx *ctx, const u_char *src, u_char *dst),
+              const Frame::Block    &block )
 {
 	rijndael_ctx   ctx;
-	rijndael_set_key(&ctx, (u_char*) kKey, 128, flag);
+	rijndael_set_key0(&ctx, (u_char*) kKey, 128, flag);
 
-	const register_t n = block.size() / kRSALength;
+	const register_t n = block.dstSize / kRSALength;
 	for ( register_t i = 0; i < n; ++i )
 	{
 		const register_t j = i*kRSALength;
-		op(&ctx, &block[j], &block[j]);
+		op(&ctx, &block.srcData[j], &block.dstData[j]);
 	}
 
 	return ( 0 );
 }
 
 register_t
-rsaEncrypt( Frame::Block    &block )
+rsaEncrypt( const Frame::Block    &block )
 {
-	return ( rsaOperation(1, rijndael_encrypt, block) );
+	return ( rsaOperation(1, rijndael_encrypt0, block) );
 }
 
 register_t
-rsaDecrypt( Frame::Block    &block )
+rsaDecrypt( const Frame::Block    &block )
 {
-	return ( rsaOperation(0, rijndael_decrypt, block) );
+	return ( rsaOperation(0, rijndael_decrypt0, block) );
 }
 
 } /* namespace rikiGlue */

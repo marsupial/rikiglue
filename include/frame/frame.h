@@ -29,8 +29,27 @@ struct Frame
 {
 public:
 
-	typedef std::vector<uint8_t> Block;
-	typedef register_t (*operation_t) ( Frame::Block     &block );
+	struct Block
+	{
+
+		Block( const uint8_t   *src,
+		       size_t          srcSz,
+		       uint8_t         *dst,
+		       size_t          dstSz ) :
+			srcData(src),
+			srcSize(srcSz),
+			dstData(dst),
+			dstSize(dstSz)
+		{}
+
+		const uint8_t   *srcData;
+		size_t          srcSize;
+
+		uint8_t         *dstData;
+		size_t          dstSize;
+	};
+	
+	typedef register_t (*operation_t) ( const Frame::Block     &block );
 
 	enum
 	{
@@ -39,86 +58,91 @@ public:
 		kFormatEnd
 	};
 
-	Frame( void    *data,
-	       size_t  rowbytes,
-	       size_t  width,
-	       size_t  height,
-	       uint8_t format = kFormatARGB ) :
-		mData(reinterpret_cast<uint8_t*>(data)),
+	Frame( size_t          width,
+	       size_t          height,
+	       DecodeThread    *decoder = NULL ) :
+		mDecoder(decoder),
 		mWidth(width),
 		mHeight(height),
-		mRowbytes(rowbytes),
-		mBlock(width*3),
-		mFormat(format)
+		mRowbytes(mWidth*3),
+		mPixels(mRowbytes*mHeight)
 	{
 	}
 
 	register_t
-	operate( operation_t    ops[],
+	operate( operation_t    *ops,
 	         size_t         numOps,
-	         DecodeThread   *thread = NULL );
+	         const uint8_t  *srcData,
+	         size_t         srcRowbytes,
+	         uint8_t        *dstData,
+	         size_t         dstRowbytes );
 
 	register_t
-	operate( operation_t    op,
-	         DecodeThread   *thread = NULL )
+	operate( operation_t    *ops,
+	         size_t         numOps,
+	         const uint8_t  *srcData,
+	         size_t         srcRowbytes )
 	{
-		return ( operate(&op, 1, thread) );
+		return ( operate(ops, numOps, srcData, srcRowbytes, &mPixels[0], mRowbytes) );
 	}
 
-	void
-	setBlock( size_t    i,
-	          Block     &block );
+	uint8_t*
+	bytes()
+	{
+		return ( &mPixels[0] );
+	}
+
+	size_t
+	rowBytes()
+	{
+		return ( mRowbytes );
+	}
 
 private:
 
-	size_t
-	numBlocks() const
-	{
-		return ( mHeight );
-	}
-
-	Block&
-	getBlock( size_t    i );
-
-	uint8_t       *mData;
+	DecodeThread   *mDecoder;
 
 	const size_t   mWidth,
 	               mHeight,
 	               mRowbytes;
 
-	Block          mBlock;
-	const uint8_t  mFormat;
+	std::vector<uint8_t>  mPixels;
+
 };
 
+register_t
+argbToRGB( const Frame::Block    &block );
+
+register_t
+bgraToRGB( const Frame::Block    &block );
+
+register_t
+rgbToARGB( const Frame::Block    &block );
+
+register_t
+rgbToBGRA( const Frame::Block    &block );
+
 register_t 
-rsaEncrypt( Frame::Block    &block );
+rsaEncrypt( const Frame::Block    &block );
 
 register_t 
-rsaDecrypt( Frame::Block    &block );
-
-register_t 
-ecEncode( Frame::Block    &block );
-
-register_t 
-ecDecode( Frame::Block    &block );
+rsaDecrypt( const Frame::Block    &block );
 
 register_t
-lutEncrypt( Frame::Block    &block );
+lutEncrypt( const Frame::Block    &block );
 
 register_t
-lutDecrypt( Frame::Block    &block );
+lutDecrypt( const Frame::Block    &block );
 
 register_t
-rChannel( Frame::Block    &block );
+rChannel( const Frame::Block    &block );
 
 register_t
-gChannel( Frame::Block    &block );
+gChannel( const Frame::Block    &block );
 
 register_t
-bChannel( Frame::Block    &block );
+bChannel( const Frame::Block    &block );
 
-register_t
-rec709( Frame::Block     &block );
 
 } /* namespace rikiGlue */
 

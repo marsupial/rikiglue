@@ -11,8 +11,8 @@ namespace rikiGlue
 DecodeThread::~DecodeThread()
 {
 	mMutex.lock();
-	if ( mExit != true )
-		mExit = true;
+	if ( mState != kExit )
+		mState = kExit;
 	mMutex.unlock();
 	
 	mCondition.signal();
@@ -26,24 +26,20 @@ void
 DecodeThread::decode()
 {
 	BlockQueue::iterator itr = mBlocks.begin();
-	ThreadBlock  &block = itr->second;
-	if ( block.mProcess == ThreadBlock::kWaiting )
+	if ( itr != mBlocks.end() )
 	{
-		block.mProcess = ThreadBlock::kProcessing;
+		ThreadBlock block = *itr;
+		mBlocks.erase(itr);
 		mMutex.unlock();
 		
-		for ( register_t i = 0; i < block.mNumOps; ++i )
+		for ( register_t i = 0; i < block.numOps; ++i )
 		{
-			if ( block.mOps[i](block.mBlock) )
+			if ( block.ops[i](block) )
 				throw ( std::runtime_error("operation error") );
-		}		
-
-		mMutex.lock();
-		block.mFrame->setBlock(itr->first, block.mBlock);
-		mBlocks.erase(itr);
+		}
 	}
-
-	mMutex.unlock();
+	else
+		mMutex.unlock();
 }
 
 void
@@ -55,12 +51,14 @@ DecodeThread::run()
 	{
 		while ( mBlocks.empty() )
 		{
+			mState = kWaiting;
 			mCondition.wait(mMutex);
-			if ( mExit )
+			if ( mState == kExit )
 			{
 				mMutex.unlock();
 				return;
 			}
+			mState = kActive;
 		}
 
 		decode();
