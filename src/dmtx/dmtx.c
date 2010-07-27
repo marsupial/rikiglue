@@ -27,6 +27,10 @@ Contact: mike@dragonflylogic.com
  * @brief Main libdmtx source file
  */
 
+#if defined(_WINDOWS)
+	#include <windows.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>

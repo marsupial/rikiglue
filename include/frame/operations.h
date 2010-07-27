@@ -57,6 +57,12 @@ aesEncrypt( const Block    &block );
 register_t
 aesDecrypt( const Block    &block );
 
+register_t
+splitterRGBA( const Block     &block );
+
+register_t
+splitterBGRA( const Block     &block );
+
 } /* namespace rikiGlue */
 
 #endif /* _operations_h__ */

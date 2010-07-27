@@ -49,6 +49,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -123,6 +124,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -175,6 +177,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\src\common\application.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\windows\main.cpp"
 				>
 			</File>
@@ -186,6 +192,26 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\frame\dmtx.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\dmtxcpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\dmtxcpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath="..\src\frame\frame.cpp"
 					>
 				</File>
@@ -193,17 +219,41 @@
 					RelativePath="..\src\frame\lut.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\src\frame\threads.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="threads"
 				>
 				<File
-					RelativePath="..\src\threads\threads.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\threads\threads.windows.cpp"
 					>
+				</File>
+			</Filter>
+			<Filter
+				Name="dmtx"
+				>
+				<File
+					RelativePath="..\src\dmtx\dmtx.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>
@@ -213,9 +263,37 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="..\include\common\application.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\windows\resource.h"
 				>
 			</File>
+			<Filter
+				Name="frame"
+				>
+				<File
+					RelativePath="..\include\frame\block.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\frame\dmtx.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\frame\frame.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\frame\operations.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\frame\threads.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="rsrc"

@@ -8,7 +8,8 @@
 
 #include "windows/resource.h"
 #include "frame/frame.h"
-#include "threads/threads.h"
+#include "frame/operations.h"
+#include "common/application.h"
 
 namespace rikiGlue
 {
@@ -19,8 +20,8 @@ namespace rikiGlue
 		kWindowClass[] = L"gabba",
 		kBitmapProperty[] = L"gabbaBitmap";
 
-	static DecodeThread
-		*sDecodeThread = NULL;
+	static Application
+		sApplication;
 
 	static void
 	setCapture( HWND     window,
@@ -74,16 +75,17 @@ WinMain( HINSTANCE    instance,
          LPSTR        cmdLine,
          int          show )
 {
-	rikiGlue::DecodeThread  thread;
-	if ( thread.create() == 0 )
-		rikiGlue::sDecodeThread = &thread;
+	rikiGlue::sApplication.startThreads();
 
 	// Perform application initialization:
 	HWND window = initInstance(instance, show);
 	if ( window == NULL )
+	{
+		rikiGlue::sApplication.stopThreads();
 		return FALSE;
+	}
 
-	setCapture(window, true);
+	rikiGlue::setCapture(window, true);
 
 	MSG    msg;
 	HACCEL accelTable = ::LoadAccelerators(instance, MAKEINTRESOURCE(IDC_APP));
@@ -98,6 +100,7 @@ WinMain( HINSTANCE    instance,
 		}
 	}
 
+	rikiGlue::sApplication.stopThreads();
 	return ( msg.wParam );
 }
 
@@ -183,7 +186,7 @@ public:
 	}
 
 	void
-		editBitmap( rikiGlue::DecodeThread    *thread )
+	editBitmap( rikiGlue::DecodeThread    *thread )
 	{
 		BITMAP bitmap;
 		::GetObject(mBitmap, sizeof(bitmap), &bitmap);
@@ -208,12 +211,21 @@ public:
 		std::vector<uint8_t> bgra(dwBmpSize);
 		::GetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bgra[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 
-		Frame  frame(bitmap.bmWidth, bitmap.bmHeight, thread);
+		using namespace rikiGlue;
+		std::auto_ptr<Frame>  frame( new Frame(bitmap.bmWidth, bitmap.bmHeight, thread) );
 
+#define SPLITTER_OP
+
+#if defined(SPLITTER_OP)
+		const Frame::operation_t ops[1] = { splitterBGRA };
+		frame->operate(&ops[0], 1, &bgra[0], rowBytes, frame->bytes(), frame->rowBytes());
+		sApplication.dmtxFrame(frame.release());
+#else
 		const Frame::operation_t ops[4] = { bgraToRGB, lutDecrypt, gChannel, rgbToBGRA };
 		frame.operate(&ops[0], 1, &bgra[0], rowBytes);
-		frame.operate(&ops[1], 2, frame.bytes(), frame.rowBytes());
-		frame.operate(&ops[3], 1, frame.bytes(), frame.rowBytes(), &bgra[0], rowBytes);
+		frame.operate(&ops[1], 2, frame->bytes(), frame->rowBytes());
+		frame.operate(&ops[3], 1, frame->bytes(), frame->rowBytes(), &bgra[0], rowBytes);
+#endif
 
 		::SetDIBits(mDC, mBitmap, 0, bitmap.bmHeight, &bgra[0], (BITMAPINFO*) &bi, DIB_RGB_COLORS);
 	}
@@ -296,7 +308,13 @@ setCapture( HWND     window,
             bool     enable )
 {
 	static UINT_PTR sTimerID = 0;
+
 	if ( enable )
+	{
+		if ( sTimerID == 0 )
+			sTimerID = ::SetTimer(window, 1, 1000/25, NULL);
+	}
+	else
 	{
 		if ( sTimerID )
 		{
@@ -304,8 +322,6 @@ setCapture( HWND     window,
 			sTimerID = 0;
 		}
 	}
-	else if ( sTimerID == 0 )
-		sTimerID = ::SetTimer(window, 1, 1000/25, NULL);
 }
 
 static void
@@ -318,7 +334,7 @@ floatCheck( HWND     window,
 
 static void
 checkCommand( HWND     window,
-              UNIT     command,
+              UINT     command,
               void (*operation) (HWND, bool) )
 {
 	HMENU  menu = ::GetMenu(window);
@@ -356,7 +372,7 @@ windowProc( HWND      window,
 					::DestroyWindow(window);
 					break;
 				case IDM_PAUSE:
-					checkCommand(window, IDM_PAUSE, pauseCheck);
+					checkCommand(window, IDM_PAUSE, setCapture);
 					break;
 				case IDM_FLOAT:
 					checkCommand(window, IDM_FLOAT, floatCheck);
@@ -367,7 +383,7 @@ windowProc( HWND      window,
 			break;
 
 		case WM_TIMER:
-			saveScreen(window, sDecodeThread);
+			saveScreen(window, sApplication.decoderThread());
 			::RedrawWindow(window, NULL, NULL, RDW_INVALIDATE);
 			break;
 

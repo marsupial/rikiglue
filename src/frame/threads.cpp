@@ -5,11 +5,11 @@
 #include "frame/threads.h"
 #include <stdexcept>
 
-namespace rikiGlue
+namespace threads
 {
 
 template <> void
-DecodeThread::work( rikiGlue::ThreadBlock    &block )
+rikiGlue::DecodeThread::work( rikiGlue::ThreadBlock    &block )
 {
 	for ( register_t i = 0; i < block.numOps; ++i )
 	{

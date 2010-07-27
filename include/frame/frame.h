@@ -12,7 +12,7 @@
 namespace rikiGlue
 {
 
-struct Frame
+class Frame
 {
 public:
 
@@ -44,18 +44,18 @@ public:
 	}
 
 	register_t
-	operate( operation_t    *ops,
-	         size_t         numOps,
-	         const uint8_t  *srcData,
-	         size_t         srcRowbytes,
-	         uint8_t        *dstData,
-	         size_t         dstRowbytes );
+	operate( const operation_t    *ops,
+	         size_t               numOps,
+	         const uint8_t        *srcData,
+	         size_t               srcRowbytes,
+	         uint8_t              *dstData,
+	         size_t               dstRowbytes );
 
 	register_t
-	operate( operation_t    *ops,
-	         size_t         numOps,
-	         const uint8_t  *srcData,
-	         size_t         srcRowbytes )
+	operate( const operation_t *ops,
+	         size_t            numOps,
+	         const uint8_t     *srcData,
+	         size_t            srcRowbytes )
 	{
 		return ( operate(ops, numOps, srcData, srcRowbytes, mPixels, mRowbytes) );
 	}

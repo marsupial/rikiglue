@@ -3,6 +3,7 @@
 */
 
 #include "frame/operations.h"
+#include <assert.h>
 
 namespace rikiGlue
 {
@@ -224,7 +225,7 @@ lutDecrypt( const Block     &block )
 }
 
 register_t
-splitter( const Block    &block )
+splitterRGBA( const Block    &block )
 {
 	assert(block.dstSize < block.srcSize );
 
@@ -244,6 +245,30 @@ splitter( const Block    &block )
 
 		dstData += 3;
 		srcData += 3;
+	}
+	return ( 0 );
+}
+
+register_t
+splitterBGRA( const Block    &block )
+{
+	assert(block.dstSize < block.srcSize );
+
+	uint8_t *srcData = const_cast<uint8_t*>(block.srcData);
+	uint8_t *dstData = block.dstData;
+
+	for ( register_t i = 0; i < block.dstSize; i += 3 )
+	{
+		const uint8_t b = srcData[0];
+		if ( srcData[2] > b )
+			memset(srcData, kDecryptLut5[0][ srcData[1] ], 3);
+		else
+			memset(srcData, kDecryptLut5[1][ srcData[1] ], 3);
+	
+		memset(dstData, b, 3);
+
+		dstData += 3;
+		srcData += 4;
 	}
 	return ( 0 );
 }

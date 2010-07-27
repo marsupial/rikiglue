@@ -100,12 +100,12 @@ rgbToBGRA( const Frame::Block    &block )
 }
 		  
 register_t
-Frame::operate( operation_t    *ops,
-                size_t         numOps,
-                const uint8_t  *srcData,
-                size_t         srcRowbytes,
-                uint8_t        *dstData,
-                size_t         dstRowbytes )
+Frame::operate( const operation_t    *ops,
+                size_t               numOps,
+                const uint8_t        *srcData,
+                size_t               srcRowbytes,
+                uint8_t              *dstData,
+                size_t               dstRowbytes )
 
 {
 	if ( mDecoder )
