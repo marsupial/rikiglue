@@ -1,7 +1,7 @@
 /*
 libdmtx - Data Matrix Encoding/Decoding Library
 
-Copyright (c) 2008 Mike Laughton
+Copyright (C) 2008, 2009 Mike Laughton
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 Contact: mike@dragonflylogic.com
 */
 
-/* $Id: dmtxencode.c 402 2008-08-12 19:15:02Z mblaughton $ */
+/* $Id: dmtxencode.c 845 2009-07-27 15:18:14Z mblaughton $ */
 
 /**
  * @file dmtxencode.c
@@ -36,114 +36,168 @@ Contact: mike@dragonflylogic.com
    in EncodeAsciiCodeword().
 */
 
-#define DMTX_CHAR_ASCII_PAD            129
-#define DMTX_CHAR_ASCII_UPPER_SHIFT    235
-
-#define DMTX_CHAR_C40_LATCH            230
-#define DMTX_CHAR_TEXT_LATCH           239
-#define DMTX_CHAR_X12_LATCH            238
-#define DMTX_CHAR_TRIPLET_UNLATCH      254
-#define DMTX_CHAR_TRIPLET_SHIFT_1        0
-#define DMTX_CHAR_TRIPLET_SHIFT_2        1
-#define DMTX_CHAR_TRIPLET_SHIFT_3        2
-
-#define DMTX_CHAR_EDIFACT_LATCH        240
-#define DMTX_CHAR_EDIFACT_UNLATCH       31
-
-#define DMTX_CHAR_BASE256_LATCH        231
-
-#define DMTX_CHAR_FNC1                 232
-#define DMTX_CHAR_STRUCTURED_APPEND    233
-#define DMTX_CHAR_ECI                  241
-#define DMTX_CHAR_05MACRO              236
-#define DMTX_CHAR_06MACRO              237
-
-#define DMTX_CHANNEL_VALID            0x00
-#define DMTX_CHANNEL_UNSUPPORTED_CHAR 0x01 << 0
-#define DMTX_CHANNEL_CANNOT_UNLATCH   0x01 << 1
-
-#define DMTX_UNLATCH_EXPLICIT            0
-#define DMTX_UNLATCH_IMPLICIT            1
-
 /**
- * @brief  XXX
+ * @brief  Initialize encode struct with default values
  * @return Initialized DmtxEncode struct
  */
-extern DmtxEncode
-dmtxEncodeStructInit(void)
+extern DmtxEncode *
+dmtxEncodeCreate(void)
 {
-   DmtxEncode enc;
+   DmtxEncode *enc;
 
-   memset(&enc, 0x00, sizeof(DmtxEncode));
+   enc = (DmtxEncode *)calloc(1, sizeof(DmtxEncode));
+   if(enc == NULL)
+      return NULL;
 
-   enc.scheme = DmtxSchemeEncodeAutoBest;
-   enc.moduleSize = 5;
-   enc.marginSize = 10;
-
-   /* This can be cleaned up later */
-   enc.region.gradient.isDefined = DMTX_TRUE;
+   enc->scheme = DmtxSchemeAscii;
+   enc->sizeIdxRequest = DmtxSymbolSquareAuto;
+   enc->marginSize = 10;
+   enc->moduleSize = 5;
+   enc->pixelPacking = DmtxPack24bppRGB;
+   enc->imageFlip = DmtxFlipNone;
+   enc->rowPadBytes = 0;
 
    /* Initialize background color to white */
-   enc.region.gradient.ray.p.R = 255.0;
+/* enc.region.gradient.ray.p.R = 255.0;
    enc.region.gradient.ray.p.G = 255.0;
-   enc.region.gradient.ray.p.B = 255.0;
+   enc.region.gradient.ray.p.B = 255.0; */
 
    /* Initialize foreground color to black */
-   enc.region.gradient.tMin = 0.0;
-   enc.region.gradient.tMax = dmtxColor3Mag(&(enc.region.gradient.ray.p));
-   enc.region.gradient.tMid = (enc.region.gradient.tMin + enc.region.gradient.tMax)/2.0;
+/* enc.region.gradient.tMin = 0.0;
+   enc.region.gradient.tMax = xyz; */
 
-   dmtxColor3Scale(&(enc.region.gradient.ray.c),
-         &(enc.region.gradient.ray.p), -1.0/enc.region.gradient.tMax);
-
-   dmtxMatrix3Identity(enc.xfrm);
+   dmtxMatrix3Identity(enc->xfrm);
 
    return enc;
 }
 
 /**
- * @brief  XXX
+ * @brief  Deinitialize encode struct
  * @param  enc
  * @return void
  */
-extern void
-dmtxEncodeStructDeInit(DmtxEncode *enc)
+extern DmtxPassFail
+dmtxEncodeDestroy(DmtxEncode **enc)
 {
-   if(enc == NULL)
-      return;
+   if(enc == NULL || *enc == NULL)
+      return DmtxFail;
 
-   dmtxImageFree(&(enc->image));
-   dmtxMessageFree(&(enc->message));
+   /* Free pixel array allocated in dmtxEncodeDataMatrix() */
+   if((*enc)->image != NULL && (*enc)->image->pxl != NULL) {
+      free((*enc)->image->pxl);
+      (*enc)->image->pxl = NULL;
+   }
 
-   memset(enc, 0x00, sizeof(DmtxEncode));
+   dmtxImageDestroy(&((*enc)->image));
+   dmtxMessageDestroy(&((*enc)->message));
+
+   free(*enc);
+
+   *enc = NULL;
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Set encoding behavior property
+ * @param  enc
+ * @param  prop
+ * @param  value
+ * @return DmtxPass | DmtxFail
+ */
+extern DmtxPassFail
+dmtxEncodeSetProp(DmtxEncode *enc, int prop, int value)
+{
+   switch(prop) {
+
+      /* Encoding details */
+      case DmtxPropScheme:
+         enc->scheme = value;
+         break;
+      case DmtxPropSizeRequest:
+         if(value == DmtxSymbolShapeAuto)
+            return DmtxFail;
+         enc->sizeIdxRequest = value;
+         break;
+
+      /* Presentation details */
+      case DmtxPropMarginSize:
+         enc->marginSize = value;
+         break;
+      case DmtxPropModuleSize:
+         enc->moduleSize = value;
+         break;
+
+      /* Image properties */
+      case DmtxPropPixelPacking:
+         enc->pixelPacking = value;
+         break;
+      case DmtxPropImageFlip:
+         enc->imageFlip = value;
+         break;
+      case DmtxPropRowPadBytes:
+         enc->rowPadBytes = value;
+      default:
+         break;
+   }
+
+   return DmtxPass;
+}
+
+/**
+ * @brief  Get encoding behavior property
+ * @param  enc
+ * @param  prop
+ * @return value
+ */
+extern int
+dmtxEncodeGetProp(DmtxEncode *enc, int prop)
+{
+   switch(prop) {
+      case DmtxPropMarginSize:
+         return enc->marginSize;
+      case DmtxPropModuleSize:
+         return enc->moduleSize;
+      case DmtxPropScheme:
+         return enc->scheme;
+      default:
+         break;
+   }
+
+   return DmtxUndefined;
+}
+
+/**
+ * @brief  Convert message into Data Matrix image
  * @param  enc
  * @param  inputSize
  * @param  inputString
  * @param  sizeIdxRequest
- * @return DMTX_SUCCESS | DMTX_FAILURE
+ * @return DmtxPass | DmtxFail
  */
-extern int
-dmtxEncodeDataMatrix(DmtxEncode *enc, int inputSize, unsigned char *inputString, int sizeIdxRequest)
+#ifndef CUSTOM_ENCODEDATAMATRIX
+extern DmtxPassFail
+dmtxEncodeDataMatrix(DmtxEncode *enc, int inputSize, unsigned char *inputString)
 {
    int dataWordCount;
    int sizeIdx;
+   int padCount;
+   int width, height, bitsPerPixel;
    unsigned char buf[4096];
+   unsigned char *pxl;
 
    /* Encode input string into data codewords */
-   sizeIdx = sizeIdxRequest;
-   dataWordCount = EncodeDataCodewords(buf, inputString, inputSize, enc->scheme, &sizeIdx);
+   sizeIdx = enc->sizeIdxRequest;
+   dataWordCount = EncodeDataCodewords(enc, buf, inputString, inputSize, &sizeIdx);
    if(dataWordCount <= 0)
-      return(DMTX_FAILURE);
+      return(DmtxFail);
 
    /* EncodeDataCodewords() should have updated any auto sizeIdx to a real one */
-   assert(sizeIdx != DMTX_SYMBOL_SQUARE_AUTO && sizeIdx != DMTX_SYMBOL_RECT_AUTO);
+   assert(sizeIdx != DmtxSymbolSquareAuto && sizeIdx != DmtxSymbolRectAuto);
 
    /* Add pad characters to match a standard symbol size (whether smallest or requested) */
-   AddPadChars(buf, &dataWordCount, dmtxGetSymbolAttribute(DmtxSymAttribSymbolDataWords, sizeIdx));
+   padCount = AddPadChars(buf, &dataWordCount,
+         dmtxGetSymbolAttribute(DmtxSymAttribSymbolDataWords, sizeIdx));
 
    /* XXX we can remove a lot of this redundant data */
    enc->region.sizeIdx = sizeIdx;
@@ -153,50 +207,64 @@ dmtxEncodeDataMatrix(DmtxEncode *enc, int inputSize, unsigned char *inputString,
    enc->region.mappingCols = dmtxGetSymbolAttribute(DmtxSymAttribMappingMatrixCols, sizeIdx);
 
    /* Allocate memory for message and array */
-   enc->message = dmtxMessageMalloc(sizeIdx, DMTX_FORMAT_MATRIX);
+   enc->message = dmtxMessageCreate(sizeIdx, DmtxFormatMatrix);
+   enc->message->padCount = padCount;
    memcpy(enc->message->code, buf, dataWordCount);
-
-/* fprintf(stdout, "\n\nsize:    %dx%d w/ %d error codewords\n", rows, cols, errorWordLength(enc->region.sizeIdx)); */
 
    /* Generate error correction codewords */
    GenReedSolEcc(enc->message, enc->region.sizeIdx);
 
    /* Module placement in region */
-   ModulePlacementEcc200(enc->message->array, enc->message->code, enc->region.sizeIdx, DMTX_MODULE_ON_RGB);
+   ModulePlacementEcc200(enc->message->array, enc->message->code,
+         enc->region.sizeIdx, DmtxModuleOnRGB);
+
+   width = 2 * enc->marginSize + (enc->region.symbolCols * enc->moduleSize);
+   height = 2 * enc->marginSize + (enc->region.symbolRows * enc->moduleSize);
+   bitsPerPixel = GetBitsPerPixel(enc->pixelPacking);
+   if(bitsPerPixel == DmtxUndefined)
+      return DmtxFail;
+   assert(bitsPerPixel % 8 == 0);
 
    /* Allocate memory for the image to be generated */
-   /* XXX image = DmtxImageMalloc(width, height); */
-   enc->image = dmtxImageMalloc(
-         2 * enc->marginSize + (enc->region.symbolCols * enc->moduleSize),
-         2 * enc->marginSize + (enc->region.symbolRows * enc->moduleSize));
+   pxl = (unsigned char *)malloc(width * height * (bitsPerPixel/8) + enc->rowPadBytes);
+   if(pxl == NULL) {
+      perror("pixel malloc error");
+      return DmtxFail;
+   }
 
+   enc->image = dmtxImageCreate(pxl, width, height, enc->pixelPacking);
    if(enc->image == NULL) {
       perror("image malloc error");
-      return DMTX_FAILURE;
+      return DmtxFail;
    }
+
+   dmtxImageSetProp(enc->image, DmtxPropImageFlip, enc->imageFlip);
+   dmtxImageSetProp(enc->image, DmtxPropRowPadBytes, enc->rowPadBytes);
 
    /* Insert finder and aligment pattern modules */
    PrintPattern(enc);
 
-   return DMTX_SUCCESS;
+   return DmtxPass;
 }
+#endif
 
 /**
- * @brief  XXX
+ * @brief  Convert message into Data Mosaic image
  * @param  enc
  * @param  inputSize
  * @param  inputString
  * @param  sizeIdxRequest
- * @return DMTX_SUCCESS | DMTX_FAILURE
+ * @return DmtxPass | DmtxFail
  */
-extern int
-dmtxEncodeDataMosaic(DmtxEncode *enc, int inputSize, unsigned char *inputString, int sizeIdxRequest)
+#ifndef CUSTOM_ENCODEDATAMOSAIC
+extern DmtxPassFail
+dmtxEncodeDataMosaic(DmtxEncode *enc, int inputSize, unsigned char *inputString)
 {
    int dataWordCount;
    int tmpInputSize;
    unsigned char *inputStart;
    int splitInputSize[3];
-   int sizeIdx;
+   int sizeIdx, sizeIdxRequest;
    int splitSizeIdxAttempt, splitSizeIdxFirst, splitSizeIdxLast;
    unsigned char buf[3][4096];
    DmtxEncode encGreen, encBlue;
@@ -212,15 +280,12 @@ dmtxEncodeDataMosaic(DmtxEncode *enc, int inputSize, unsigned char *inputString,
     * 6) take the 3 different images you created and write out a new barcode
     */
 
-   /* XXX we're going to force ascii until we fix the problem with C40/Text termination */
-   enc->scheme = DmtxSchemeEncodeAscii;
-
    /* Encode full input string to establish baseline data codeword count */
-   sizeIdx = sizeIdxRequest;
+   sizeIdx = sizeIdxRequest = enc->sizeIdxRequest;
    /* XXX buf can be changed here to use all 3 buffers' length */
-   dataWordCount = EncodeDataCodewords(buf[0], inputString, inputSize, enc->scheme, &sizeIdx);
+   dataWordCount = EncodeDataCodewords(enc, buf[0], inputString, inputSize, &sizeIdx);
    if(dataWordCount <= 0)
-      return DMTX_FAILURE;
+      return DmtxFail;
 
    /* Use 1/3 (ceiling) of inputSize establish input size target */
    tmpInputSize = (inputSize + 2) / 3;
@@ -230,15 +295,15 @@ dmtxEncodeDataMosaic(DmtxEncode *enc, int inputSize, unsigned char *inputString,
    /* XXX clean up above lines later for corner cases */
 
    /* Use 1/3 (floor) of dataWordCount establish first symbol size attempt */
-   splitSizeIdxFirst = FindCorrectBarcodeSize(tmpInputSize, sizeIdxRequest);
-   if(splitSizeIdxFirst == -1)
-      return DMTX_FAILURE;
+   splitSizeIdxFirst = FindCorrectSymbolSize(tmpInputSize, sizeIdxRequest);
+   if(splitSizeIdxFirst == DmtxUndefined)
+      return DmtxFail;
 
    /* Set the last possible symbol size for this symbol shape or specific size request */
-   if(sizeIdxRequest == DMTX_SYMBOL_SQUARE_AUTO)
-      splitSizeIdxLast = DMTX_SYMBOL_SQUARE_COUNT - 1;
-   else if(sizeIdxRequest == DMTX_SYMBOL_RECT_AUTO)
-      splitSizeIdxLast = DMTX_SYMBOL_SQUARE_COUNT + DMTX_SYMBOL_RECT_COUNT - 1;
+   if(sizeIdxRequest == DmtxSymbolSquareAuto)
+      splitSizeIdxLast = DmtxSymbolSquareCount - 1;
+   else if(sizeIdxRequest == DmtxSymbolRectAuto)
+      splitSizeIdxLast = DmtxSymbolSquareCount + DmtxSymbolRectCount - 1;
    else
       splitSizeIdxLast = splitSizeIdxFirst;
 
@@ -254,26 +319,28 @@ dmtxEncodeDataMosaic(DmtxEncode *enc, int inputSize, unsigned char *inputString,
       /* RED LAYER */
       sizeIdx = splitSizeIdxAttempt;
       inputStart = inputString;
-      EncodeDataCodewords(buf[0], inputStart, splitInputSize[0], enc->scheme, &sizeIdx);
+      EncodeDataCodewords(enc, buf[0], inputStart, splitInputSize[0], &sizeIdx);
       if(sizeIdx != splitSizeIdxAttempt)
          continue;
 
       /* GREEN LAYER */
       sizeIdx = splitSizeIdxAttempt;
       inputStart += splitInputSize[0];
-      EncodeDataCodewords(buf[1], inputStart, splitInputSize[1], enc->scheme, &sizeIdx);
+      EncodeDataCodewords(enc, buf[1], inputStart, splitInputSize[1], &sizeIdx);
       if(sizeIdx != splitSizeIdxAttempt)
          continue;
 
       /* BLUE LAYER */
       sizeIdx = splitSizeIdxAttempt;
       inputStart += splitInputSize[1];
-      EncodeDataCodewords(buf[2], inputStart, splitInputSize[2], enc->scheme, &sizeIdx);
+      EncodeDataCodewords(enc, buf[2], inputStart, splitInputSize[2], &sizeIdx);
       if(sizeIdx != splitSizeIdxAttempt)
          continue;
 
       break;
    }
+
+   dmtxEncodeSetProp(enc, DmtxPropSizeRequest, splitSizeIdxAttempt);
 
    /* Now we have the correct lengths for splitInputSize, and they all fit into the desired size */
    encGreen = *enc;
@@ -281,50 +348,51 @@ dmtxEncodeDataMosaic(DmtxEncode *enc, int inputSize, unsigned char *inputString,
 
    /* First encode red to the main encode struct (image portion will be overwritten) */
    inputStart = inputString;
-   dmtxEncodeDataMatrix(enc, splitInputSize[0], inputStart, splitSizeIdxAttempt);
+   dmtxEncodeDataMatrix(enc, splitInputSize[0], inputStart);
 
    inputStart += splitInputSize[0];
-   dmtxEncodeDataMatrix(&encGreen, splitInputSize[1], inputStart, splitSizeIdxAttempt);
+   dmtxEncodeDataMatrix(&encGreen, splitInputSize[1], inputStart);
 
    inputStart += splitInputSize[1];
-   dmtxEncodeDataMatrix(&encBlue, splitInputSize[2], inputStart, splitSizeIdxAttempt);
+   dmtxEncodeDataMatrix(&encBlue, splitInputSize[2], inputStart);
 
    mappingRows = dmtxGetSymbolAttribute(DmtxSymAttribMappingMatrixRows, splitSizeIdxAttempt);
    mappingCols = dmtxGetSymbolAttribute(DmtxSymAttribMappingMatrixCols, splitSizeIdxAttempt);
 
    memset(enc->message->array, 0x00, sizeof(unsigned char) * enc->region.mappingRows * enc->region.mappingCols);
-   ModulePlacementEcc200(enc->message->array, enc->message->code, enc->region.sizeIdx, DMTX_MODULE_ON_RED);
+   ModulePlacementEcc200(enc->message->array, enc->message->code, enc->region.sizeIdx, DmtxModuleOnRed);
 
    /* Data Mosaic will traverse this array multiple times -- reset
-      DMTX_MODULE_ASSIGNED and DMX_MODULE_VISITED bits before starting */
+      DmtxModuleAssigned and DMX_MODULE_VISITED bits before starting */
    for(row = 0; row < mappingRows; row++) {
       for(col = 0; col < mappingCols; col++) {
-         enc->message->array[row*mappingCols+col] &= (0xff ^ (DMTX_MODULE_ASSIGNED | DMTX_MODULE_VISITED));
+         enc->message->array[row*mappingCols+col] &= (0xff ^ (DmtxModuleAssigned | DmtxModuleVisited));
       }
    }
 
-   ModulePlacementEcc200(enc->message->array, encGreen.message->code, enc->region.sizeIdx, DMTX_MODULE_ON_GREEN);
+   ModulePlacementEcc200(enc->message->array, encGreen.message->code, enc->region.sizeIdx, DmtxModuleOnGreen);
 
    /* Data Mosaic will traverse this array multiple times -- reset
-      DMTX_MODULE_ASSIGNED and DMX_MODULE_VISITED bits before starting */
+      DmtxModuleAssigned and DMX_MODULE_VISITED bits before starting */
    for(row = 0; row < mappingRows; row++) {
       for(col = 0; col < mappingCols; col++) {
-         enc->message->array[row*mappingCols+col] &= (0xff ^ (DMTX_MODULE_ASSIGNED | DMTX_MODULE_VISITED));
+         enc->message->array[row*mappingCols+col] &= (0xff ^ (DmtxModuleAssigned | DmtxModuleVisited));
       }
    }
 
-   ModulePlacementEcc200(enc->message->array, encBlue.message->code, enc->region.sizeIdx, DMTX_MODULE_ON_BLUE);
+   ModulePlacementEcc200(enc->message->array, encBlue.message->code, enc->region.sizeIdx, DmtxModuleOnBlue);
 
 /* dmtxEncodeStructDeInit(&encGreen);
    dmtxEncodeStructDeInit(&encBlue); */
 
    PrintPattern(enc);
 
-   return DMTX_SUCCESS;
+   return DmtxPass;
 }
+#endif
 
 /**
- * @brief  XXX
+ * @brief  Convert input into message using specific encodation scheme
  * @param  buf
  * @param  inputString
  * @param  inputSize
@@ -333,8 +401,8 @@ dmtxEncodeDataMosaic(DmtxEncode *enc, int inputSize, unsigned char *inputString,
  * @return Count of encoded data words
  */
 static int
-EncodeDataCodewords(unsigned char *buf, unsigned char *inputString,
-      int inputSize, DmtxSchemeEncode scheme, int *sizeIdx)
+EncodeDataCodewords(DmtxEncode *enc, unsigned char *buf, unsigned char *inputString,
+      int inputSize, int *sizeIdx)
 {
    int dataWordCount;
 
@@ -345,16 +413,16 @@ EncodeDataCodewords(unsigned char *buf, unsigned char *inputString,
     */
 
    /* Encode input string into data codewords */
-   switch(scheme) {
-      case DmtxSchemeEncodeAutoBest:
-         dataWordCount = EncodeAutoBest(buf, inputString, inputSize);
+   switch(enc->scheme) {
+      case DmtxSchemeAutoBest:
+         dataWordCount = EncodeAutoBest(enc, buf, inputString, inputSize);
          break;
-      case DmtxSchemeEncodeAutoFast:
+      case DmtxSchemeAutoFast:
          dataWordCount = 0;
-         /* dataWordCount = EncodeAutoFast(buf, inputString, inputSize); */
+         /* dataWordCount = EncodeAutoFast(enc, buf, inputString, inputSize); */
          break;
       default:
-         dataWordCount = EncodeSingleScheme(buf, inputString, inputSize, scheme);
+         dataWordCount = EncodeSingleScheme(enc, buf, inputString, inputSize, enc->scheme);
          break;
    }
 
@@ -362,36 +430,43 @@ EncodeDataCodewords(unsigned char *buf, unsigned char *inputString,
       needed by Encode...() for triplet termination */
 
    /* parameter sizeIdx is requested value, returned sizeIdx is decision */
-   *sizeIdx = FindCorrectBarcodeSize(dataWordCount, *sizeIdx);
-   if(*sizeIdx == -1)
+   *sizeIdx = FindCorrectSymbolSize(dataWordCount, *sizeIdx);
+   if(*sizeIdx == DmtxUndefined)
       return 0;
 
    return dataWordCount;
 }
 
 /**
- * @brief  XXX
+ * @brief  Add necessary padding codewords to message
  * @param  buf
  * @param  bufSize
  * @param  paddedSize
  * @return void
  */
-static void
+static int
 AddPadChars(unsigned char *buf,  int *bufSize, int paddedSize)
 {
+   int padCount = 0;
+
    /* First pad character is not randomized */
-   if(*bufSize < paddedSize)
-      buf[(*bufSize)++] = DMTX_CHAR_ASCII_PAD;
+   if(*bufSize < paddedSize) {
+      padCount++;
+      buf[(*bufSize)++] = DmtxCharAsciiPad;
+   }
 
    /* All remaining pad characters are randomized based on character position */
    while(*bufSize < paddedSize) {
-      buf[*bufSize] = Randomize253State(DMTX_CHAR_ASCII_PAD, *bufSize + 1);
+      padCount++;
+      buf[*bufSize] = Randomize253State(DmtxCharAsciiPad, *bufSize + 1);
       (*bufSize)++;
    }
+
+   return padCount;
 }
 
 /**
- * @brief  XXX
+ * @brief  Randomize 253 state
  * @param  codewordValue
  * @param  codewordPosition
  * @return Randomized value
@@ -404,12 +479,16 @@ Randomize253State(unsigned char codewordValue, int codewordPosition)
 
    pseudoRandom = ((149 * codewordPosition) % 253) + 1;
    tmp = codewordValue + pseudoRandom;
+   if(tmp > 254)
+      tmp -= 254;
 
-   return (tmp <= 254) ? tmp : tmp - 254;
+   assert(tmp >= 0 && tmp < 256);
+
+   return (unsigned char)tmp;
 }
 
 /**
- * @brief  XXX
+ * @brief  Randomize 255 state
  * @param  codewordValue
  * @param  codewordPosition
  * @return Randomized value
@@ -427,7 +506,7 @@ Randomize255State(unsigned char codewordValue, int codewordPosition)
 }
 
 /**
- * @brief  XXX
+ * @brief  Write encoded message to image
  * @param  enc
  * @return void
  */
@@ -438,8 +517,9 @@ PrintPattern(DmtxEncode *enc)
    int symbolRow, symbolCol;
    int pixelRow, pixelCol;
    int moduleStatus;
+   size_t rowSize, height;
+   int rgb[3];
    double sxy, txy;
-   DmtxRgb rgb;
    DmtxMatrix3 m1, m2;
    DmtxVector2 vIn, vOut;
 
@@ -454,11 +534,10 @@ PrintPattern(DmtxEncode *enc)
    dmtxMatrix3Scale(m2, enc->moduleSize, enc->moduleSize);
    dmtxMatrix3Multiply(enc->rxfrm, m2, m1);
 
-   /* Print raster version of barcode pattern
-      IMPORTANT: DmtxImage is stored with its origin at bottom-right
-      (unlike common image file formats) to preserve "right-handed" 2D space */
+   rowSize = dmtxImageGetProp(enc->image, DmtxPropRowSizeBytes);
+   height = dmtxImageGetProp(enc->image, DmtxPropHeight);
 
-   memset(enc->image->pxl, 0xff, dmtxImageGetProp(enc->image, DmtxPropArea) * sizeof(DmtxRgb));
+   memset(enc->image->pxl, 0xff, rowSize * height);
 
    for(symbolRow = 0; symbolRow < enc->region.symbolRows; symbolRow++) {
       for(symbolCol = 0; symbolCol < enc->region.symbolCols; symbolCol++) {
@@ -471,14 +550,18 @@ PrintPattern(DmtxEncode *enc)
          pixelCol = (int)(vOut.X);
          pixelRow = (int)(vOut.Y);
 
-         moduleStatus = dmtxSymbolModuleStatus(enc->message, enc->region.sizeIdx, symbolRow, symbolCol);
+         moduleStatus = dmtxSymbolModuleStatus(enc->message,
+               enc->region.sizeIdx, symbolRow, symbolCol);
 
          for(i = pixelRow; i < pixelRow + enc->moduleSize; i++) {
             for(j = pixelCol; j < pixelCol + enc->moduleSize; j++) {
-               rgb[0] = (moduleStatus & DMTX_MODULE_ON_RED) ? 0 : 255;
-               rgb[1] = (moduleStatus & DMTX_MODULE_ON_GREEN) ? 0 : 255;
-               rgb[2] = (moduleStatus & DMTX_MODULE_ON_BLUE) ? 0 : 255;
-               dmtxImageSetRgb(enc->image, j, i, rgb);
+               rgb[0] = ((moduleStatus & DmtxModuleOnRed) != 0x00) ? 0 : 255;
+               rgb[1] = ((moduleStatus & DmtxModuleOnGreen) != 0x00) ? 0 : 255;
+               rgb[2] = ((moduleStatus & DmtxModuleOnBlue) != 0x00) ? 0 : 255;
+/*             dmtxImageSetRgb(enc->image, j, i, rgb); */
+               dmtxImageSetPixelValue(enc->image, j, i, 0, rgb[0]);
+               dmtxImageSetPixelValue(enc->image, j, i, 1, rgb[1]);
+               dmtxImageSetPixelValue(enc->image, j, i, 2, rgb[2]);
             }
          }
 
@@ -487,7 +570,7 @@ PrintPattern(DmtxEncode *enc)
 }
 
 /**
- * @brief  XXX
+ * @brief  Initialize encoding channel
  * @param  channel
  * @param  codewords
  * @param  length
@@ -497,14 +580,14 @@ static void
 InitChannel(DmtxChannel *channel, unsigned char *codewords, int length)
 {
    memset(channel, 0x00, sizeof(DmtxChannel));
-   channel->encScheme = DmtxSchemeEncodeAscii;
-   channel->invalid = DMTX_CHANNEL_VALID;
+   channel->encScheme = DmtxSchemeAscii;
+   channel->invalid = DmtxChannelValid;
    channel->inputPtr = codewords;
    channel->inputStop = codewords + length;
 }
 
 /**
- * @brief  XXX
+ * @brief  Encode message using single encodation scheme
  * @param  buf
  * @param  codewords
  * @param  length
@@ -512,21 +595,22 @@ InitChannel(DmtxChannel *channel, unsigned char *codewords, int length)
  * @return Encoded length
  */
 static int
-EncodeSingleScheme(unsigned char *buf, unsigned char *codewords, int length, DmtxSchemeEncode scheme)
+EncodeSingleScheme(DmtxEncode *enc, unsigned char *buf, unsigned char *codewords, int length, DmtxScheme scheme)
 {
    int size;
+   DmtxPassFail err;
    DmtxChannel channel;
-
-   /* XXX function needs to change return size */
 
    InitChannel(&channel, codewords, length);
 
    while(channel.inputPtr < channel.inputStop) {
-      EncodeNextWord(&channel, scheme);
+      err = EncodeNextWord(enc, &channel, scheme);
+      if(err == DmtxFail)
+         return 0;
 
       /* DumpChannel(&channel); */
 
-      if(channel.invalid) {
+      if(channel.invalid != 0) {
          fprintf(stderr, "Character \"%c\" not supported by requested encodation scheme\n\n", *channel.inputPtr);
          return 0;
       }
@@ -540,31 +624,32 @@ EncodeSingleScheme(unsigned char *buf, unsigned char *codewords, int length, Dmt
 }
 
 /**
- * @brief  XXX
+ * @brief  Encode message using best possible encodation (combine schemes)
  * @param  buf
  * @param  codewords
  * @param  length
  * @return Encoded length of winning channel
  */
 static int
-EncodeAutoBest(unsigned char *buf, unsigned char *codewords, int length)
+EncodeAutoBest(DmtxEncode *enc, unsigned char *buf, unsigned char *codewords, int length)
 {
    int targetScheme;
    int winnerSize;
+   DmtxPassFail err;
    DmtxChannelGroup optimal, best;
    DmtxChannel *channel, *winner;
 
-   /* XXX function needs to change return size */
-
    /* Intialize optimizing channels and encode first codeword from default ASCII */
-   for(targetScheme = DmtxSchemeEncodeAscii; targetScheme <= DmtxSchemeEncodeBase256; targetScheme++) {
+   for(targetScheme = DmtxSchemeAscii; targetScheme <= DmtxSchemeBase256; targetScheme++) {
       channel = &(optimal.channel[targetScheme]);
       InitChannel(channel, codewords, length);
-      EncodeNextWord(channel, targetScheme);
+      err = EncodeNextWord(enc, channel, targetScheme);
+      if(err == DmtxFail)
+         return 0;
    }
 
    /* fprintf(stdout,"\nWinners:"); */
-   /* DumpChannelGroup(&optimal, DmtxSchemeEncodeAscii); */
+   /* DumpChannelGroup(&optimal, DmtxSchemeAscii); */
 
    /* For each remaining word in the input stream, test the efficiency of
       getting to this encodation scheme for each input character by
@@ -573,8 +658,8 @@ EncodeAutoBest(unsigned char *buf, unsigned char *codewords, int length)
    while(optimal.channel[0].inputPtr < optimal.channel[0].inputStop) { /* XXX only tracking first channel */
 
       /* fprintf(stdout,"\n** codeword **\n"); */
-      for(targetScheme = DmtxSchemeEncodeAscii; targetScheme <= DmtxSchemeEncodeBase256; targetScheme++) {
-         best.channel[targetScheme] = FindBestChannel(optimal, targetScheme);
+      for(targetScheme = DmtxSchemeAscii; targetScheme <= DmtxSchemeBase256; targetScheme++) {
+         best.channel[targetScheme] = FindBestChannel(enc, optimal, targetScheme);
       }
       optimal = best;
 
@@ -583,8 +668,8 @@ EncodeAutoBest(unsigned char *buf, unsigned char *codewords, int length)
    }
 
    /* Choose a winner now that all channels are finished */
-   winner = &(optimal.channel[DmtxSchemeEncodeAscii]);
-   for(targetScheme = DmtxSchemeEncodeAscii + 1; targetScheme <= DmtxSchemeEncodeBase256; targetScheme++) {
+   winner = &(optimal.channel[DmtxSchemeAscii]);
+   for(targetScheme = DmtxSchemeAscii + 1; targetScheme <= DmtxSchemeBase256; targetScheme++) {
       if(optimal.channel[targetScheme].invalid != 0)
          continue;
 
@@ -600,25 +685,26 @@ EncodeAutoBest(unsigned char *buf, unsigned char *codewords, int length)
 }
 
 /**
- * @brief  XXX
+ * @brief  Determine current best channel in encoding process
  * @param  group
  * @param  targetScheme
  * @return Winning channel
  */
 static DmtxChannel
-FindBestChannel(DmtxChannelGroup group, DmtxSchemeEncode targetScheme)
+FindBestChannel(DmtxEncode *enc, DmtxChannelGroup group, DmtxScheme targetScheme)
 {
-   DmtxSchemeEncode encFrom;
+   DmtxPassFail err;
+   DmtxScheme encFrom;
    DmtxChannel *channel, *winner;
 
    winner = NULL;
-   for(encFrom = DmtxSchemeEncodeAscii; encFrom <= DmtxSchemeEncodeBase256; encFrom++) {
+   for(encFrom = DmtxSchemeAscii; encFrom <= DmtxSchemeBase256; encFrom++) {
 
       channel = &(group.channel[encFrom]);
 
       /* If from channel doesn't hold valid data because it couldn't
          represent the previous value then skip it */
-      if(channel->invalid)
+      if(channel->invalid != 0)
          continue;
 
       /* If channel has already processed all of its input values then it
@@ -626,16 +712,18 @@ FindBestChannel(DmtxChannelGroup group, DmtxSchemeEncode targetScheme)
       if(channel->inputPtr == channel->inputStop)
          continue;
 
-      EncodeNextWord(channel, targetScheme);
+      err = EncodeNextWord(enc, channel, targetScheme);
+      if(err == DmtxFail)
+         ; /* XXX fix this */
 
       /* If channel scheme can't represent next word then stop for this channel */
-      if(channel->invalid & DMTX_CHANNEL_UNSUPPORTED_CHAR) {
+      if((channel->invalid & DmtxChannelUnsupportedChar) != 0) {
          winner = channel;
          break;
       }
 
       /* If channel scheme was unable to unlatch here then skip */
-      if(channel->invalid & DMTX_CHANNEL_CANNOT_UNLATCH)
+      if((channel->invalid & DmtxChannelCannotUnlatch) != 0)
          continue;
 
       if(winner == NULL || channel->currentLength < winner->currentLength)
@@ -648,66 +736,68 @@ FindBestChannel(DmtxChannelGroup group, DmtxSchemeEncode targetScheme)
 }
 
 /**
- * @brief  XXX
+ * @brief  Encode next codeword using requested encodation scheme
  * @param  channel
  * @param  targetScheme
  * @return void
  */
-static void
-EncodeNextWord(DmtxChannel *channel, DmtxSchemeEncode targetScheme)
+static DmtxPassFail
+EncodeNextWord(DmtxEncode *enc, DmtxChannel *channel, DmtxScheme targetScheme)
 {
+   DmtxPassFail err;
+
    /* Change to new encodation scheme if necessary */
    if(channel->encScheme != targetScheme) {
-      ChangeEncScheme(channel, targetScheme, DMTX_UNLATCH_EXPLICIT);
-      if(channel->invalid)
-         return;
+      ChangeEncScheme(channel, targetScheme, DmtxUnlatchExplicit);
+      if(channel->invalid != 0)
+         return DmtxFail;
    }
 
    assert(channel->encScheme == targetScheme);
 
    /* Encode next input value */
    switch(channel->encScheme) {
-      case DmtxSchemeEncodeAscii:
-         EncodeAsciiCodeword(channel);
+      case DmtxSchemeAscii:
+         err = EncodeAsciiCodeword(channel);
          break;
-
-      case DmtxSchemeEncodeC40:
-         EncodeTripletCodeword(channel);
+      case DmtxSchemeC40:
+         err = EncodeTripletCodeword(enc, channel);
          break;
-
-      case DmtxSchemeEncodeText:
-         EncodeTripletCodeword(channel);
+      case DmtxSchemeText:
+         err = EncodeTripletCodeword(enc, channel);
          break;
-
-      case DmtxSchemeEncodeX12:
-         EncodeTripletCodeword(channel);
+      case DmtxSchemeX12:
+         err = EncodeTripletCodeword(enc, channel);
          break;
-
-      case DmtxSchemeEncodeEdifact:
-         EncodeEdifactCodeword(channel);
+      case DmtxSchemeEdifact:
+         err = EncodeEdifactCodeword(enc, channel);
          break;
-
-      case DmtxSchemeEncodeBase256:
-         EncodeBase256Codeword(channel);
+      case DmtxSchemeBase256:
+         err = EncodeBase256Codeword(channel);
          break;
-
       default:
+         err = DmtxFail;
          break;
    }
+
+   if(err == DmtxFail)
+      return DmtxFail;
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Encode value using ASCII encodation (standard or extended)
  * @param  channel
  * @return void
  */
-static void
+static DmtxPassFail
 EncodeAsciiCodeword(DmtxChannel *channel)
 {
    unsigned char inputValue, prevValue, prevPrevValue;
    int prevIndex;
 
-   assert(channel->encScheme == DmtxSchemeEncodeAscii);
+   assert(channel->encScheme == DmtxSchemeAscii);
 
    inputValue = *(channel->inputPtr);
 
@@ -756,33 +846,31 @@ EncodeAsciiCodeword(DmtxChannel *channel)
       if(prevPrevValue != 235 && isdigit(prevValue)) {
          channel->encodedWords[prevIndex] = 10 * (prevValue - '0') + (inputValue - '0') + 130;
          channel->inputPtr++;
-         return;
+         return DmtxPass;
       }
    }
 
    /* Extended ASCII char */
    if(inputValue >= 128) {
-      PushInputWord(channel, DMTX_CHAR_ASCII_UPPER_SHIFT);
+      PushInputWord(channel, DmtxCharAsciiUpperShift);
       IncrementProgress(channel, 12);
       inputValue -= 128;
    }
-   /* Normal ASCII char */
-   else {
-      inputValue++;
-   }
 
-   PushInputWord(channel, inputValue);
+   PushInputWord(channel, inputValue + 1);
    IncrementProgress(channel, 12);
    channel->inputPtr++;
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Encode value using C40, Text, or X12 encodation
  * @param  channel
  * @return void
  */
-static void
-EncodeTripletCodeword(DmtxChannel *channel)
+static DmtxPassFail
+EncodeTripletCodeword(DmtxEncode *enc, DmtxChannel *channel)
 {
    int i;
    int inputCount;
@@ -790,13 +878,14 @@ EncodeTripletCodeword(DmtxChannel *channel)
    int count;
    int outputWords[4];       /* biggest: upper shift to non-basic set */
    unsigned char buffer[6];  /* biggest: 2 words followed by 4-word upper shift */
+   DmtxPassFail err;
    DmtxTriplet triplet;
    unsigned char inputWord;
    unsigned char *ptr;
 
-   assert(channel->encScheme == DmtxSchemeEncodeC40 ||
-         channel->encScheme == DmtxSchemeEncodeText ||
-         channel->encScheme == DmtxSchemeEncodeX12);
+   assert(channel->encScheme == DmtxSchemeC40 ||
+         channel->encScheme == DmtxSchemeText ||
+         channel->encScheme == DmtxSchemeX12);
 
    assert(channel->currentLength <= channel->encodedLength);
 
@@ -827,8 +916,8 @@ EncodeTripletCodeword(DmtxChannel *channel)
             count = GetC40TextX12Words(outputWords, inputWord, channel->encScheme);
 
             if(count == 0) {
-               channel->invalid = DMTX_CHANNEL_UNSUPPORTED_CHAR;
-               return;
+               channel->invalid = DmtxChannelUnsupportedChar;
+               return DmtxFail;
             }
 
             for(i = 0; i < count; i++) {
@@ -860,7 +949,7 @@ EncodeTripletCodeword(DmtxChannel *channel)
                channel->inputPtr++;
             }
 
-            /* If final triplet value was shift then InrementProgress will
+            /* If final triplet value was shift then IncrementProgress will
                overextend us .. hack it back a little.  Note that this means
                this barcode is invalid unless one of the specific end-of-symbol
                conditions explicitly allows it. */
@@ -869,9 +958,13 @@ EncodeTripletCodeword(DmtxChannel *channel)
                channel->inputPtr--;
             }
 
-            inputCount = channel->inputStop - channel->inputPtr;
+            assert(channel->inputStop >= channel->inputPtr);
+            assert(channel->inputStop - channel->inputPtr <= INT_MAX);
+            inputCount = (int)(channel->inputStop - channel->inputPtr);
 
-            ProcessEndOfSymbolTriplet(channel, &triplet, tripletCount, inputCount);
+            err = ProcessEndOfSymbolTriplet(enc, channel, &triplet, tripletCount, inputCount);
+            if(err == DmtxFail)
+               return DmtxFail;
             break;
          }
 
@@ -889,25 +982,27 @@ EncodeTripletCodeword(DmtxChannel *channel)
       IncrementProgress(channel, 8);
       channel->inputPtr++;
    }
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Encode value using EDIFACT encodation
  * @param  channel
  * @return void
  */
-static void
-EncodeEdifactCodeword(DmtxChannel *channel)
+static DmtxPassFail
+EncodeEdifactCodeword(DmtxEncode *enc, DmtxChannel *channel)
 {
    unsigned char inputValue;
 
-   assert(channel->encScheme == DmtxSchemeEncodeEdifact);
+   assert(channel->encScheme == DmtxSchemeEdifact);
 
    inputValue = *(channel->inputPtr);
 
    if(inputValue < 32 || inputValue > 94) {
-      channel->invalid = DMTX_CHANNEL_UNSUPPORTED_CHAR;
-      return;
+      channel->invalid = DmtxChannelUnsupportedChar;
+      return DmtxFail;
    }
 
    PushInputWord(channel, inputValue & 0x3f);
@@ -915,15 +1010,17 @@ EncodeEdifactCodeword(DmtxChannel *channel)
    channel->inputPtr++;
 
    /* XXX rename this to CheckforEndOfSymbolEdifact() */
-   TestForEndOfSymbolEdifact(channel);
+   TestForEndOfSymbolEdifact(enc, channel);
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Encode value using Base 256 encodation
  * @param  channel
  * @return void
  */
-static void
+static DmtxPassFail
 EncodeBase256Codeword(DmtxChannel *channel)
 {
    int i;
@@ -933,7 +1030,7 @@ EncodeBase256Codeword(DmtxChannel *channel)
    unsigned char *firstBytePtr;
    unsigned char headerByte[2];
 
-   assert(channel->encScheme == DmtxSchemeEncodeBase256);
+   assert(channel->encScheme == DmtxSchemeBase256);
 
    firstBytePtr = &(channel->encodedWords[channel->firstCodeWord/12]);
    headerByte[0] = UnRandomize255State(*firstBytePtr, channel->firstCodeWord/12 + 1);
@@ -984,17 +1081,19 @@ EncodeBase256Codeword(DmtxChannel *channel)
    /* XXX will need to introduce an EndOfSymbolBase256() that recognizes
       opportunity to encode headerLength of 0 if remaining Base 256 message
       exactly matches symbol capacity */
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Change from one encodation scheme to another
  * @param  channel
  * @param  targetScheme
  * @param  unlatchType
  * @return void
  */
 static void
-ChangeEncScheme(DmtxChannel *channel, DmtxSchemeEncode targetScheme, int unlatchType)
+ChangeEncScheme(DmtxChannel *channel, DmtxScheme targetScheme, int unlatchType)
 {
    int advance;
 
@@ -1002,35 +1101,35 @@ ChangeEncScheme(DmtxChannel *channel, DmtxSchemeEncode targetScheme, int unlatch
 
    /* Unlatch to ASCII (base encodation scheme) */
    switch(channel->encScheme) {
-      case DmtxSchemeEncodeAscii:
+      case DmtxSchemeAscii:
          /* Nothing to do */
          assert(channel->currentLength % 12 == 0);
          break;
 
-      case DmtxSchemeEncodeC40:
-      case DmtxSchemeEncodeText:
-      case DmtxSchemeEncodeX12:
+      case DmtxSchemeC40:
+      case DmtxSchemeText:
+      case DmtxSchemeX12:
 
          /* Can't unlatch unless currently at a byte boundary */
-         if(channel->currentLength % 12) {
-            channel->invalid = DMTX_CHANNEL_CANNOT_UNLATCH;
+         if((channel->currentLength % 12) != 0) {
+            channel->invalid = DmtxChannelCannotUnlatch;
             return;
          }
 
          /* Can't unlatch if last word in previous triplet is a shift */
          if(channel->currentLength != channel->encodedLength) {
-            channel->invalid = DMTX_CHANNEL_CANNOT_UNLATCH;
+            channel->invalid = DmtxChannelCannotUnlatch;
             return;
          }
 
          /* Unlatch to ASCII and increment progress */
-         if(unlatchType == DMTX_UNLATCH_EXPLICIT) {
-            PushInputWord(channel, DMTX_CHAR_TRIPLET_UNLATCH);
+         if(unlatchType == DmtxUnlatchExplicit) {
+            PushInputWord(channel, DmtxCharTripletUnlatch);
             IncrementProgress(channel, 12);
          }
          break;
 
-      case DmtxSchemeEncodeEdifact:
+      case DmtxSchemeEdifact:
 
          /* must overwrite next 6 bits (after current) with 011111 (31) and
             then fill remaining bits until next byte bounday with zeros
@@ -1040,8 +1139,8 @@ ChangeEncScheme(DmtxChannel *channel, DmtxSchemeEncode targetScheme, int unlatch
             increment current and encoded length */
 
          assert(channel->currentLength % 3 == 0);
-         if(unlatchType == DMTX_UNLATCH_EXPLICIT) {
-            PushInputWord(channel, DMTX_CHAR_EDIFACT_UNLATCH);
+         if(unlatchType == DmtxUnlatchExplicit) {
+            PushInputWord(channel, DmtxCharEdifactUnlatch);
             IncrementProgress(channel, 9);
          }
 
@@ -1052,7 +1151,7 @@ ChangeEncScheme(DmtxChannel *channel, DmtxSchemeEncode targetScheme, int unlatch
          /* assert(remaining bits are zero); */
          break;
 
-      case DmtxSchemeEncodeBase256:
+      case DmtxSchemeBase256:
 
          /* since Base 256 stores the length value at the beginning of the
             string instead of using an unlatch character, "unlatching" Base
@@ -1068,43 +1167,37 @@ ChangeEncScheme(DmtxChannel *channel, DmtxSchemeEncode targetScheme, int unlatch
       default:
          break;
    }
-   channel->encScheme = DmtxSchemeEncodeAscii;
+   channel->encScheme = DmtxSchemeAscii;
 
    /* Latch to new encodation scheme */
    switch(targetScheme) {
-      case DmtxSchemeEncodeAscii:
+      case DmtxSchemeAscii:
          /* Nothing to do */
          break;
-
-      case DmtxSchemeEncodeC40:
-         PushInputWord(channel, DMTX_CHAR_C40_LATCH);
+      case DmtxSchemeC40:
+         PushInputWord(channel, DmtxCharC40Latch);
          IncrementProgress(channel, 12);
          break;
-
-      case DmtxSchemeEncodeText:
-         PushInputWord(channel, DMTX_CHAR_TEXT_LATCH);
+      case DmtxSchemeText:
+         PushInputWord(channel, DmtxCharTextLatch);
          IncrementProgress(channel, 12);
          break;
-
-      case DmtxSchemeEncodeX12:
-         PushInputWord(channel, DMTX_CHAR_X12_LATCH);
+      case DmtxSchemeX12:
+         PushInputWord(channel, DmtxCharX12Latch);
          IncrementProgress(channel, 12);
          break;
-
-      case DmtxSchemeEncodeEdifact:
-         PushInputWord(channel, DMTX_CHAR_EDIFACT_LATCH);
+      case DmtxSchemeEdifact:
+         PushInputWord(channel, DmtxCharEdifactLatch);
          IncrementProgress(channel, 12);
          break;
-
-      case DmtxSchemeEncodeBase256:
-         PushInputWord(channel, DMTX_CHAR_BASE256_LATCH);
+      case DmtxSchemeBase256:
+         PushInputWord(channel, DmtxCharBase256Latch);
          IncrementProgress(channel, 12);
 
          /* Write temporary field length (0 indicates remainder of symbol) */
          PushInputWord(channel, Randomize255State(0, 2));
          IncrementProgress(channel, 12);
          break;
-
       default:
          break;
    }
@@ -1115,7 +1208,7 @@ ChangeEncScheme(DmtxChannel *channel, DmtxSchemeEncode targetScheme, int unlatch
 }
 
 /**
- * @brief  XXX
+ * @brief  Push codeword onto channel and increment length
  * @param  channel
  * @param  codeword
  * @return void
@@ -1130,8 +1223,8 @@ PushInputWord(DmtxChannel *channel, unsigned char codeword)
    /* XXX should this assertion actually be a legit runtime test? */
    assert(channel->encodedLength/12 <= 3*1558); /* increased for Mosaic */
 
-   /* XXX this is currently pretty ugly, but I have other fish to fry at
-      the moment.  What is required is to go through and decide on a
+   /* XXX this is currently pretty ugly, but can wait until the
+      rewrite. What is required is to go through and decide on a
       consistent approach (probably that all encodation schemes use
       currentLength except for triplet-based schemes which use
       currentLength and encodedLength).  All encodation schemes should
@@ -1139,19 +1232,19 @@ PushInputWord(DmtxChannel *channel, unsigned char codeword)
       another approach would be to maintain currentLength and "extraLength" */
 
    switch(channel->encScheme) {
-      case DmtxSchemeEncodeAscii:
+      case DmtxSchemeAscii:
          channel->encodedWords[channel->currentLength/12] = codeword;
          channel->encodedLength += 12;
          break;
 
-      case DmtxSchemeEncodeC40:
-      case DmtxSchemeEncodeText:
-      case DmtxSchemeEncodeX12:
+      case DmtxSchemeC40:
+      case DmtxSchemeText:
+      case DmtxSchemeX12:
          channel->encodedWords[channel->encodedLength/12] = codeword;
          channel->encodedLength += 12;
          break;
 
-      case DmtxSchemeEncodeEdifact:
+      case DmtxSchemeEdifact:
          /* EDIFACT is the only encodation scheme where we don't encode up to the
             next byte boundary.  This is because EDIFACT can be unlatched at any
             point, including mid-byte, so we can't guarantee what the next
@@ -1186,7 +1279,7 @@ PushInputWord(DmtxChannel *channel, unsigned char codeword)
          channel->encodedLength += 9;
          break;
 
-      case DmtxSchemeEncodeBase256:
+      case DmtxSchemeBase256:
          channel->encodedWords[channel->currentLength/12] = codeword;
          channel->encodedLength += 12;
          break;
@@ -1197,7 +1290,7 @@ PushInputWord(DmtxChannel *channel, unsigned char codeword)
 }
 
 /**
- * @brief  XXX
+ * @brief  Push triplet codeword onto channel
  * @param  channel
  * @param  triplet
  * @return void
@@ -1213,7 +1306,7 @@ PushTriplet(DmtxChannel *channel, DmtxTriplet *triplet)
 }
 
 /**
- * @brief  XXX
+ * @brief  Increment encoding progress tracking variables
  * @param  channel
  * @param  encodedUnits
  * @return void
@@ -1235,8 +1328,8 @@ IncrementProgress(DmtxChannel *channel, int encodedUnits)
     * character.
     */
 
-   if(channel->encScheme == DmtxSchemeEncodeC40 ||
-         channel->encScheme == DmtxSchemeEncodeText) {
+   if(channel->encScheme == DmtxSchemeC40 ||
+         channel->encScheme == DmtxSchemeText) {
 
       pos = (channel->currentLength % 6) / 2;
       startByte = (channel->currentLength / 12) - (pos >> 1);
@@ -1253,20 +1346,22 @@ IncrementProgress(DmtxChannel *channel, int encodedUnits)
 }
 
 /**
- * @brief  XXX
+ * @brief  Special end-of-symbol encoding for triplet-based schemes
  * @param  channel
  * @param  triplet
  * @param  tripletCount
  * @param  inputCount
  * @return void
  */
-static void
-ProcessEndOfSymbolTriplet(DmtxChannel *channel, DmtxTriplet *triplet, int tripletCount, int inputCount)
+static DmtxPassFail
+ProcessEndOfSymbolTriplet(DmtxEncode *enc, DmtxChannel *channel,
+      DmtxTriplet *triplet, int tripletCount, int inputCount)
 {
    int sizeIdx;
    int currentByte;
    int remainingCodewords;
    int inputAdjust;
+   DmtxPassFail err;
 
    /* In this function we process some special cases from the Data Matrix
     * standard, and as such we circumvent the normal functions for
@@ -1304,10 +1399,14 @@ ProcessEndOfSymbolTriplet(DmtxChannel *channel, DmtxTriplet *triplet, int triple
 
    /* Find minimum symbol size big enough to accomodate remaining codewords */
    currentByte = channel->currentLength/12;
-/* XXX this is broken -- what if someone asks for DMTX_SYMBOL_RECT_AUTO or a specific sizeIdx? */
-   sizeIdx = FindCorrectBarcodeSize(currentByte + ((inputCount == 3) ? 2 : inputCount),
-         DMTX_SYMBOL_SQUARE_AUTO);
-   /* XXX test for sizeIdx == -1 here */
+
+   sizeIdx = FindCorrectSymbolSize(currentByte + ((inputCount == 3) ? 2 : inputCount),
+         enc->sizeIdxRequest);
+
+   if(sizeIdx == DmtxUndefined)
+      return DmtxFail;
+
+   /* XXX test for sizeIdx == DmtxUndefined here */
    remainingCodewords = dmtxGetSymbolAttribute(DmtxSymAttribSymbolDataWords, sizeIdx) - currentByte;
 
    /* XXX the big problem with all of these special cases is what if one of
@@ -1317,18 +1416,19 @@ ProcessEndOfSymbolTriplet(DmtxChannel *channel, DmtxTriplet *triplet, int triple
 
    /* Special case (d): Unlatch is implied (switch manually) */
    if(inputCount == 1 && remainingCodewords == 1) {
-      ChangeEncScheme(channel, DmtxSchemeEncodeAscii, DMTX_UNLATCH_IMPLICIT);
-      EncodeNextWord(channel, DmtxSchemeEncodeAscii);
+      ChangeEncScheme(channel, DmtxSchemeAscii, DmtxUnlatchImplicit);
+      err = EncodeNextWord(enc, channel, DmtxSchemeAscii);
+      if(err == DmtxFail)
+         return DmtxFail;
       assert(channel->invalid == 0);
       assert(channel->inputPtr == channel->inputStop);
    }
    else if(remainingCodewords == 2) {
-
       /* Special case (a): Unlatch is implied */
       if(tripletCount == 3) {
          PushTriplet(channel, triplet);
          IncrementProgress(channel, 24);
-         channel->encScheme = DmtxSchemeEncodeAscii;
+         channel->encScheme = DmtxSchemeAscii;
          channel->inputPtr += 3;
          channel->inputPtr -= inputAdjust;
       }
@@ -1338,14 +1438,16 @@ ProcessEndOfSymbolTriplet(DmtxChannel *channel, DmtxTriplet *triplet, int triple
          triplet->value[2] = 0;
          PushTriplet(channel, triplet);
          IncrementProgress(channel, 24);
-         channel->encScheme = DmtxSchemeEncodeAscii;
+         channel->encScheme = DmtxSchemeAscii;
          channel->inputPtr += 2;
          channel->inputPtr -= inputAdjust;
       }
       /* Special case (c) */
       else if(tripletCount == 1) {
-         ChangeEncScheme(channel, DmtxSchemeEncodeAscii, DMTX_UNLATCH_EXPLICIT);
-         EncodeNextWord(channel, DmtxSchemeEncodeAscii);
+         ChangeEncScheme(channel, DmtxSchemeAscii, DmtxUnlatchExplicit);
+         err = EncodeNextWord(enc, channel, DmtxSchemeAscii);
+         if(err == DmtxFail)
+            return DmtxFail;
          assert(channel->invalid == 0);
          /* XXX I can still think of a case that looks ugly here.  What if
             the final 2 C40 codewords are a Shift word and a non-Shift
@@ -1360,25 +1462,29 @@ ProcessEndOfSymbolTriplet(DmtxChannel *channel, DmtxTriplet *triplet, int triple
       remainingCodewords = dmtxGetSymbolAttribute(DmtxSymAttribSymbolDataWords, sizeIdx) - currentByte;
 
       if(remainingCodewords > 0) {
-         ChangeEncScheme(channel, DmtxSchemeEncodeAscii, DMTX_UNLATCH_EXPLICIT);
+         ChangeEncScheme(channel, DmtxSchemeAscii, DmtxUnlatchExplicit);
 
          while(channel->inputPtr < channel->inputStop) {
-            EncodeNextWord(channel, DmtxSchemeEncodeAscii);
+            err = EncodeNextWord(enc, channel, DmtxSchemeAscii);
+            if(err == DmtxFail)
+               return DmtxFail;
             assert(channel->invalid == 0);
          }
       }
    }
 
    assert(channel->inputPtr == channel->inputStop);
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Determine if end-of-symbol condition is met for EDIFACT-based schemes
  * @param  channel
  * @return void
  */
-static void
-TestForEndOfSymbolEdifact(DmtxChannel *channel)
+static DmtxPassFail
+TestForEndOfSymbolEdifact(DmtxEncode *enc, DmtxChannel *channel)
 {
    int edifactValues;
    int currentByte;
@@ -1386,6 +1492,7 @@ TestForEndOfSymbolEdifact(DmtxChannel *channel)
    int symbolCodewords;
    int asciiCodewords;
    int i;
+   DmtxPassFail err;
 
    /* This function tests if the remaining input values can be completed using
     * one of the valid end-of-symbol cases, and finishes encodation if possible.
@@ -1410,19 +1517,21 @@ TestForEndOfSymbolEdifact(DmtxChannel *channel)
     */
 
    /* Count remaining input values assuming EDIFACT encodation */
-   edifactValues = channel->inputStop - channel->inputPtr;
+   assert(channel->inputStop >= channel->inputPtr);
+   assert(channel->inputStop - channel->inputPtr <= INT_MAX);
+   edifactValues = (int)(channel->inputStop - channel->inputPtr);
 
    /* Can't end symbol right now if there are 5+ values remaining
       (noting that '9999' can still terminate in case (f)) */
    if(edifactValues > 4) /* subset of (i) -- performance only */
-      return;
+      return DmtxPass;
 
    /* Find minimum symbol size big enough to accomodate remaining codewords */
-   /* XXX broken -- what if someone asks for DMTX_SYMBOL_RECT_AUTO or specific sizeIdx? */
+   /* XXX broken -- what if someone asks for DmtxSymbolRectAuto or specific sizeIdx? */
 
    currentByte = channel->currentLength/12;
-   sizeIdx = FindCorrectBarcodeSize(currentByte, DMTX_SYMBOL_SQUARE_AUTO);
-   /* XXX test for sizeIdx == -1 here */
+   sizeIdx = FindCorrectSymbolSize(currentByte, DmtxSymbolSquareAuto);
+   /* XXX test for sizeIdx == DmtxUndefined here */
    symbolCodewords = dmtxGetSymbolAttribute(DmtxSymAttribSymbolDataWords, sizeIdx) - currentByte;
 
    /* Test for special case condition */
@@ -1434,54 +1543,58 @@ TestForEndOfSymbolEdifact(DmtxChannel *channel)
       asciiCodewords = edifactValues;
 
       if(asciiCodewords <= symbolCodewords) { /* (a,b,d,e,f) */
-         ChangeEncScheme(channel, DmtxSchemeEncodeAscii, DMTX_UNLATCH_IMPLICIT);
+         ChangeEncScheme(channel, DmtxSchemeAscii, DmtxUnlatchImplicit);
 
          /* XXX this loop should produce exactly asciiWords codewords ... assert somehow? */
          for(i = 0; i < edifactValues; i++) {
-            EncodeNextWord(channel, DmtxSchemeEncodeAscii);
+            err = EncodeNextWord(enc, channel, DmtxSchemeAscii);
+            if(err == DmtxFail)
+               return DmtxFail;
             assert(channel->invalid == 0);
          }
       }
       /* else (c,g) -- do nothing */
    }
    else if(edifactValues == 0) { /* (h) */
-      ChangeEncScheme(channel, DmtxSchemeEncodeAscii, DMTX_UNLATCH_EXPLICIT);
+      ChangeEncScheme(channel, DmtxSchemeAscii, DmtxUnlatchExplicit);
    }
    /* else (i) -- do nothing */
+
+   return DmtxPass;
 }
 
 /**
- * @brief  XXX
+ * @brief  Convert 3 input values into 2 codewords for triplet-based schemes
  * @param  outputWords
  * @param  inputWord
  * @param  encScheme
  * @return Codeword count
  */
 static int
-GetC40TextX12Words(int *outputWords, int inputWord, DmtxSchemeEncode encScheme)
+GetC40TextX12Words(int *outputWords, int inputWord, DmtxScheme encScheme)
 {
    int count;
 
-   assert(encScheme == DmtxSchemeEncodeC40 ||
-         encScheme == DmtxSchemeEncodeText ||
-         encScheme == DmtxSchemeEncodeX12);
+   assert(encScheme == DmtxSchemeC40 ||
+         encScheme == DmtxSchemeText ||
+         encScheme == DmtxSchemeX12);
 
    count = 0;
 
    /* Handle extended ASCII with Upper Shift character */
    if(inputWord > 127) {
-      if(encScheme == DmtxSchemeEncodeX12) {
+      if(encScheme == DmtxSchemeX12) {
          return 0;
       }
       else {
-         outputWords[count++] = 1;
+         outputWords[count++] = DmtxCharTripletShift2;
          outputWords[count++] = 30;
          inputWord -= 128;
       }
    }
 
    /* Handle all other characters according to encodation scheme */
-   if(encScheme == DmtxSchemeEncodeX12) {
+   if(encScheme == DmtxSchemeX12) {
       if(inputWord == 13)
          outputWords[count++] = 0;
       else if(inputWord == 42)
@@ -1497,43 +1610,43 @@ GetC40TextX12Words(int *outputWords, int inputWord, DmtxSchemeEncode encScheme)
    }
    else { /* encScheme is C40 or Text */
       if(inputWord <= 31) {
-         outputWords[count++] = DMTX_CHAR_TRIPLET_SHIFT_1;
+         outputWords[count++] = DmtxCharTripletShift1;
          outputWords[count++] = inputWord;
       }
       else if(inputWord == 32) {
          outputWords[count++] = 3;
       }
       else if(inputWord <= 47) {
-         outputWords[count++] = DMTX_CHAR_TRIPLET_SHIFT_2;
+         outputWords[count++] = DmtxCharTripletShift2;
          outputWords[count++] = inputWord - 33;
       }
       else if(inputWord <= 57) {
          outputWords[count++] = inputWord - 44;
       }
       else if(inputWord <= 64) {
-         outputWords[count++] = DMTX_CHAR_TRIPLET_SHIFT_2;
+         outputWords[count++] = DmtxCharTripletShift2;
          outputWords[count++] = inputWord - 43;
       }
-      else if(inputWord <= 90 && encScheme == DmtxSchemeEncodeC40) {
+      else if(inputWord <= 90 && encScheme == DmtxSchemeC40) {
          outputWords[count++] = inputWord - 51;
       }
-      else if(inputWord <= 90 && encScheme == DmtxSchemeEncodeText) {
-         outputWords[count++] = DMTX_CHAR_TRIPLET_SHIFT_3;
+      else if(inputWord <= 90 && encScheme == DmtxSchemeText) {
+         outputWords[count++] = DmtxCharTripletShift3;
          outputWords[count++] = inputWord - 64;
       }
       else if(inputWord <= 95) {
-         outputWords[count++] = DMTX_CHAR_TRIPLET_SHIFT_2;
+         outputWords[count++] = DmtxCharTripletShift2;
          outputWords[count++] = inputWord - 69;
       }
-      else if(inputWord == 96 && encScheme == DmtxSchemeEncodeText) {
-         outputWords[count++] = DMTX_CHAR_TRIPLET_SHIFT_3;
+      else if(inputWord == 96 && encScheme == DmtxSchemeText) {
+         outputWords[count++] = DmtxCharTripletShift3;
          outputWords[count++] = 0;
       }
-      else if(inputWord <= 122 && encScheme == DmtxSchemeEncodeText) {
+      else if(inputWord <= 122 && encScheme == DmtxSchemeText) {
          outputWords[count++] = inputWord - 83;
       }
       else if(inputWord <= 127) {
-         outputWords[count++] = DMTX_CHAR_TRIPLET_SHIFT_3;
+         outputWords[count++] = DmtxCharTripletShift3;
          outputWords[count++] = inputWord - 96;
       }
    }
@@ -1542,7 +1655,7 @@ GetC40TextX12Words(int *outputWords, int inputWord, DmtxSchemeEncode encScheme)
 }
 
 /**
- * @brief  XXX
+ * @brief  Convert 2 codewords into 3 values for triplet-based schemes
  * @param  cw1
  * @param  cw2
  * @return Triplet data
@@ -1564,7 +1677,7 @@ GetTripletValues(unsigned char cw1, unsigned char cw2)
 }
 
 /**
- * @brief  XXX
+ * @brief  Convert 3 codewords into 4 values for quadrulplet-based schemes
  * @param  cw1
  * @param  cw2
  * @param  cw3
@@ -1586,7 +1699,7 @@ GetQuadrupletValues(unsigned char cw1, unsigned char cw2, unsigned char cw3)
 }
 
 /**
- * @brief  XXX
+ * @brief  Write channel contents to standard output
  * @param  channel
  * @return void
  */
@@ -1602,9 +1715,9 @@ DumpChannel(DmtxChannel *channel)
    if(channel->currentLength % 12)
       fprintf(stdout, "%3d-", channel->encodedWords[j]);
 
-   if(channel->invalid & DMTX_CHANNEL_CANNOT_UNLATCH)
+   if(channel->invalid & DmtxChannelCannotUnlatch)
       fprintf(stdout, "(can't unlatch right now)");
-   else if(channel->invalid & DMTX_CHANNEL_UNSUPPORTED_CHAR)
+   else if(channel->invalid & DmtxChannelUnsupportedChar)
       fprintf(stdout, "(unsupported character)");
 
    fprintf(stdout, "\n");
@@ -1612,7 +1725,7 @@ DumpChannel(DmtxChannel *channel)
 */
 
 /**
- * @brief  XXX
+ * @brief  Write all channels' contents to standard output
  * @param  group
  * @param  encTarget
  * @return void
@@ -1626,7 +1739,7 @@ DumpChannelGroup(DmtxChannelGroup *group, int encTarget)
    DmtxChannel *channel;
 
    fprintf(stdout, "\n");
-   for(encScheme = DmtxSchemeEncodeAscii; encScheme <= DmtxSchemeEncodeBase256; encScheme++) {
+   for(encScheme = DmtxSchemeAscii; encScheme <= DmtxSchemeBase256; encScheme++) {
       channel = &(group->channel[encScheme]);
       fprintf(stdout, "%s from %s: ", encNames[encTarget], encNames[encScheme]);
       for(i = 8 + strlen(encNames[encTarget]) + strlen(encNames[encScheme]); i < 24; i++)
