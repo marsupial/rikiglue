@@ -11,9 +11,6 @@
 namespace rikiGlue
 {
 
-register_t
-splitter( const Frame::Block     &block );
-
 template <class T> static void
 nop( T& )
 {
@@ -144,7 +141,7 @@ destroyThread( T   *&thread,
 #define SPLIT_OP
 
 #if defined(SPLIT_OP)
-	const Frame::operation_t  rgbOps[1] = { splitter };
+	const Frame::operation_t  rgbOps[1] = { splitterRGBA };
 #else
 	const Frame::operation_t  rgbOps[4] = { argbToRGB, lutDecrypt, gChannel, rgbToARGB };
 #endif
