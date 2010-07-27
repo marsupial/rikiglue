@@ -29,6 +29,11 @@ dmtxDecode( uint8_t  *pixels,
             int      height )
 {
 	DmtxImage  *img = dmtxImageCreate(pixels, width, height, DmtxPack24bppRGB);
+
+#if defined(_WINDOWS)
+	dmtxImageSetProp(img, DmtxPropImageFlip, DmtxFlipY);
+#endif
+
 	DmtxDecode *dec = dmtxDecodeCreate(img, 1);
 
 	std::string  lastFound;
@@ -37,11 +42,13 @@ dmtxDecode( uint8_t  *pixels,
 	dmtxDecodeSetProp(&dec, DmtxPropYmin, 0);
 	dmtxDecodeSetProp(&dec, DmtxPropYmax, 100);
 */
-	DmtxTime   msec = dmtxTimeAdd(dmtxTimeNow(), 1000/25);
+	const long kTimeOut = 1000/25;
+	DmtxTime   msec = dmtxTimeAdd(dmtxTimeNow(), kTimeOut);
 	DmtxRegion *reg = dmtxRegionFindNext(dec, &msec);
+
 	while ( reg != NULL )
 	{
-		DmtxMessage *msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
+		DmtxMessage *msg = dmtxDecodeMatrixRegion(dec, reg, 35);
 		if ( msg != NULL )
 		{
 			printf("found: \"");
@@ -58,7 +65,7 @@ dmtxDecode( uint8_t  *pixels,
 */
 		}
 		dmtxRegionDestroy(&reg);
-		msec = dmtxTimeAdd(dmtxTimeNow(), 1000/25);
+		msec = dmtxTimeAdd(dmtxTimeNow(), kTimeOut);
 		reg = dmtxRegionFindNext(dec, &msec);
 	}
 
