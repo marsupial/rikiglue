@@ -73,9 +73,10 @@ main( int        argc,
 	printf("Encoding %d bytes\n", bytes.size());
 
    /* 1) ENCODE a new Data Matrix barcode image (in memory only) */
-	DmtxEncode enc = dmtxEncodeStructInit();
-	dmtxEncodeDataMatrix(&enc, bytes.size(), &bytes[0], DMTX_SYMBOL_SQUARE_AUTO);
-	writeImage(filePath, *(enc.image));
+	DmtxEncode *enc = dmtxEncodeCreate();
+	dmtxEncodeDataMatrix(enc, bytes.size(), &bytes[0]);
+	writeImage(filePath, *(enc->image));
+	dmtxEncodeDestroy(&enc);
 
 	return ( 0 );
 }
