@@ -181,7 +181,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C4E618CB095A3CE80012CA3F /* glue */;
+			remoteGlobalIDString = C4E618CB095A3CE80012CA3F;
 			remoteInfo = glue;
 		};
 /* End PBXContainerItemProxy section */
@@ -534,8 +534,6 @@
 				C259267A11FCCBBE008F094E /* readpass.c */,
 				C259267B11FCCBBE008F094E /* rijndael.c */,
 				C259268011FCCBBE008F094E /* rsa.c */,
-				C259268111FCCBBE008F094E /* schnorr.c */,
-				C259268511FCCBBE008F094E /* session.c */,
 				C259268E11FCCBBE008F094E /* ssh-dss.c */,
 				C259269611FCCBBE008F094E /* ssh-rsa.c */,
 				C259269711FCCBBE008F094E /* ssh.c */,
@@ -556,6 +554,8 @@
 		C259275511FCCDEE008F094E /* unused */ = {
 			isa = PBXGroup;
 			children = (
+				C259268111FCCBBE008F094E /* schnorr.c */,
+				C259268511FCCBBE008F094E /* session.c */,
 				C259269C11FCCBBE008F094E /* sshlogin.c */,
 				C259267111FCCBBE008F094E /* monitor_wrap.c */,
 				C259262911FCCBBE008F094E /* auth-bsdauth.c */,
