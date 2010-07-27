@@ -16,13 +16,13 @@ enum
 typedef enum
 {
 
-	kEncrypt, 
-	kStrID_EncryptName,
-	kStrID_EncryptDescription,
+	kRSAEncrypt, 
+	kStrID_RSAEncryptName,
+	kStrID_RSAEncryptDescription,
 
-	kDecrypt, 
-	kStrID_DecryptName,
-	kStrID_DecryptDescription,
+	kRSADecrypt, 
+	kStrID_RSADecryptName,
+	kStrID_RSADecryptDescription,
 
 	kEncryptLut,
 	kStrID_ELutName,
@@ -31,6 +31,18 @@ typedef enum
 	kDecryptLut,
 	kStrID_DLutName,
 	kStrID_DLutDescription,
+
+	kCSS,
+	kStrID_CSSName,
+	kStrID_CSSDescription,
+
+	kAESEncrypt, 
+	kStrID_AESEncryptName,
+	kStrID_AESEncryptDescription,
+
+	kAESDecrypt, 
+	kStrID_AESDecryptName,
+	kStrID_AESDecryptDescription,
 
 	kStrID_Exception,
 	kStrID_NUMTYPES

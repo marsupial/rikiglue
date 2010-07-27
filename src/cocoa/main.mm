@@ -4,6 +4,57 @@
 
 #import "cocoa/gabba.h"
 #import "frame/frame.h"
+#import "frame/operations.h"
+#import <memory>
+#import <algorithm>
+
+namespace rikiGlue
+{
+
+register_t
+splitter( const Frame::Block     &block );
+
+template <class T> static void
+nop( T& )
+{
+}
+
+static void
+frameDelete( Frame    *frame )
+{
+	delete frame;
+}
+
+template <class T> static void
+createThread( T   *&thread )
+{
+	thread = new T;
+	if ( thread && thread->create() != 0 )
+	{
+		delete thread;
+		thread = NULL;
+	}
+}
+
+template <class T, class F> static void
+destroyThread( T   *&thread,
+               F   op = NULL )
+{
+	if ( thread )
+	{
+		typename T::Queue queue;
+		thread->lock();
+			std::swap(queue, thread->queue());
+			thread->exit();
+		thread->unlock();
+		thread->signal();
+		
+		std::for_each(queue.begin(), queue.end(), op);
+		delete thread;
+	}
+}
+
+} /* namespace rikiGlue */
 
 @implementation Dabba
 
@@ -88,12 +139,44 @@
 	CGImageRelease(capturedImage);
 
 	using namespace rikiGlue;
-	Frame  frame(imageRect.size.width, imageRect.size.height, &decoder);	
+	std::auto_ptr<Frame> frame( new Frame(imageRect.size.width, imageRect.size.height, pixelDecoder) );
 
+#define SPLIT_OP
+
+#if defined(SPLIT_OP)
+	const Frame::operation_t  rgbOps[1] = { splitter };
+#else
 	const Frame::operation_t  rgbOps[4] = { argbToRGB, lutDecrypt, gChannel, rgbToARGB };
-	frame.operate(&rgbOps[0], 1, &argb[0], rowBytes);
-	frame.operate(&rgbOps[1], 2, frame.bytes(), frame.rowBytes());
-	frame.operate(&rgbOps[3], 1, frame.bytes(), frame.rowBytes(), &argb[0], rowBytes);
+#endif
+
+//	NSDate *date0 = [ NSDate date ];
+
+#if defined(SPLIT_OP)
+	frame->operate(&rgbOps[0], 1, &argb[0], rowBytes, frame->bytes(), frame->rowBytes() );
+#else
+	frame->operate(&rgbOps[0], 1, &argb[0], rowBytes);
+	frame->operate(&rgbOps[1], 2, frame->bytes(), frame->rowBytes());
+	frame->operate(&rgbOps[3], 1, frame->bytes(), frame->rowBytes(), &argb[0], rowBytes);
+#endif
+
+//	double interval0 = - [ date0 timeIntervalSinceNow ];
+//	printf("time: %f, %f fps\n", interval0, 1.0/interval0);
+
+	if ( instrDecoder )
+	{
+			instrDecoder->lock();
+			if ( instrDecoder->queue().size() == 0 )
+				instrDecoder->queue().push_back(frame.get());
+			else
+			{
+				Frame *dropFrame = instrDecoder->queue()[0];
+				instrDecoder->queue()[0] = frame.get();
+				delete dropFrame;
+			}
+			frame.release();
+			instrDecoder->unlock();
+			instrDecoder->signal();
+	}
 
 	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);
@@ -174,25 +257,27 @@
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
 {
+	rikiGlue::createThread<rikiGlue::DecodeThread>(pixelDecoder);
+	rikiGlue::createThread<rikiGlue::DMTXThread>(instrDecoder);
+
 	colorSpace = CGColorSpaceCreateDeviceRGB();
 	[ window setDelegate: self ];
 	[ self setPaused: nil ];
-	decoder.create();
+
 	interval = 0;
 	nIntervals = 0;
 }
 
 - (void) applicationWillTerminate: (NSNotification*) notification
 {
-	decoder.lock();
-	decoder.exit();
-	decoder.unlock();
-	decoder.signal();
-	
-	[ window setDelegate: nil ];
 	[ timer invalidate ];
 	[ timer release ];
+	[ window setDelegate: nil ];
 	CGColorSpaceRelease(colorSpace);
+
+	rikiGlue::destroyThread<rikiGlue::DecodeThread>(pixelDecoder, rikiGlue::nop<rikiGlue::ThreadBlock>);
+	rikiGlue::destroyThread<rikiGlue::DMTXThread>(instrDecoder, rikiGlue::frameDelete);
+
 
 	interval /= -nIntervals;
 	printf("t: %f, %f fps\n", interval, 1.0/interval);

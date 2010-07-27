@@ -3,7 +3,6 @@
 */
 
 #include "frame/frame.h"
-#include "threads/threads.h"
 #include <assert.h>
 
 namespace rikiGlue
@@ -57,18 +56,21 @@ rgbToARGB( const Frame::Block    &block )
 {
 	assert(block.dstSize > block.srcSize );
 
-	const uint8_t  *srcData = block.srcData;
+	//const uint8_t  *srcData = block.srcData;
+	uint8_t  *srcData = const_cast<uint8_t*>(block.srcData);
 	uint8_t *dstData = block.dstData;
 
 	for ( register_t i = 0; i < block.srcSize; i += 3 )
 	{
 			*dstData++ = 255;
 	#if defined(RUNROLL)
-			*dstData++ = *srcData++;
-			*dstData++ = *srcData++;
+			uint8_t b = srcData[2];
+			*dstData++ = *srcData; *srcData++ = b;
+			*dstData++ = *srcData; *srcData++ = b;
 			*dstData++ = *srcData++;
 	#else
 			memcpy(dstData, srcData, 3);
+			memset(srcData, srcData[2], 3);
 			dstData += 3;
 			srcData += 3;
 	#endif
@@ -81,7 +83,8 @@ rgbToBGRA( const Frame::Block    &block )
 {
 	assert(block.dstSize > block.srcSize );
 
-	const uint8_t  *srcData = block.srcData;
+	//const uint8_t  *srcData = block.srcData;
+	uint8_t  *srcData = const_cast<uint8_t*>(block.srcData);
 	uint8_t *dstData = block.dstData;
 
 	for ( register_t i = 0; i < block.srcSize; i += 3 )
@@ -89,6 +92,7 @@ rgbToBGRA( const Frame::Block    &block )
 		dstData[0] = srcData[2];
 		dstData[1] = srcData[1];
 		dstData[2] = srcData[0];
+		memset(srcData, srcData[2], 3);
 		srcData += 3;
 		dstData += 4;
 	}
@@ -123,7 +127,7 @@ Frame::operate( operation_t    *ops,
 		mDecoder->lock();
 		while ( mDecoder->queue().size() || mDecoder->state() == DecodeThread::kActive )
 		{
-			mDecoder->decode();
+			mDecoder->work();
 			mDecoder->lock();
 		}
 		mDecoder->unlock();
