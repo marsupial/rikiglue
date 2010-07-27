@@ -11,27 +11,10 @@
 #include "plugin/pf.h"
 #include "plugin/strings.h"
 #include "frame/frame.h"
+#include "frame/operations.h"
 
 namespace rikiGlue
 {
-
-class PFParams : public Params
-{
-public:
-
-	PFParams( const ::PF_ParamDef * const params[] ) :
-		mParams(params)
-	{}
-	virtual ~PFParams() {}
-
-	virtual int operator [] ( int    i ) const
-	{
-		return ( mParams[i]->u.sd.value );
-	}
-
-private:
-	const ::PF_ParamDef * const *mParams;
-};
 
 static PF_Err 
 about( PF_InData      *in_data,	
@@ -175,11 +158,11 @@ rikiGlue( PF_Cmd        cmd,
 
 					switch ( selector )
 					{
-						case kEncrypt:
+						case kRSAEncrypt:
 							ops[1] = rsaEncrypt;
 							break;
 
-						case kDecrypt:
+						case kRSADecrypt:
 							ops[1] = rsaDecrypt;
 							break;
 
@@ -190,6 +173,19 @@ rikiGlue( PF_Cmd        cmd,
 						case kDecryptLut:
 							ops[1] = lutDecrypt;
 							break;
+
+						case kCSS:
+							ops[1] = css;
+							break;
+
+						case kAESEncrypt:
+							ops[1] = aesEncrypt;
+							break;
+
+						case kAESDecrypt:
+							ops[1] = aesDecrypt;
+							break;
+
 					}
 					if ( ops[1] )
 					{
@@ -225,34 +221,34 @@ extern "C"
 {
 
 DllExport A_Err
-rikiEncrypt( PF_Cmd        cmd,
-             PF_InData     *in_data,
-             PF_OutData    *out_data,
-             PF_ParamDef   *params[],
-             PF_LayerDef   *output,
-             void          *extra )
+rikiRSAEncrypt( PF_Cmd        cmd,
+                PF_InData     *in_data,
+                PF_OutData    *out_data,
+                PF_ParamDef   *params[],
+                PF_LayerDef   *output,
+                void          *extra )
 {	
-	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kEncrypt) );
+	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kRSAEncrypt) );
 }
 
 DllExport A_Err
-rikiDecrypt( PF_Cmd        cmd,
-             PF_InData     *in_data,
-             PF_OutData    *out_data,
-             PF_ParamDef   *params[],
-             PF_LayerDef   *output,
-             void          *extra )
+rikiRSADecrypt( PF_Cmd        cmd,
+                PF_InData     *in_data,
+                PF_OutData    *out_data,
+                PF_ParamDef   *params[],
+                PF_LayerDef   *output,
+                void          *extra )
 {	
-	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecrypt) );
+	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kRSADecrypt) );
 }
 
 DllExport A_Err
 rikiEncLut( PF_Cmd        cmd,
-           PF_InData     *in_data,
-           PF_OutData    *out_data,
-           PF_ParamDef   *params[],
-           PF_LayerDef   *output,
-           void          *extra )
+            PF_InData     *in_data,
+            PF_OutData    *out_data,
+            PF_ParamDef   *params[],
+            PF_LayerDef   *output,
+            void          *extra )
 {	
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kEncryptLut) );
 }
@@ -266,6 +262,39 @@ rikiDecLut( PF_Cmd        cmd,
            void          *extra )
 {	
 	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kDecryptLut) );
+}
+
+DllExport A_Err
+rikiCSS( PF_Cmd        cmd,
+           PF_InData     *in_data,
+           PF_OutData    *out_data,
+           PF_ParamDef   *params[],
+           PF_LayerDef   *output,
+           void          *extra )
+{	
+	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kCSS) );
+}
+
+DllExport A_Err
+rikiAESEncrypt( PF_Cmd        cmd,
+             PF_InData     *in_data,
+             PF_OutData    *out_data,
+             PF_ParamDef   *params[],
+             PF_LayerDef   *output,
+             void          *extra )
+{	
+	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kAESEncrypt) );
+}
+
+DllExport A_Err
+rikiAESDecrypt( PF_Cmd        cmd,
+             PF_InData     *in_data,
+             PF_OutData    *out_data,
+             PF_ParamDef   *params[],
+             PF_LayerDef   *output,
+             void          *extra )
+{	
+	return ( rikiGlue::rikiGlue(cmd, in_data, out_data, params, output, extra, kAESDecrypt) );
 }
 
 }

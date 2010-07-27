@@ -254,7 +254,7 @@ dmtxImageSetRgb(DmtxImage *img, int x, int y, DmtxRgb rgb)
       return DMTX_FAILURE;
 
    offset = dmtxImageGetOffset(img, x, y);
-   memcpy(img->pxl[offset], rgb, 3);
+   memcpy(img->pxl[offset], rgb, sizeof(DmtxRgb));
 
    return DMTX_SUCCESS;
 }
@@ -278,7 +278,7 @@ dmtxImageGetRgb(DmtxImage *img, int x, int y, DmtxRgb rgb)
       return DMTX_FAILURE;
 
    offset = dmtxImageGetOffset(img, x, y);
-   memcpy(rgb, img->pxl[offset], 3);
+   memcpy(rgb, img->pxl[offset], sizeof(DmtxRgb));
 
    return DMTX_SUCCESS;
 }

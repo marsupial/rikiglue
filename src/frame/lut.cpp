@@ -2,7 +2,7 @@
 	lut.cpp
 */
 
-#include "frame/frame.h"
+#include "frame/operations.h"
 
 namespace rikiGlue
 {
@@ -184,8 +184,8 @@ static const uint8_t kDecryptLut5[3][256] =
 };
 
 static void
-lutCrypt( const uint8_t          lut[3][256],
-          const Frame::Block     &block )
+lutCrypt( const uint8_t      lut[3][256],
+          const Block        &block )
 {
 	const register_t blockDiv = block.dstSize / 3;
 	const uint8_t *srcData = block.srcData;
@@ -210,16 +210,41 @@ lutCrypt( const uint8_t          lut[3][256],
 }
 
 register_t
-lutEncrypt( const Frame::Block     &block )
+lutEncrypt( const Block     &block )
 {
 	lutCrypt(kEncryptLut5, block);
 	return ( 0 );
 }
 
 register_t
-lutDecrypt( const Frame::Block     &block )
+lutDecrypt( const Block     &block )
 {
 	lutCrypt(kDecryptLut5, block);
+	return ( 0 );
+}
+
+register_t
+splitter( const Block    &block )
+{
+	assert(block.dstSize < block.srcSize );
+
+	uint8_t *srcData = const_cast<uint8_t*>(block.srcData);
+	uint8_t *dstData = block.dstData;
+
+	for ( register_t i = 0; i < block.dstSize; i += 3 )
+	{
+		srcData++;
+		const uint8_t b = srcData[2];
+		if ( srcData[0] > b )
+			memset(srcData, kDecryptLut5[0][ srcData[1] ], 3);
+		else
+			memset(srcData, kDecryptLut5[1][ srcData[1] ], 3);
+	
+		memset(dstData, b, 3);
+
+		dstData += 3;
+		srcData += 3;
+	}
 	return ( 0 );
 }
 

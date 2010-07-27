@@ -7,49 +7,17 @@
 #ifndef _frame_h__
 #define _frame_h__
 
-#include "glue.pch"
-#include <vector>
+#include "frame/threads.h"
 
 namespace rikiGlue
 {
-
-class DecodeThread;
-
-class Params
-{
-public:
-
-	Params() {}
-	virtual ~Params() {}
-
-	virtual int operator [] ( int    i ) const = 0;
-};
 
 struct Frame
 {
 public:
 
-	struct Block
-	{
-
-		Block( const uint8_t   *src,
-		       size_t          srcSz,
-		       uint8_t         *dst,
-		       size_t          dstSz ) :
-			srcData(src),
-			srcSize(srcSz),
-			dstData(dst),
-			dstSize(dstSz)
-		{}
-
-		const uint8_t   *srcData;
-		size_t          srcSize;
-
-		uint8_t         *dstData;
-		size_t          dstSize;
-	};
-	
-	typedef register_t (*operation_t) ( const Frame::Block     &block );
+	typedef rikiGlue::Block     Block;
+	typedef Block::operation_t  operation_t;
 
 	enum
 	{
@@ -65,8 +33,14 @@ public:
 		mWidth(width),
 		mHeight(height),
 		mRowbytes(mWidth*3),
-		mPixels(mRowbytes*mHeight)
+		mPixels( new uint8_t[mRowbytes*mHeight] )
 	{
+	}
+
+	~Frame()
+	{
+		if ( mPixels )
+			delete [] mPixels;
 	}
 
 	register_t
@@ -83,19 +57,39 @@ public:
 	         const uint8_t  *srcData,
 	         size_t         srcRowbytes )
 	{
-		return ( operate(ops, numOps, srcData, srcRowbytes, &mPixels[0], mRowbytes) );
+		return ( operate(ops, numOps, srcData, srcRowbytes, mPixels, mRowbytes) );
 	}
 
 	uint8_t*
 	bytes()
 	{
-		return ( &mPixels[0] );
+		return ( mPixels );
 	}
 
 	size_t
-	rowBytes()
+	rowBytes() const
 	{
 		return ( mRowbytes );
+	}
+
+	size_t
+	width() const
+	{
+		return ( mWidth );
+	}
+	
+	size_t
+	height() const
+	{
+		return ( mHeight );
+	}
+
+	uint8_t*
+	release()
+	{
+		uint8_t *pixels = mPixels;
+		mPixels = NULL;
+		return ( pixels );
 	}
 
 private:
@@ -106,43 +100,9 @@ private:
 	               mHeight,
 	               mRowbytes;
 
-	std::vector<uint8_t>  mPixels;
+	uint8_t        *mPixels;
 
 };
-
-register_t
-argbToRGB( const Frame::Block    &block );
-
-register_t
-bgraToRGB( const Frame::Block    &block );
-
-register_t
-rgbToARGB( const Frame::Block    &block );
-
-register_t
-rgbToBGRA( const Frame::Block    &block );
-
-register_t 
-rsaEncrypt( const Frame::Block    &block );
-
-register_t 
-rsaDecrypt( const Frame::Block    &block );
-
-register_t
-lutEncrypt( const Frame::Block    &block );
-
-register_t
-lutDecrypt( const Frame::Block    &block );
-
-register_t
-rChannel( const Frame::Block    &block );
-
-register_t
-gChannel( const Frame::Block    &block );
-
-register_t
-bChannel( const Frame::Block    &block );
-
 
 } /* namespace rikiGlue */
 

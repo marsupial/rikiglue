@@ -8,13 +8,13 @@
 	#include <AE_General.r>
 #endif
 
-#define RNAME  "Encrypt"
-#define RENTRY "rikiEncrypt"
+#define RNAME  "RSA Encrypt"
+#define RENTRY "rikiRSAEncrypt"
 #define RPIPL  1600
 #include "pipl.i.r"
 
-#define RNAME  "Decrypt"
-#define RENTRY "rikiDecrypt"
+#define RNAME  "RSA Decrypt"
+#define RENTRY "rikiRSADecrypt"
 #define RPIPL  1610
 #include "pipl.i.r"
 
@@ -27,4 +27,21 @@
 #define RNAME  "LUT Decode"
 #define RENTRY "rikiDecLut"
 #define RPIPL  1710
+#include "pipl.i.r"
+
+
+#define RNAME  "CSS"
+#define RENTRY "rikiCSS"
+#define RPIPL  1800
+#include "pipl.i.r"
+
+
+#define RNAME  "AES Encrypt"
+#define RENTRY "rikiAESEncrypt"
+#define RPIPL  1900
+#include "pipl.i.r"
+
+#define RNAME  "AES Decrypt"
+#define RENTRY "rikiAESDecrypt"
+#define RPIPL  1910
 #include "pipl.i.r"

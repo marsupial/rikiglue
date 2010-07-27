@@ -3,8 +3,7 @@
 */
 
 #import <Cocoa/Cocoa.h>
-
-#import "threads/threads.h"
+#import "frame/threads.h"
 
 @interface Dabba : NSView
 {
@@ -24,7 +23,8 @@
 	CGColorSpaceRef         colorSpace;
 	NSTimer                 *timer;
 	
-	rikiGlue::DecodeThread  decoder;
+	rikiGlue::DecodeThread  *pixelDecoder;
+	rikiGlue::DMTXThread    *instrDecoder;
 
 	double interval, nIntervals;
 }

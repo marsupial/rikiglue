@@ -2,14 +2,14 @@
 	channel.cpp
 */
 
-#include "frame/frame.h"
+#include "frame/operations.h"
 
 namespace rikiGlue
 {
 
 static register_t
-chOperation( uint8_t               c,
-             const Frame::Block    &block )
+chOperation( uint8_t        c,
+             const Block    &block )
 {
 	const register_t n = block.dstSize / 3;
 	const uint8_t *srcData = block.srcData;
@@ -33,19 +33,19 @@ chOperation( uint8_t               c,
 }
 
 register_t
-rChannel( const Frame::Block    &block )
+rChannel( const Block    &block )
 {
 	return ( chOperation(0, block) );
 }
 
 register_t
-gChannel( const Frame::Block    &block )
+gChannel( const Block    &block )
 {
 	return ( chOperation(1, block) );
 }
 
 register_t
-bChannel( const Frame::Block    &block )
+bChannel( const Block    &block )
 {
 	return ( chOperation(2, block) );
 }

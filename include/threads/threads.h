@@ -16,6 +16,8 @@
 	#define USE_PTHREADS   1
 #endif
 
+#include <vector>
+
 namespace threads
 {
 
@@ -88,36 +90,12 @@ private:
 	condition_t  mCondition;
 };
 
-} /* namespace threads */
-
-#include "frame/frame.h"
-#include <vector>
-
-namespace rikiGlue
-{
-
-struct ThreadBlock : public Frame::Block
-{
-	ThreadBlock( const uint8_t   *src,
-	             size_t          srcSz,
-	             uint8_t         *dst,
-	             size_t          dstSz,
-	             const Frame::operation_t *opers,
-	             size_t                   nOpers ) :
-		Block(src, srcSz, dst, dstSz),
-		ops(opers),
-		numOps(nOpers)
-	{}
-	
-	const Frame::operation_t *ops;
-	size_t                   numOps;
-};
-
-typedef std::vector<ThreadBlock>   BlockQueue;
-
-class DecodeThread : public threads::Thread
+template <class T>
+class Worker : public Thread
 {
 public:
+
+	typedef std::vector<T> Queue;
 
 	enum
 	{
@@ -126,18 +104,70 @@ public:
 		kExit     = 2
 	};
 
-	DecodeThread() :
+	Worker() :
 		mState(kActive)
 	{}
 
-	virtual ~DecodeThread();
+	virtual ~Worker()
+	{
+		mMutex.lock();
+		if ( mState != kExit )
+			mState = kExit;
+		mMutex.unlock();
+		
+		mCondition.signal();
+		
+		mMutex.lock();
+			// pthread_cancel(mThread);
+		mMutex.unlock();
+	}
 
 	// mutex must be locked before calling, and is unlocked on exit
 	void
-	decode();
+	work()
+	{
+		typename Queue::iterator itr = mQueue.begin();
+		if ( itr != mQueue.end() )
+		{
+			T param = *itr;
+			mQueue.erase(itr);
+			mMutex.unlock();
+			
+			work(param);
+		}
+		else
+			mMutex.unlock();
+	}
+
+	void
+	work( T    &param );
 
 	virtual void
-	run();
+	run()
+	{
+		mMutex.lock();
+
+		while ( true )
+		{
+			while ( mQueue.empty() )
+			{
+				mState = kWaiting;
+				mCondition.wait(mMutex);
+				if ( mState == kExit )
+				{
+					mMutex.unlock();
+					return;
+				}
+				mState = kActive;
+			}
+
+			work();
+			if ( mState == kExit )
+				return;
+
+			mMutex.lock();
+		}
+	}
 
 	void
 	exit()
@@ -169,26 +199,20 @@ public:
 		mCondition.signal();
 	}
 
-	void
-	broadcast()
-	{
-		mCondition.broadcast();
-	}
-
-	BlockQueue&
+	Queue&
 	queue()
 	{
-		return ( mBlocks );
+		return ( mQueue );
 	}
 
 private:
 
 	threads::Mutex      mMutex;
 	threads::Condition  mCondition;
-	BlockQueue          mBlocks;
-	volatile uint8_t             mState;
+	Queue               mQueue;
+	uint8_t             mState;
 };
 
-} /* namespace rikiGlue */
+} /* namespace threads */
 
 #endif /* _threads_h__ */
