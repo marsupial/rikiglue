@@ -16,9 +16,9 @@ namespace rikiGlue
 	typedef std::deque<HWND>  list_t;
 
 	static const TCHAR
-		kWindowTitle[] = L"glue",
-		kWindowClass[] = L"gabba",
-		kBitmapProperty[] = L"gabbaBitmap";
+		kWindowTitle[] = TEXT("glue"),
+		kWindowClass[] = TEXT("gabba"),
+		kBitmapProperty[] = TEXT("gabbaBitmap");
 
 	static Application
 		sApplication;

@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\include"
-				PreprocessorDefinitions="_VISUALC_;WIN32;_WINDOWS;_DEBUG"
+				PreprocessorDefinitions="_WIN32_WINNT=0x0500;NO_IPV6=1;_CRT_SECURE_NO_WARNINGS;_VISUALC_;WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -64,6 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="imm32.lib winmm.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -139,6 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="imm32.lib winmm.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -180,10 +182,26 @@
 			<File
 				RelativePath="..\src\common\application.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						DebugInformationFormat="0"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\windows\main.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						DebugInformationFormat="0"
+					/>
+				</FileConfiguration>
 			</File>
 			<Filter
 				Name="frame"
@@ -191,6 +209,14 @@
 				<File
 					RelativePath="..\src\frame\channel.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\frame\dmtx.cpp"
@@ -209,20 +235,45 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							ObjectFile="$(IntDir)\dmtxcpp"
+							DebugInformationFormat="0"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\frame\frame.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\frame\lut.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\src\frame\threads.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -231,6 +282,14 @@
 				<File
 					RelativePath="..\src\threads\threads.windows.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -239,6 +298,430 @@
 				<File
 					RelativePath="..\src\dmtx\dmtx.c"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="putty"
+				>
+				<File
+					RelativePath="..\src\putty\CPROXY.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\LDISC.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\MISC.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\PINGER.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\PORTFWD.C"
+					>
+				</File>
+				<File
+					RelativePath="..\src\putty\PROXY.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\putty.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSH.C"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="3"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHAES.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHARCF.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHBLOWF.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHBN.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHCRC.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHCRCDA.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHDES.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHDH.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHDSS.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHMD5.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHPUBK.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHRAND.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHRSA.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHSH256.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHSH512.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHSHA.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\SSHZLIB.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\TREE234.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\VERSION.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\WILDCARD.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\WINHANDL.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\WINMISC.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\WINNET.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\WINNOISE.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\WINPROXY.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\src\putty\WINSTORE.C"
+					>
+				</File>
+				<File
+					RelativePath="..\src\putty\X11FWD.C"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>
