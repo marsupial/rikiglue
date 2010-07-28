@@ -81,7 +81,7 @@ Mutex::unlock()
 }
 
 Condition::Condition() :
-	mCondition( ::CreateEvent(0, FALSE, FALSE, L"gabbaCondition") )
+	mCondition( ::CreateEvent(0, FALSE, FALSE, TEXT("gabbaCondition")) )
 {
 	if ( mCondition == NULL )
 		throw ( std::runtime_error("CreateEvent") );
