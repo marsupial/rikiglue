@@ -119,6 +119,7 @@ fprintf(stderr, "crypted: %d bytes\n", num);
 		tNum += blen; //( decrypt ? rsaSz : blen );
 	}
 fprintf(stderr, "Crypted: %d bytes, crypt size: %d\n", static_cast<int>(tNum), static_cast<int>(crypt.size()));
+	return ( tNum == 0 );
 }
 
 static int
@@ -166,6 +167,7 @@ main( int           argc,
 
 	bytes_t crypt;
 	rval = crypto(argv[argc-1], decrypt, bytes, crypt);
+fprintf(stderr, "crypto returned: %d\n", rval);
 	if ( rval == 0 )
 		fwrite(&crypt[0], sizeof(bytes_t::value_type), crypt.size(), stdout);
 
