@@ -14,6 +14,15 @@
 
 #include "common.cpp"
 
+#if defined(_WIN32)
+	#include <io.h>
+	#include <fcntl.h>
+	#define WINDOWS_STD_INOUT_BINARY  setmode(0, O_BINARY); setmode(1, O_BINARY);
+#else
+	#define WINDOWS_STD_INOUT_BINARY         
+#endif
+
+
 static const char rnd_seed[] = "Apartment 21 (Tomorrow Can Shut Up and Go Away)";
 
 static int
@@ -156,6 +165,8 @@ main( int           argc,
 {
 	if ( argc < 2 )
 		return ( usage(argv[0]) );
+
+	WINDOWS_STD_INOUT_BINARY
 
 	int   rval = 0;
 	bool  decrypt = testFlag(argc, argv, 'd');

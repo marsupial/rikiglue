@@ -18,9 +18,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\build"
-			IntermediateDirectory="..\build\$(ConfigurationName)"
+			OutputDirectory="..\..\build"
+			IntermediateDirectory="..\..\build\$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\OpenSSL.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -41,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\include"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="_WIN32_WINNT=0x0500;NO_IPV6=1;_CRT_SECURE_NO_WARNINGS;_VISUALC_;WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -57,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="..\include"
+				AdditionalIncludeDirectories="..\..\include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -94,9 +95,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\build"
-			IntermediateDirectory="..\build\$(ConfigurationName)"
+			OutputDirectory="..\..\build"
+			IntermediateDirectory="..\..\build\$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\OpenSSL.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -119,7 +121,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\include"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="_VISUALC_;WIN32;_WINDOWS;NDEBUG"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -133,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="..\include"
+				AdditionalIncludeDirectories="..\..\include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -180,7 +182,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\common\application.cpp"
+				RelativePath="..\..\src\common\application.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -192,7 +194,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\windows\main.cpp"
+				RelativePath="..\..\src\windows\main.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -207,7 +209,7 @@
 				Name="frame"
 				>
 				<File
-					RelativePath="..\src\frame\channel.cpp"
+					RelativePath="..\..\src\frame\channel.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -219,7 +221,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\frame\dmtx.cpp"
+					RelativePath="..\..\src\frame\dmtx.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -240,7 +242,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\frame\frame.cpp"
+					RelativePath="..\..\src\frame\frame.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -252,7 +254,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\frame\lut.cpp"
+					RelativePath="..\..\src\frame\lut.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -264,7 +266,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\frame\threads.cpp"
+					RelativePath="..\..\src\frame\threads.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -280,7 +282,7 @@
 				Name="threads"
 				>
 				<File
-					RelativePath="..\src\threads\threads.windows.cpp"
+					RelativePath="..\..\src\threads\threads.windows.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -296,7 +298,7 @@
 				Name="dmtx"
 				>
 				<File
-					RelativePath="..\src\dmtx\dmtx.c"
+					RelativePath="..\..\src\dmtx\dmtx.c"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -312,7 +314,7 @@
 				Name="putty"
 				>
 				<File
-					RelativePath="..\src\putty\CPROXY.C"
+					RelativePath="..\..\src\putty\CPROXY.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -324,7 +326,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\LDISC.C"
+					RelativePath="..\..\src\putty\LDISC.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -336,7 +338,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\MISC.C"
+					RelativePath="..\..\src\putty\MISC.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -348,7 +350,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\PINGER.C"
+					RelativePath="..\..\src\putty\PINGER.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -360,23 +362,11 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\PORTFWD.C"
+					RelativePath="..\..\src\putty\PORTFWD.C"
 					>
 				</File>
 				<File
-					RelativePath="..\src\putty\PROXY.C"
-					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DebugInformationFormat="0"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\src\putty\putty.cpp"
+					RelativePath="..\..\src\putty\PROXY.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -388,7 +378,19 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSH.C"
+					RelativePath="..\..\src\putty\putty.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\src\putty\SSH.C"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -408,7 +410,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHAES.C"
+					RelativePath="..\..\src\putty\SSHAES.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -420,7 +422,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHARCF.C"
+					RelativePath="..\..\src\putty\SSHARCF.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -432,7 +434,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHBLOWF.C"
+					RelativePath="..\..\src\putty\SSHBLOWF.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -444,7 +446,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHBN.C"
+					RelativePath="..\..\src\putty\SSHBN.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -456,7 +458,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHCRC.C"
+					RelativePath="..\..\src\putty\SSHCRC.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -468,7 +470,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHCRCDA.C"
+					RelativePath="..\..\src\putty\SSHCRCDA.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -480,7 +482,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHDES.C"
+					RelativePath="..\..\src\putty\SSHDES.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -492,7 +494,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHDH.C"
+					RelativePath="..\..\src\putty\SSHDH.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -504,7 +506,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHDSS.C"
+					RelativePath="..\..\src\putty\SSHDSS.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -516,7 +518,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHMD5.C"
+					RelativePath="..\..\src\putty\SSHMD5.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -528,7 +530,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHPUBK.C"
+					RelativePath="..\..\src\putty\SSHPUBK.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -540,7 +542,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHRAND.C"
+					RelativePath="..\..\src\putty\SSHRAND.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -552,7 +554,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHRSA.C"
+					RelativePath="..\..\src\putty\SSHRSA.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -564,7 +566,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHSH256.C"
+					RelativePath="..\..\src\putty\SSHSH256.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -576,7 +578,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHSH512.C"
+					RelativePath="..\..\src\putty\SSHSH512.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -588,7 +590,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHSHA.C"
+					RelativePath="..\..\src\putty\SSHSHA.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -600,7 +602,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\SSHZLIB.C"
+					RelativePath="..\..\src\putty\SSHZLIB.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -612,7 +614,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\TREE234.C"
+					RelativePath="..\..\src\putty\TREE234.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -624,7 +626,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\VERSION.C"
+					RelativePath="..\..\src\putty\VERSION.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -636,7 +638,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\WILDCARD.C"
+					RelativePath="..\..\src\putty\WILDCARD.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -648,7 +650,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\WINHANDL.C"
+					RelativePath="..\..\src\putty\WINHANDL.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -660,7 +662,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\WINMISC.C"
+					RelativePath="..\..\src\putty\WINMISC.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -672,7 +674,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\WINNET.C"
+					RelativePath="..\..\src\putty\WINNET.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -684,7 +686,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\WINNOISE.C"
+					RelativePath="..\..\src\putty\WINNOISE.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -696,7 +698,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\WINPROXY.C"
+					RelativePath="..\..\src\putty\WINPROXY.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -708,11 +710,11 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\src\putty\WINSTORE.C"
+					RelativePath="..\..\src\putty\WINSTORE.C"
 					>
 				</File>
 				<File
-					RelativePath="..\src\putty\X11FWD.C"
+					RelativePath="..\..\src\putty\X11FWD.C"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -731,34 +733,34 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\include\common\application.h"
+				RelativePath="..\..\include\common\application.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\windows\resource.h"
+				RelativePath="..\..\include\windows\resource.h"
 				>
 			</File>
 			<Filter
 				Name="frame"
 				>
 				<File
-					RelativePath="..\include\frame\block.h"
+					RelativePath="..\..\include\frame\block.h"
 					>
 				</File>
 				<File
-					RelativePath="..\include\frame\dmtx.h"
+					RelativePath="..\..\include\frame\dmtx.h"
 					>
 				</File>
 				<File
-					RelativePath="..\include\frame\frame.h"
+					RelativePath="..\..\include\frame\frame.h"
 					>
 				</File>
 				<File
-					RelativePath="..\include\frame\operations.h"
+					RelativePath="..\..\include\frame\operations.h"
 					>
 				</File>
 				<File
-					RelativePath="..\include\frame\threads.h"
+					RelativePath="..\..\include\frame\threads.h"
 					>
 				</File>
 			</Filter>
@@ -769,15 +771,15 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="..\rsrc\windows\icon.ico"
+				RelativePath="..\..\rsrc\windows\icon.ico"
 				>
 			</File>
 			<File
-				RelativePath="..\rsrc\windows\resource.rc"
+				RelativePath="..\..\rsrc\windows\resource.rc"
 				>
 			</File>
 			<File
-				RelativePath="..\rsrc\windows\small.ico"
+				RelativePath="..\..\rsrc\windows\small.ico"
 				>
 			</File>
 		</Filter>
