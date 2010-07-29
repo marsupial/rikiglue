@@ -15,7 +15,6 @@ void time(NSDate *date) { double i = - [ date timeIntervalSinceNow ]; printf("ti
 namespace rikiGlue
 {
 
-static const int kEdge = 13;
 
 struct LastRect
 {
@@ -23,23 +22,29 @@ struct LastRect
 	DmtxPixelLoc  br;
 	bool          valid;
 };
+
+static const int kEdge = 13;
 static LastRect sLastRect = { {0,0}, {0,0}, false };
 
-// in thread vs lock and push : 700 vs. 1400
-// dealloc 2s .5fps vs:
-// 2s .5 .01 70fps
+void
+DMTXDecode::finished( DMTXDecode  &decode )
+{
+	dmtxRegionDestroy(&decode.reg);
+	dmtxImageDestroy(&decode.dec->image);
+	dmtxDecodeDestroy(&decode.dec);
+	delete decode.frame;
+}
+
+inline DMTXThread::timeout_t
+timeoutCalc( Frame    *frame )
+{
+	return ( (frame->width() * frame->height()) / 350 );
+}
 
 static void
-dmtxFound( DmtxDecode   *dec,
-           DmtxRegion   *reg )
+dmtxDecode( DMTXDecode   &decode )
 {
-	sLastRect.tl.X = reg->leftLoc.X-kEdge;
-	sLastRect.tl.Y = reg->topLoc.Y+kEdge;
-	sLastRect.br.X = reg->rightLoc.X+kEdge;
-	sLastRect.br.Y = reg->bottomLoc.Y-kEdge;
-	sLastRect.valid  = true;
-
-	DmtxMessage *msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
+	DmtxMessage *msg = dmtxDecodeMatrixRegion(decode.dec, decode.reg, DmtxUndefined);
 	if ( msg != NULL )
 	{
 
@@ -48,46 +53,61 @@ dmtxFound( DmtxDecode   *dec,
 		printf("\"\n");
 		dmtxMessageDestroy(&msg);
 	}
-	// std::string output(reinterpret_cast<const char*>(msg->output), msg->outputIdx);
+
+	DMTXDecode::finished(decode);
 }
 
-static bool
-dmtxFind( DmtxDecode    *dec,
-          long          timeoutMS )
+void
+DMTXReader::process( Frame         *frame,
+                     DmtxDecode    *dec,
+                     DmtxRegion    *reg )
 {
-	DmtxTime   msec = dmtxTimeAdd(dmtxTimeNow(), timeoutMS);
+	sLastRect.tl.X = reg->leftLoc.X-kEdge;
+	sLastRect.tl.Y = reg->topLoc.Y+kEdge;
+	sLastRect.br.X = reg->rightLoc.X+kEdge;
+	sLastRect.br.Y = reg->bottomLoc.Y-kEdge;
+	sLastRect.valid  = true;
+
+	DMTXDecode  decode = { frame, dec, reg };
+	if ( mInstThread )
+	{
+		mInstThread->lock();
+			mInstThread->queue().push_back(decode);
+		mInstThread->unlock();
+		mInstThread->signal();
+	}
+	else
+		dmtxDecode(decode);
+}
+
+bool
+DMTXReader::find( Frame         *frame,
+                  DmtxDecode    *dec,
+                  timeout_t     timeout )
+{
+	DmtxTime   msec = dmtxTimeAdd(dmtxTimeNow(), timeout);
 	DmtxRegion *reg = dmtxRegionFindNext(dec, &msec);
 
 	if ( reg != NULL )
 	{
-		dmtxFound(dec, reg);
-		dmtxRegionDestroy(&reg);
+		process(frame, dec, reg);
 		return ( true );
 	}
 
 	return ( false );
 }
 
-inline int32_t
-timeoutCalc( register_t   width,
-             register_t   height )
+bool
+DMTXReader::scan( Frame    *frame )
 {
-	return ( (width*height) / 350 );
-}
-
-static int
-dmtxDecode( uint8_t       *pixels,
-            register_t    width,
-            register_t    height )
-{
-	DmtxImage  *img = dmtxImageCreate(pixels, width, height, DmtxPack24bppRGB);
+	DmtxImage  *img = dmtxImageCreate(frame->bytes(), frame->width(), frame->height(), DmtxPack24bppRGB);
 
 #if defined(_WINDOWS)
 	dmtxImageSetProp(img, DmtxPropImageFlip, DmtxFlipY);
 #endif
 
-	int32_t    timeout;
-	DmtxDecode *dec = dmtxDecodeCreate(img, 1);
+	timeout_t   timeout;
+	DmtxDecode  *dec = dmtxDecodeCreate(img, 1);
 
 	if ( sLastRect.valid )
 	{
@@ -98,26 +118,27 @@ dmtxDecode( uint8_t       *pixels,
 		timeout = 1000 / 25;
 	}
 	else
-		timeout = timeoutCalc(width, height);
+		timeout = timeoutCalc(frame);
 
-	if ( dmtxFind(dec, timeout) == false )
+	if ( find(frame, dec, timeout) )
+		return ( true );
+	
+	if ( sLastRect.valid )
 	{
-		printf("not found with timeout: %d and valid: %d\n", timeout, sLastRect.valid);
-		if ( sLastRect.valid )
-		{
-			sLastRect.valid = false;
-			dmtxDecodeSetProp(dec, DmtxPropXmin, 0);
-			dmtxDecodeSetProp(dec, DmtxPropXmax, width);
-			dmtxDecodeSetProp(dec, DmtxPropYmin, 0);
-			dmtxDecodeSetProp(dec, DmtxPropYmax, height);
-			dmtxFind(dec, timeoutCalc(width, height));
-		}
+		sLastRect.valid = false;
+		dmtxDecodeSetProp(dec, DmtxPropXmin, 0);
+		dmtxDecodeSetProp(dec, DmtxPropXmax, frame->width());
+		dmtxDecodeSetProp(dec, DmtxPropYmin, 0);
+		dmtxDecodeSetProp(dec, DmtxPropYmax, frame->height());
+
+		if ( find(frame, dec, timeoutCalc(frame)) )
+			return ( true );
 	}
 
 	dmtxDecodeDestroy(&dec);
 	dmtxImageDestroy(&img);
 
-	return ( 0 );
+	return ( false );
 }
 
 } /* namespace rikiGlue */
@@ -126,10 +147,17 @@ namespace threads
 {
 
 template <> void
-rikiGlue::DMTXThread::work( rikiGlue::Frame   *&frame )
+Worker<rikiGlue::Frame*>::work( rikiGlue::Frame   *&frame )
 {
-	rikiGlue::dmtxDecode(frame->bytes(), frame->width(), frame->height());
-	delete frame;
+	if ( static_cast<rikiGlue::DMTXThread*>(this)->scan(frame) == false )
+		delete frame;
+}
+
+template <> void
+rikiGlue::DMTXInstrThread::work( rikiGlue::DMTXDecode   &decode )
+{
+printf("threaded decode\n");
+	rikiGlue::dmtxDecode(decode);
 }
 
 } /* namespace threads */

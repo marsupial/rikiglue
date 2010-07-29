@@ -8,6 +8,33 @@
 namespace rikiGlue
 {
 
+#if defined(TEST_FRAME_LEAKS)
+
+static int sAFrames = 0, sDFrames = 0;
+int Frame::allocedFrames() { return ( sAFrames ); }
+int Frame::deAllocedFrames() { return ( sDFrames ); }
+
+Frame::Frame( size_t          width,
+              size_t          height,
+              DecodeThread    *decoder ) :
+	mDecoder(decoder),
+	mWidth(width),
+	mHeight(height),
+	mRowbytes(mWidth*3),
+	mPixels( new uint8_t[mRowbytes*mHeight] )
+{
+	sAFrames++;
+}
+
+Frame::~Frame()
+{
+	sDFrames++;
+	if ( mPixels )
+		delete [] mPixels;
+}
+
+#endif
+
 register_t
 argbToRGB( const Frame::Block    &block )
 {

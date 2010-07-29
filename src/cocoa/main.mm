@@ -11,45 +11,6 @@
 namespace rikiGlue
 {
 
-template <class T> static void
-nop( T& )
-{
-}
-
-static void
-frameDelete( Frame    *frame )
-{
-	delete frame;
-}
-
-template <class T> static void
-createThread( T   *&thread )
-{
-	thread = new T;
-	if ( thread && thread->create() != 0 )
-	{
-		delete thread;
-		thread = NULL;
-	}
-}
-
-template <class T, class F> static void
-destroyThread( T   *&thread,
-               F   op = NULL )
-{
-	if ( thread )
-	{
-		typename T::Queue queue;
-		thread->lock();
-			std::swap(queue, thread->queue());
-			thread->exit();
-		thread->unlock();
-		thread->signal();
-		
-		std::for_each(queue.begin(), queue.end(), op);
-		delete thread;
-	}
-}
 
 } /* namespace rikiGlue */
 
@@ -136,7 +97,7 @@ destroyThread( T   *&thread,
 	CGImageRelease(capturedImage);
 
 	using namespace rikiGlue;
-	std::auto_ptr<Frame> frame( new Frame(imageRect.size.width, imageRect.size.height, pixelDecoder) );
+	std::auto_ptr<Frame> frame( new Frame(imageRect.size.width, imageRect.size.height, application.decoderThread()) );
 
 #define SPLIT_OP
 
@@ -159,21 +120,7 @@ destroyThread( T   *&thread,
 //	double interval0 = - [ date0 timeIntervalSinceNow ];
 //	printf("time: %f, %f fps\n", interval0, 1.0/interval0);
 
-	if ( instrDecoder )
-	{
-			instrDecoder->lock();
-			if ( instrDecoder->queue().size() == 0 )
-				instrDecoder->queue().push_back(frame.get());
-			else
-			{
-				Frame *dropFrame = instrDecoder->queue()[0];
-				instrDecoder->queue()[0] = frame.get();
-				delete dropFrame;
-			}
-			frame.release();
-			instrDecoder->unlock();
-			instrDecoder->signal();
-	}
+	application.dmtxFrame(frame.release());
 
 	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);
@@ -254,8 +201,7 @@ destroyThread( T   *&thread,
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
 {
-	rikiGlue::createThread<rikiGlue::DecodeThread>(pixelDecoder);
-	rikiGlue::createThread<rikiGlue::DMTXThread>(instrDecoder);
+	application.startThreads();
 
 	colorSpace = CGColorSpaceCreateDeviceRGB();
 	[ window setDelegate: self ];
@@ -272,12 +218,25 @@ destroyThread( T   *&thread,
 	[ window setDelegate: nil ];
 	CGColorSpaceRelease(colorSpace);
 
-	rikiGlue::destroyThread<rikiGlue::DecodeThread>(pixelDecoder, rikiGlue::nop<rikiGlue::ThreadBlock>);
-	rikiGlue::destroyThread<rikiGlue::DMTXThread>(instrDecoder, rikiGlue::frameDelete);
-
+	application.stopThreads();
 
 	interval /= -nIntervals;
 	printf("t: %f, %f fps\n", interval, 1.0/interval);
+
+#if defined(TEST_FRAME_LEAKS)
+
+	int aFrames = Frame::allocedFrames();
+	int dFrames = Frame::deAllocedFrames();
+	
+	if ( aFrames != dFrames )
+		printf("******* LEAKING ********\n");
+	printf("number of allocated frames  : %d\n", aFrames);
+	printf("number of deallocated frames: %d\n", dFrames);
+	if ( aFrames != dFrames )
+		printf("******* LEAKING ********\n");
+
+#endif
+
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) application

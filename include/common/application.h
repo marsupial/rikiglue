@@ -34,15 +34,12 @@ public:
 		return ( mPixelDecodeThread );
 	}
 
-	DMTXThread*
-	dmtxThread()
-	{
-		return ( mInstructionDecodeThread );
-	}
-
 private:
-		DecodeThread  *mPixelDecodeThread;
-		DMTXThread    *mInstructionDecodeThread;
+
+	DecodeThread    *mPixelDecodeThread;
+
+	DMTXThread      *mDMTXThread;
+	DMTXInstrThread *mDMTXInstrThread;
 };
 
 } /* namespace rikiGlue */

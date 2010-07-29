@@ -20,6 +20,18 @@ frameDelete( Frame    *frame )
 	delete frame;
 }
 
+template <class T, class P> static void
+createThread( T   *&thread,
+              P   param )
+{
+	thread = new T(param);
+	if ( thread && thread->create() != 0 )
+	{
+		delete thread;
+		thread = NULL;
+	}
+}
+
 template <class T> static void
 createThread( T   *&thread )
 {
@@ -53,7 +65,8 @@ destroyThread( T   *&inThread,
 
 Application::Application() :
 	mPixelDecodeThread(NULL),
-	mInstructionDecodeThread(NULL)
+	mDMTXThread(NULL),
+	mDMTXInstrThread(NULL)
 {
 }
 
@@ -66,35 +79,42 @@ void
 Application::startThreads()
 {
 	createThread(mPixelDecodeThread);
-	createThread(mInstructionDecodeThread);
+	createThread(mDMTXInstrThread);
+	createThread(mDMTXThread, mDMTXInstrThread);
 }
 
 void
 Application::stopThreads()
 {
 	destroyThread(mPixelDecodeThread, nop<ThreadBlock>);
-	destroyThread(mInstructionDecodeThread, frameDelete);
+	destroyThread(mDMTXThread, frameDelete);
+	destroyThread(mDMTXInstrThread, DMTXDecode::finished);
 }
 
 void
 Application::dmtxFrame( Frame    *inFrame )
 {
 	std::auto_ptr<Frame> frame(inFrame);
-	if ( !mInstructionDecodeThread )
+	if ( !mDMTXThread )
+	{
+		DMTXReader  dmtx(mDMTXInstrThread);
+		if ( dmtx.scan(inFrame) )
+			frame.release();
 		return;
+	}
 
-	mInstructionDecodeThread->lock();
-	if ( mInstructionDecodeThread->queue().size() == 0 )
-		mInstructionDecodeThread->queue().push_back(frame.get());
+	mDMTXThread->lock();
+	if ( mDMTXThread->queue().size() == 0 )
+		mDMTXThread->queue().push_back(frame.get());
 	else
 	{
-		Frame *dropFrame = mInstructionDecodeThread->queue()[0];
-		mInstructionDecodeThread->queue()[0] = frame.get();
+		Frame *dropFrame = mDMTXThread->queue()[0];
+		mDMTXThread->queue()[0] = frame.get();
 		delete dropFrame;
 	}
 	frame.release();
-	mInstructionDecodeThread->unlock();
-	mInstructionDecodeThread->signal();
+	mDMTXThread->unlock();
+	mDMTXThread->signal();
 }
 
 } /* namespace rikiGlue */
