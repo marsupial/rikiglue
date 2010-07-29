@@ -95,7 +95,7 @@ destroyThread( T   *&thread,
 
 @end
 
-				
+
 @implementation Gabba
 
 - (CGImageRef) imageBelowWindow: (NSWindow *) inWindow withRect: (NSRect) inRect
