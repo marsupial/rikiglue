@@ -226,8 +226,8 @@ init( Config    &cfg )
 }
 
 int
-putty_main( int           argc,
-            const char    **argv )
+ssh_main( int           argc,
+          const char    **argv )
 {
 	if ( argc < 4 )
 	{
