@@ -10,6 +10,9 @@
 #include "threads/threads.h"
 #include "frame/block.h"
 
+struct DmtxDecode_struct;
+struct DmtxRegion_struct;
+
 namespace rikiGlue
 {
 
@@ -32,8 +35,63 @@ struct ThreadBlock : public Block
 	size_t                   numOps;
 };
 
-typedef threads::Worker<ThreadBlock>  DecodeThread;
-typedef threads::Worker<Frame*> DMTXThread;
+struct DMTXDecode
+{
+	Frame             *frame;
+	DmtxDecode_struct *dec;
+	DmtxRegion_struct *reg;
+
+	static void
+	finished( DMTXDecode  &decode );
+};
+
+typedef threads::Worker<ThreadBlock> DecodeThread;
+
+typedef threads::Worker<DMTXDecode>  DMTXInstrThread;
+
+class DMTXReader
+{
+public:
+	typedef long  timeout_t;
+
+	DMTXReader( DMTXInstrThread  *instThread = NULL ) :
+		mInstThread(instThread)
+	{}
+	~DMTXReader() {}
+
+	bool
+	scan( Frame   *frame );  // if returns true, takes ownership of frame
+
+private:
+
+	bool
+	find( Frame                 *frame,
+	      DmtxDecode_struct     *dec,
+	      timeout_t             timeout );
+
+	void
+	process( Frame              *frame,
+	         DmtxDecode_struct  *dec,
+	         DmtxRegion_struct  *reg );
+
+	DMTXInstrThread  *mInstThread;
+};
+
+class DMTXThread : public DMTXReader, public threads::Worker<Frame*>
+{
+public:
+
+	typedef long  timeout_t;
+
+	DMTXThread( DMTXInstrThread  *instThread = NULL ) :
+		DMTXReader(instThread)
+	{}
+	virtual ~DMTXThread() {}
+
+private:
+
+};
+
 
 } /* namespace rikiGlue */
 

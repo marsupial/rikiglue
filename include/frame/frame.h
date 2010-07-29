@@ -26,6 +26,18 @@ public:
 		kFormatEnd
 	};
 
+#if defined(TEST_FRAME_LEAKS)
+
+	Frame( size_t          width,
+	       size_t          height,
+	       DecodeThread    *decoder = NULL );
+
+	~Frame();
+	int allocedFrames();
+	int deAllocedFrames();
+
+#else
+
 	Frame( size_t          width,
 	       size_t          height,
 	       DecodeThread    *decoder = NULL ) :
@@ -42,6 +54,8 @@ public:
 		if ( mPixels )
 			delete [] mPixels;
 	}
+
+#endif
 
 	register_t
 	operate( const operation_t    *ops,
