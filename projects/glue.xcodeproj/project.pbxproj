@@ -468,7 +468,7 @@
 		C25927CE11FCD06E008F094E /* vis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vis.c; path = "../src/ssh/openbsd-compat/vis.c"; sourceTree = SOURCE_ROOT; };
 		C25927CF11FCD06E008F094E /* xcrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xcrypt.c; path = "../src/ssh/openbsd-compat/xcrypt.c"; sourceTree = SOURCE_ROOT; };
 		C25927D011FCD06E008F094E /* xmmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmmap.c; path = "../src/ssh/openbsd-compat/xmmap.c"; sourceTree = SOURCE_ROOT; };
-		C2592EA811FE4DB6008F094E /* dmtx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dmtx.cpp; path = ../src/frame/dmtx.cpp; sourceTree = SOURCE_ROOT; };
+		C2592EA811FE4DB6008F094E /* dmtx.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = dmtx.cpp; path = ../src/frame/dmtx.cpp; sourceTree = SOURCE_ROOT; };
 		C2592FA411FE55B5008F094E /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threads.cpp; path = ../src/frame/threads.cpp; sourceTree = SOURCE_ROOT; };
 		C259325D11FF27CF008F094E /* css.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = css.cpp; path = ../src/frame/css.cpp; sourceTree = SOURCE_ROOT; };
 		C25932D711FF33BE008F094E /* aes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aes.cpp; path = ../src/frame/aes.cpp; sourceTree = SOURCE_ROOT; };

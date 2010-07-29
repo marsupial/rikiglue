@@ -39,7 +39,11 @@ Thread::Thread() :
 Thread::~Thread()
 {
 	if ( ! pthread_equal(mThread, pthread_self()) )
-		pthread_join(mThread, NULL);
+	{
+		pthread_t thread = mThread;
+		mThread = pthread_self();
+		pthread_join(thread, NULL);
+	}
 }
 
 register_t

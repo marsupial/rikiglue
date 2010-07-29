@@ -6,27 +6,79 @@
 #include "dmtx/dmtx.h"
 #include <string>
 
-namespace rikiGlue
-{
 /*
-	c01   c11
-	c00   c10
-
-bool
-compareCorners( const DmtxCorners    &c0,
-                const DmtxCorners    &c1 )
-{
-	return ( ((c0.c00.X > (c1.c00.X-1.0)) && (c0.c10.X < (c1.c10.X+1.0))) && 
-	         ((c0.c00.Y > (c1.c00.Y-1.0)) && (c0.c11.Y < (c1.c11.Y+1.0))) );
-
-//	(c0.c00.Y > (c1.c00.Y-1.0)) && (c0.c11.Y < (c1.c11.Y+1.0))
-}
+#import <Cocoa/Cocoa.h>
+NSDate* date() { return ( [ NSDate date ] ); }
+void time(NSDate *date) { double i = - [ date timeIntervalSinceNow ]; printf("time: %f, %f fps\n", i, 1.0/i); }
 */
 
+namespace rikiGlue
+{
+
+static const int kEdge = 13;
+
+struct LastRect
+{
+	DmtxPixelLoc  tl;
+	DmtxPixelLoc  br;
+	bool          valid;
+};
+static LastRect sLastRect = { {0,0}, {0,0}, false };
+
+// in thread vs lock and push : 700 vs. 1400
+// dealloc 2s .5fps vs:
+// 2s .5 .01 70fps
+
+static void
+dmtxFound( DmtxDecode   *dec,
+           DmtxRegion   *reg )
+{
+	sLastRect.tl.X = reg->leftLoc.X-kEdge;
+	sLastRect.tl.Y = reg->topLoc.Y+kEdge;
+	sLastRect.br.X = reg->rightLoc.X+kEdge;
+	sLastRect.br.Y = reg->bottomLoc.Y-kEdge;
+	sLastRect.valid  = true;
+
+	DmtxMessage *msg = dmtxDecodeMatrixRegion(dec, reg, DmtxUndefined);
+	if ( msg != NULL )
+	{
+
+		printf("found: \"");
+		fwrite(msg->output, sizeof(unsigned char), msg->outputIdx, stdout);
+		printf("\"\n");
+		dmtxMessageDestroy(&msg);
+	}
+	// std::string output(reinterpret_cast<const char*>(msg->output), msg->outputIdx);
+}
+
+static bool
+dmtxFind( DmtxDecode    *dec,
+          long          timeoutMS )
+{
+	DmtxTime   msec = dmtxTimeAdd(dmtxTimeNow(), timeoutMS);
+	DmtxRegion *reg = dmtxRegionFindNext(dec, &msec);
+
+	if ( reg != NULL )
+	{
+		dmtxFound(dec, reg);
+		dmtxRegionDestroy(&reg);
+		return ( true );
+	}
+
+	return ( false );
+}
+
+inline int32_t
+timeoutCalc( register_t   width,
+             register_t   height )
+{
+	return ( (width*height) / 350 );
+}
+
 static int
-dmtxDecode( uint8_t  *pixels,
-            int      width,
-            int      height )
+dmtxDecode( uint8_t       *pixels,
+            register_t    width,
+            register_t    height )
 {
 	DmtxImage  *img = dmtxImageCreate(pixels, width, height, DmtxPack24bppRGB);
 
@@ -34,43 +86,37 @@ dmtxDecode( uint8_t  *pixels,
 	dmtxImageSetProp(img, DmtxPropImageFlip, DmtxFlipY);
 #endif
 
+	int32_t    timeout;
 	DmtxDecode *dec = dmtxDecodeCreate(img, 1);
 
-	std::string  lastFound;
-/*	dmtxDecodeSetProp(&dec, DmtxPropXmin, 0);
-	dmtxDecodeSetProp(&dec, DmtxPropXmax, 100);
-	dmtxDecodeSetProp(&dec, DmtxPropYmin, 0);
-	dmtxDecodeSetProp(&dec, DmtxPropYmax, 100);
-*/
-	const long kTimeOut = 1000/25;
-	DmtxTime   msec = dmtxTimeAdd(dmtxTimeNow(), kTimeOut);
-	DmtxRegion *reg = dmtxRegionFindNext(dec, &msec);
-
-	while ( reg != NULL )
+	if ( sLastRect.valid )
 	{
-		DmtxMessage *msg = dmtxDecodeMatrixRegion(dec, reg, 35);
-		if ( msg != NULL )
+		dmtxDecodeSetProp(dec, DmtxPropXmin, sLastRect.tl.X);
+		dmtxDecodeSetProp(dec, DmtxPropXmax, sLastRect.br.X);
+		dmtxDecodeSetProp(dec, DmtxPropYmin, sLastRect.br.Y);
+		dmtxDecodeSetProp(dec, DmtxPropYmax, sLastRect.tl.Y);
+		timeout = 1000 / 25;
+	}
+	else
+		timeout = timeoutCalc(width, height);
+
+	if ( dmtxFind(dec, timeout) == false )
+	{
+		printf("not found with timeout: %d and valid: %d\n", timeout, sLastRect.valid);
+		if ( sLastRect.valid )
 		{
-			printf("found: \"");
-			fwrite(msg->output, sizeof(unsigned char), msg->outputIdx, stdout);
-			printf("\"\n");
-			dmtxMessageDestroy(&msg);
-/*
-			std::string output(reinterpret_cast<const char*>(msg->output), msg->outputIdx);
-			printf("output: \"%s\"\n", output.c_str(), found++);
-			dmtxMessageFree(&msg);
-			if ( output == lastFound )
-				break;
-			lastFound = output;
-*/
+			sLastRect.valid = false;
+			dmtxDecodeSetProp(dec, DmtxPropXmin, 0);
+			dmtxDecodeSetProp(dec, DmtxPropXmax, width);
+			dmtxDecodeSetProp(dec, DmtxPropYmin, 0);
+			dmtxDecodeSetProp(dec, DmtxPropYmax, height);
+			dmtxFind(dec, timeoutCalc(width, height));
 		}
-		dmtxRegionDestroy(&reg);
-		msec = dmtxTimeAdd(dmtxTimeNow(), kTimeOut);
-		reg = dmtxRegionFindNext(dec, &msec);
 	}
 
 	dmtxDecodeDestroy(&dec);
 	dmtxImageDestroy(&img);
+
 	return ( 0 );
 }
 
