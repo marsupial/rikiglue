@@ -77,6 +77,7 @@ Application::Application() :
 	mPixelDecodeThread(NULL),
 	mDMTXThread(NULL),
 	mDMTXInstrThread(NULL),
+	mRect(0.f, 0.f, 1.f, 1.f),
 	mLocked(false)
 {
 }
@@ -85,39 +86,6 @@ Application::~Application()
 {
 	stopThreads();
 }
-
-
-class Lower : public Command
-{
-public:
-
-	static Command*
-	create( const char       *args,
-	        size_t           len )
-	{
-		return ( new Lower(args, len) );
-	}
-
-	Lower( const char      *args,
-	       size_t           len ) :
-		mArguments(args, len)
-	{
-	}
-
-	~Lower()
-	{
-	}
-
-	virtual bool
-	doIt( const Command::Context   &context )
-	{
-		printf("<Lower> [%s]\n", mArguments.c_str());
-		return ( false );
-	}
-
-private:
-	std::string    mArguments;
-};
 
 void
 Application::stop()
@@ -227,13 +195,13 @@ Application::addInstruction( const uint8_t     *bytes,
 }
 
 void
-Application::process( const Command::Context   &ctx )
+Application::process( Command::Context   &ctx )
 {
 	return ( mInstructions.process(ctx) );
 }
 
 void
-Instructions::process( const Command::Context   &ctx )
+Instructions::process( Command::Context   &ctx )
 {
 	lock();
 		list_t  tmp( mInstructions );

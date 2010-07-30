@@ -2,7 +2,12 @@
    command.cpp
 */
 
-#include <ApplicationServices/ApplicationServices.h>
+#if defined(_WINDOWS)
+
+#else
+	#include <ApplicationServices/ApplicationServices.h>
+#endif
+
 #include "common/application.h"
 #include "commands/command.h"
 
@@ -19,6 +24,78 @@ Rect::Rect( float_t   x,
 	height(h)
 {
 }
+
+#if defined(_WINDOWS)
+
+using namespace Gdiplus;
+#define mGDIContext (mContext.mGraphics)
+
+void
+Command::Context::context_t::transform()
+{
+	mGraphics.TranslateTransform(0.f, mHeight);
+	mGraphics.ScaleTransform(1.f, -1.f);
+
+	const rikiGlue::Rect &rect = Application::instance().transform();
+	mGraphics.TranslateTransform(rect.originX, rect.originY);
+	mGraphics.ScaleTransform(rect.width, rect.height);
+}
+
+Command::Context::Context( Command::Context::context_param_t ctx,
+                           const Rect                        &bounds ) :
+	mContext(ctx, bounds.height)
+{
+	mContext.transform();
+}
+
+Command::Context::~Context()
+{
+
+}
+
+void
+Command::Context::setStrokeColor( float_t   r,
+		                          float_t   g,
+		                          float_t   b,
+		                          float_t   a  )
+{
+	mContext.mStroke = Color( static_cast<BYTE>(a*255.f), static_cast<BYTE>(r*255.f),
+	                          static_cast<BYTE>(g*255.f), static_cast<BYTE>(b*255.f) );
+}
+/*
+void
+Command::Context::drawText( const std::string &str,
+						    const Rect        &location,
+                            const float_t     fontSize,
+						    const std::string &fontName )
+{
+	GraphicsState state = mGDIContext.Save();
+
+	Matrix mx1;
+	Matrix mx2(1.f, 0.f, 0.f, -1.f, 0.f, fontSize+fontSize/2.f);
+
+	mGDIContext.GetTransform(&mx1);
+	mx1.Multiply(&mx2);
+	mGDIContext.SetTransform(&mx1);
+	
+	SolidBrush brush( mContext.mStroke );
+	Font       font(wname.data(), fontSize);
+	PointF     pt(location.originX, -location.originY);
+
+	mGDIContext.DrawString(wstr.data(), wstr.length(), &font, pt, &brush);
+	mGDIContext.Restore(state);
+}
+*/
+
+void
+Command::Context::strokeRect( const Rect    &rect )
+{
+	Pen pen( mContext.mStroke );
+	RectF gdiRect(rect.originX, rect.originY, rect.width, rect.height);
+	mGDIContext.DrawRectangles(&pen, &gdiRect, 1);
+}
+
+#else
 
 Command::Context::Context( Command::Context::context_t   ctx,
                            const Rect                    &bounds ) :
@@ -40,17 +117,19 @@ void
 Command::Context::setStrokeColor( float_t   r,
 		                          float_t   g,
 		                          float_t   b,
-		                          float_t   a  ) const
+		                          float_t   a  )
 {
 	CGContextSetRGBStrokeColor(mContext, r, g, b, a);
 }
 
 void
-Command::Context::strokeRect( const Rect    &rect ) const
+Command::Context::strokeRect( const Rect    &rect )
 {
 	const CGRect cgRect = { { rect.originX, rect.originY}, { rect.width, rect.height } };
 	CGContextStrokeRect(mContext, cgRect);
 }
+
+#endif
 
 class Lower : public Command
 {
@@ -74,7 +153,7 @@ public:
 	}
 
 	virtual bool
-	doIt( const Command::Context   &context )
+	doIt( Command::Context   &context )
 	{
 		printf("<Lower> [%s]\n", mArguments.c_str());
 		return ( false );
@@ -105,7 +184,7 @@ public:
 	}
 
 	virtual bool
-	doIt( const Command::Context   &context )
+	doIt( Command::Context   &context )
 	{
 		if ( Application::instance().locked() )
 			context.setStrokeColor(0.0, 1.0, 0);

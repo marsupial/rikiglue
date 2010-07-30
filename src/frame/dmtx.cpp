@@ -126,7 +126,6 @@ DMTXReader::scan( Frame    *frame )
 	
 	if ( sLastRect.valid )
 	{
-		Application::instance().notLocked();
 		sLastRect.valid = false;
 		dmtxDecodeSetProp(dec, DmtxPropXmin, 0);
 		dmtxDecodeSetProp(dec, DmtxPropXmax, frame->width());
@@ -143,6 +142,8 @@ DMTXReader::scan( Frame    *frame )
 */
 	dmtxDecodeDestroy(&dec);
 	dmtxImageDestroy(&img);
+	
+	Application::instance().notLocked();
 
 	return ( false );
 }
