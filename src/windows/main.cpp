@@ -356,6 +356,51 @@ checkCommand( HWND     window,
 	}
 }
 
+static bool
+openDocument( HWND               hwnd )
+{
+	OPENFILENAME ofn;
+	TCHAR         szFile[1024];
+
+	::ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = hwnd;
+	ofn.lpstrFile = szFile;
+	ofn.lpstrFile[0] = 0;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrTitle = TEXT("Open private RSA key");
+	ofn.nFilterIndex = 1;
+	ofn.Flags = OFN_FILEMUSTEXIST;
+
+	if ( ::GetOpenFileName(&ofn) == FALSE )
+		return ( false );
+
+#if defined(UNICODE) || defined(_UNICODE)
+	const size_t sz = wcslen(ofn.lpstrFile);
+	if ( sz == 0 )
+		return ( false );
+
+	std::string    filePath;
+	filePath.resize(sz);
+
+	if ( ::WideCharToMultiByte(CP_UTF8, 0, ofn.lpstrFile, sz, &(*filePath.begin()), sz, NULL, NULL) == 0 )
+	{
+		MessageBox(hwnd, TEXT("Path could not be converted"), NULL, MB_OK);
+		return ( false );
+	}
+#else
+	const std::string    filePath(ofn.lpstrFile);
+#endif
+
+	if ( Application::instance().setRSAKey(filePath) == false )
+	{
+		MessageBox(hwnd, TEXT("Invalid Key"), NULL, MB_OK);
+		return ( false );
+	}
+
+	return ( true );
+}
+
 static LRESULT CALLBACK
 windowProc( HWND      window,
             UINT      message,
@@ -368,12 +413,15 @@ windowProc( HWND      window,
 		case WM_COMMAND:
 			switch ( LOWORD(wParam) )
 			{
+				case IDM_EXIT:
+					::DestroyWindow(window);
+					break;
+				case IDM_OPEN:
+					openDocument(window);
+					break;
 				case IDM_ABOUT:
 					::DialogBox( reinterpret_cast<HINSTANCE>(::GetWindowLong(window, GWL_HINSTANCE)),
 								 MAKEINTRESOURCE(IDD_ABOUTBOX), window, aboutProc );
-					break;
-				case IDM_EXIT:
-					::DestroyWindow(window);
 					break;
 				case IDM_PAUSE:
 					checkCommand(window, IDM_PAUSE, setCapture);

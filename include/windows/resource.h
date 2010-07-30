@@ -7,10 +7,11 @@
 #define IDR_MAINFRAME		128
 #define IDD_ABOUTBOX		103
 
-#define IDM_ABOUT			204
-#define IDM_EXIT			205
-#define IDM_PAUSE           206
-#define IDM_FLOAT           207
+#define IDM_EXIT			204
+#define IDM_OPEN			205
+#define IDM_ABOUT			206
+#define IDM_PAUSE           207
+#define IDM_FLOAT           208
 
 #define IDI_ICON			107
 #define IDI_SMALL			108

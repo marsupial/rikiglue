@@ -3,6 +3,7 @@
 */
 
 #include <vector>
+#include <errno.h>
 
 typedef std::vector<unsigned char>  bytes_t;
 

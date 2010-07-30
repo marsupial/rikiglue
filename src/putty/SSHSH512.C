@@ -167,7 +167,7 @@ static void SHA512_Block(SHA512_State *s, uint64 *block) {
  * at the end, and pass those blocks to the core SHA512 algorithm.
  */
 
-void SHA512_Init(SHA512_State *s) {
+void pSHA512_Init(SHA512_State *s) {
     int i;
     SHA512_Core_Init(s);
     s->blkused = 0;
@@ -224,7 +224,7 @@ void SHA512_Bytes(SHA512_State *s, const void *p, int len) {
     }
 }
 
-void SHA512_Final(SHA512_State *s, unsigned char *digest) {
+void pSHA512_Final(SHA512_State *s, unsigned char *digest) {
     int i;
     int pad;
     unsigned char c[BLKSIZE];
@@ -271,9 +271,9 @@ void SHA512_Final(SHA512_State *s, unsigned char *digest) {
 void SHA512_Simple(const void *p, int len, unsigned char *output) {
     SHA512_State s;
 
-    SHA512_Init(&s);
+    pSHA512_Init(&s);
     SHA512_Bytes(&s, p, len);
-    SHA512_Final(&s, output);
+    pSHA512_Final(&s, output);
 }
 
 #ifdef TEST

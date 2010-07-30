@@ -24,7 +24,8 @@ IDC_APP MENU
 BEGIN
     POPUP "&File"
     BEGIN
-        MENUITEM "E&xit",                IDM_EXIT
+        MENUITEM "&Open",                IDM_OPEN
+		MENUITEM "E&xit",                IDM_EXIT
     END
     POPUP "&Window"
     BEGIN
@@ -39,6 +40,8 @@ END
 
 IDC_APP ACCELERATORS
 BEGIN
+	"^O", IDM_OPEN
+	"o",  IDM_OPEN,   ASCII,  ALT
 	"^Q", IDM_EXIT
 	"q",  IDM_EXIT,   ASCII,  ALT
 	"?",  IDM_ABOUT,  ASCII,  ALT
