@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="imm32.lib winmm.lib"
+				AdditionalDependencies="imm32.lib winmm.lib gdiplus.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="imm32.lib winmm.lib"
+				AdditionalDependencies="imm32.lib winmm.lib gdiplus.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -724,6 +724,14 @@
 							DebugInformationFormat="0"
 						/>
 					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="commands"
+				>
+				<File
+					RelativePath="..\..\src\commands\command.cpp"
+					>
 				</File>
 			</Filter>
 		</Filter>

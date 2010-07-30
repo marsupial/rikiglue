@@ -7,6 +7,9 @@
 #ifndef _command_h__
 #define _command_h__
 
+#if defined(_WINDOWS)
+	#include <gdiplus.h>
+#endif
 
 namespace rikiGlue
 {
@@ -39,13 +42,32 @@ public:
 	{
 	public:
 		#if defined(_WINDOWS)
-			typedef HDC           context_t;
+			typedef HDC                 context_param_t;
+			struct context_t
+			{
+				context_t( HDC       hdc,
+				           float_t   h ) :
+					mGraphics(hdc),
+					mStroke(0,0,0),
+					// mFill(0,0,0),
+					mHeight(h)
+				{}
+				
+				void
+				transform();
+
+				Gdiplus::Graphics  mGraphics;
+				Gdiplus::Color     mStroke;
+				// Gdiplus::Color     mFill;
+				float_t            mHeight;
+			};
 		#else
 			typedef struct CGContext *  context_t;
+			typedef context_t           context_param_t;             
 		#endif
 	
-		Context( context_t    context,
-		         const Rect   &bounds );
+		Context( context_param_t  context,
+		         const Rect       &bounds );
 
 		~Context();
 
@@ -53,10 +75,17 @@ public:
 		setStrokeColor( float_t   r,
 		                float_t   g,
 		                float_t   b,
-		                float_t   a = 1.0 ) const;
+		                float_t   a = 1.0 );
 
 		void
-		strokeRect( const Rect   &rect ) const;
+		strokeRect( const Rect   &rect );
+/*
+		void
+		drawText( const std::string  &str,
+		          const Rect         &location,
+                  const float_t      fontSize,
+		          const std::string  &font );
+*/
 	private:
 
 		context_t    mContext;
@@ -67,7 +96,7 @@ public:
 	virtual ~Command() {}
 
 	virtual bool
-	doIt( const Command::Context   &context ) = 0;
+	doIt( Command::Context   &context ) = 0;
 
 private:
 

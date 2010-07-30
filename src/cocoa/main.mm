@@ -46,7 +46,8 @@
 
 	using namespace rikiGlue;
 	rikiGlue::Rect rrect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-	Application::instance().process( Command::Context(cgContext, rrect) );
+	Command::Context ctx(cgContext, rrect);
+	Application::instance().process(ctx);
 }
 
 @end

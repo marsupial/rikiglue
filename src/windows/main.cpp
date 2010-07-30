@@ -74,30 +74,35 @@ WinMain( HINSTANCE    instance,
 {
 	rikiGlue::Application::instance().start();
 
+	using namespace Gdiplus;
+	ULONG_PTR            gdiToken;
+	GdiplusStartupInput  gdiStartupInput;
+	GdiplusStartup(&gdiToken, &gdiStartupInput, NULL);
+
 	// Perform application initialization:
 	HWND window = initInstance(instance, show);
-	if ( window == NULL )
+	MSG  msg;
+	if ( window )
 	{
-		rikiGlue::Application::instance().stop();
-		return FALSE;
-	}
+		rikiGlue::setCapture(window, true);
 
-	rikiGlue::setCapture(window, true);
+		HACCEL accelTable = ::LoadAccelerators(instance, MAKEINTRESOURCE(IDC_APP));
 
-	MSG    msg;
-	HACCEL accelTable = ::LoadAccelerators(instance, MAKEINTRESOURCE(IDC_APP));
-
-	// Main message loop:
-	while ( ::GetMessage(&msg, NULL, 0, 0) )
-	{
-		if ( !::TranslateAccelerator(msg.hwnd, accelTable, &msg) )
+		// Main message loop:
+		while ( ::GetMessage(&msg, NULL, 0, 0) )
 		{
-			::TranslateMessage(&msg);
-			::DispatchMessage(&msg);
+			if ( !::TranslateAccelerator(msg.hwnd, accelTable, &msg) )
+			{
+				::TranslateMessage(&msg);
+				::DispatchMessage(&msg);
+			}
 		}
 	}
-
+	else
+		msg.wParam = FALSE;
+	
 	rikiGlue::Application::instance().stop();
+	GdiplusShutdown(gdiToken);
 	return ( msg.wParam );
 }
 
@@ -356,6 +361,7 @@ windowProc( HWND      window,
             WPARAM    wParam,
             LPARAM    lParam )
 {
+	static bool sIsMinimized = false;
 	switch ( message )
 	{
 		case WM_COMMAND:
@@ -389,9 +395,11 @@ windowProc( HWND      window,
 			{
 				case SIZE_MINIMIZED:
 					setCapture(window, false);
+					sIsMinimized = true;
 					return ( ::DefWindowProc(window, message, wParam, lParam) );
-				case SIZE_MAXIMIZED:
-					setCapture(window, true);
+				case SIZE_RESTORED:
+					if ( sIsMinimized )
+						setCapture(window, true);
 					return ( ::DefWindowProc(window, message, wParam, lParam) );
 
 				default:
@@ -402,26 +410,29 @@ windowProc( HWND      window,
 			break;
 
 		case WM_PAINT:
-		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(window, &ps);
-			if ( HGDIOBJ bitmap = ::GetProp(window, kBitmapProperty) )
 			{
+				PAINTSTRUCT ps;
+				HDC hdc = BeginPaint(window, &ps);
+				HGDIOBJ bitmap = ::GetProp(window, kBitmapProperty);
+
 				HDC bdc = CreateCompatibleDC(hdc);
-				HGDIOBJ obj = ::SelectObject(bdc, bitmap);
-			
+				HGDIOBJ obj = ( bitmap ? ::SelectObject(bdc, bitmap) : NULL );
+				
 				RECT rect;
 				::GetClientRect(window, &rect);
-			
-				::BitBlt(hdc, 0, 0, rect.right, rect.bottom, bdc, 0, 0, SRCCOPY);
-				
-				rikiGlue::Rect rrect(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top);
-				rikiGlue::Application::instance().process(rRect);
 
-				::SelectObject(bdc, obj);
+				{
+					rikiGlue::Rect rrect(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top);
+					Command::Context ctx(bdc, rrect);
+					rikiGlue::Application::instance().process(ctx);
+				}
+
+				::BitBlt(hdc, 0, 0, rect.right, rect.bottom, bdc, 0, 0, SRCCOPY);
+				if ( bitmap )
+					::SelectObject(bdc, obj);
+				
 				::DeleteDC(bdc);
-			}
-			::EndPaint(window, &ps);
+				::EndPaint(window, &ps);
 			}
 			break;
 

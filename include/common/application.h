@@ -45,7 +45,7 @@ public:
 	}
 
 	void
-	process( const Command::Context   &ctx );
+	process( Command::Context   &ctx );
 
 	void
 	clear();
@@ -81,7 +81,7 @@ public:
 	                const Rect       &rect );
 
 	void
-	process( const Command::Context   &ctx );
+	process( Command::Context   &ctx );
 
 	void
 	notLocked()
