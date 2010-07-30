@@ -30,7 +30,6 @@ public:
 	virtual bool
 	doIt( Context   &context )
 	{
-//		Context::Rect rect(0, 50,200,200);
 		Context::Rect rect(0, 1080-200,200,200);
 		context.blockOperation(rect, F);
 		return ( false );

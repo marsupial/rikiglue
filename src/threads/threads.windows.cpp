@@ -38,9 +38,8 @@ Thread::~Thread()
 {
 	if ( mThread.handle != INVALID_HANDLE_VALUE )
 	{
-		::WaitForSingleObject(mThread.handle, INFINITE);
+		// ::WaitForSingleObject(mThread.handle, INFINITE);
 		::CloseHandle(mThread.handle);
-
 	}
 }
 

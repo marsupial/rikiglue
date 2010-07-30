@@ -2,7 +2,13 @@
 	rsa.cpp
 */
 
+#include "glue.pch"
 #include "frame/operations.h"
+
+#if defined(_WINDOWS)
+	typedef int              int32_t;
+	typedef unsigned int     uint32_t;
+#endif
 
 namespace rsa
 {
@@ -1281,7 +1287,7 @@ rsaSetKey( const uint8_t    *key,
 
 static register_t
 rsaOperation( const Block     &block,
-              void (*op) (uint32_t*, int32_t, const u_char *src, u_char *dst) )
+              void (*op) (uint32_t*, int32_t, const uint8_t *src, uint8_t *dst) )
 {
 	using namespace rsa;
 
