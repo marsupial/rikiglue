@@ -22,8 +22,6 @@
 
 	CGColorSpaceRef         colorSpace;
 	NSTimer                 *timer;
-	
-	rikiGlue::Application   application;
 
 	double interval, nIntervals;
 }

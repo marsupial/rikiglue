@@ -5,17 +5,27 @@
 #include "common/application.h"
 #include "frame/frame.h"
 #include <algorithm>
+#include <string>
 
 namespace rikiGlue
 {
+
+static Application
+	sApplication;
+
+Application&
+Application::instance()
+{
+	return ( sApplication );
+}
 
 template <class T> static void
 nop( T& )
 {
 }
 
-static void
-frameDelete( Frame    *frame )
+template <class T> static void
+deleter( T    *frame )
 {
 	delete frame;
 }
@@ -66,13 +76,54 @@ destroyThread( T   *&inThread,
 Application::Application() :
 	mPixelDecodeThread(NULL),
 	mDMTXThread(NULL),
-	mDMTXInstrThread(NULL)
+	mDMTXInstrThread(NULL),
+	mLocked(false)
 {
 }
 
 Application::~Application()
 {
 	stopThreads();
+}
+
+
+class Lower : public Command
+{
+public:
+
+	static Command*
+	create( const char       *args,
+	        size_t           len )
+	{
+		return ( new Lower(args, len) );
+	}
+
+	Lower( const char      *args,
+	       size_t           len ) :
+		mArguments(args, len)
+	{
+	}
+
+	~Lower()
+	{
+	}
+
+	virtual bool
+	doIt( const Command::Context   &context )
+	{
+		printf("<Lower> [%s]\n", mArguments.c_str());
+		return ( false );
+	}
+
+private:
+	std::string    mArguments;
+};
+
+void
+Application::stop()
+{
+	stopThreads();
+	mInstructions.clear();
 }
 
 void
@@ -83,11 +134,12 @@ Application::startThreads()
 	createThread(mDMTXThread, mDMTXInstrThread);
 }
 
+
 void
 Application::stopThreads()
 {
 	destroyThread(mPixelDecodeThread, nop<ThreadBlock>);
-	destroyThread(mDMTXThread, frameDelete);
+	destroyThread(mDMTXThread, deleter<Frame>);
 	destroyThread(mDMTXInstrThread, DMTXDecode::finished);
 }
 
@@ -115,6 +167,103 @@ Application::dmtxFrame( Frame    *inFrame )
 	frame.release();
 	mDMTXThread->unlock();
 	mDMTXThread->signal();
+}
+
+const static register_t
+	kWidth = 100-20,
+	kHeight = 100-20,
+	kOriginX = (1920/2)-40,
+	kOriginY = (1080/2)-40;
+
+bool
+Application::addInstruction( const uint8_t     *bytes,
+                             size_t            len,
+                             const Rect        &rect )
+{
+	mRect.width = rect.width/kWidth;
+	mRect.height = rect.height/kHeight;
+	mRect.originX = rect.originX - (kOriginX*mRect.width);
+	mRect.originY = rect.originY - (kOriginY*mRect.height);
+
+	mLocked = true;
+
+	const uint8_t   *end = bytes;
+	while ( len )
+	{
+		const uint8_t val = *end;
+		if ( val == ' ' || val == 0 )
+		{
+			std::string name(bytes, end);
+			Commands_t::const_iterator itr = mCommands.find(name);
+			if ( itr == mCommands.end() )
+				return ( false );
+
+			size_t argLen;
+			const char *args;
+			if ( val == 0 )
+			{
+				args = reinterpret_cast<const char*>(end);
+				argLen = 0;
+			}
+			else
+			{
+				args = reinterpret_cast<const char*>(end+1);
+				argLen = len-1;
+			}
+		
+			std::auto_ptr<Command> cmd( itr->second(args, argLen) );
+			if ( cmd.get() == NULL )
+				return ( false );
+
+			mInstructions.lock();
+				mInstructions.push_back(cmd.get());
+				cmd.release();
+			mInstructions.unlock();
+		}
+		++end;
+		--len;
+	}
+	return ( false );
+}
+
+void
+Application::process( const Command::Context   &ctx )
+{
+	return ( mInstructions.process(ctx) );
+}
+
+void
+Instructions::process( const Command::Context   &ctx )
+{
+	lock();
+		list_t  tmp( mInstructions );
+	unlock();
+
+	list_t::iterator itr = tmp.begin();
+	while ( itr != tmp.end() )
+	{
+		if ( (*itr)->doIt(ctx) == false )
+			itr = tmp.erase(itr);
+		else
+			++itr;
+	}
+
+	lock();
+		std::swap(mInstructions, tmp);
+	unlock();
+}
+
+void
+Instructions::clear()
+{
+	lock();
+		if ( mInstructions.size() )
+		{
+			list_t tmp;
+			std::swap(mInstructions, tmp);
+			std::for_each(tmp.begin(), tmp.end(), deleter<Command>);
+		}
+	unlock();
 }
 
 } /* namespace rikiGlue */

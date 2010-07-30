@@ -20,9 +20,6 @@ namespace rikiGlue
 		kWindowClass[] = TEXT("gabba"),
 		kBitmapProperty[] = TEXT("gabbaBitmap");
 
-	static Application
-		sApplication;
-
 	static void
 	setCapture( HWND     window,
 				bool     enable );
@@ -75,13 +72,13 @@ WinMain( HINSTANCE    instance,
          LPSTR        cmdLine,
          int          show )
 {
-	rikiGlue::sApplication.startThreads();
+	rikiGlue::Application::instance().start();
 
 	// Perform application initialization:
 	HWND window = initInstance(instance, show);
 	if ( window == NULL )
 	{
-		rikiGlue::sApplication.stopThreads();
+		rikiGlue::Application::instance().stop();
 		return FALSE;
 	}
 
@@ -100,7 +97,7 @@ WinMain( HINSTANCE    instance,
 		}
 	}
 
-	rikiGlue::sApplication.stopThreads();
+	rikiGlue::Application::instance().stop();
 	return ( msg.wParam );
 }
 
@@ -219,7 +216,7 @@ public:
 #if defined(SPLITTER_OP)
 		const Frame::operation_t ops[1] = { splitterBGRA };
 		frame->operate(&ops[0], 1, &bgra[0], rowBytes, frame->bytes(), frame->rowBytes());
-		sApplication.dmtxFrame(frame.release());
+		Application::instance().dmtxFrame(frame.release());
 #else
 		const Frame::operation_t ops[4] = { bgraToRGB, lutDecrypt, gChannel, rgbToBGRA };
 		frame.operate(&ops[0], 1, &bgra[0], rowBytes);
@@ -383,7 +380,7 @@ windowProc( HWND      window,
 			break;
 
 		case WM_TIMER:
-			saveScreen(window, sApplication.decoderThread());
+			saveScreen(window, Application::instance().decoderThread());
 			::RedrawWindow(window, NULL, NULL, RDW_INVALIDATE);
 			break;
 
@@ -418,6 +415,9 @@ windowProc( HWND      window,
 			
 				::BitBlt(hdc, 0, 0, rect.right, rect.bottom, bdc, 0, 0, SRCCOPY);
 				
+				rikiGlue::Rect rrect(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top);
+				rikiGlue::Application::instance().process(rRect);
+
 				::SelectObject(bdc, obj);
 				::DeleteDC(bdc);
 			}

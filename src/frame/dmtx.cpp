@@ -2,6 +2,7 @@
 	dmtx.cpp
 */
 
+#include "common/application.h"
 #include "frame/frame.h"
 #include "dmtx/dmtx.h"
 #include <string>
@@ -23,7 +24,7 @@ struct LastRect
 	bool          valid;
 };
 
-static const int kEdge = 13;
+static const int kEdge = 10;
 static LastRect sLastRect = { {0,0}, {0,0}, false };
 
 void
@@ -47,10 +48,10 @@ dmtxDecode( DMTXDecode   &decode )
 	DmtxMessage *msg = dmtxDecodeMatrixRegion(decode.dec, decode.reg, DmtxUndefined);
 	if ( msg != NULL )
 	{
-
-		printf("found: \"");
-		fwrite(msg->output, sizeof(unsigned char), msg->outputIdx, stdout);
-		printf("\"\n");
+		Rect  rect(sLastRect.tl.X+kEdge, sLastRect.br.Y+kEdge,
+		           (sLastRect.br.X-sLastRect.tl.X)-(kEdge*2),
+		           (sLastRect.tl.Y-sLastRect.br.Y)-(kEdge*2)+1 );
+		Application::instance().addInstruction(msg->output, msg->outputIdx, rect);
 		dmtxMessageDestroy(&msg);
 	}
 
@@ -125,16 +126,21 @@ DMTXReader::scan( Frame    *frame )
 	
 	if ( sLastRect.valid )
 	{
+		Application::instance().notLocked();
 		sLastRect.valid = false;
 		dmtxDecodeSetProp(dec, DmtxPropXmin, 0);
 		dmtxDecodeSetProp(dec, DmtxPropXmax, frame->width());
 		dmtxDecodeSetProp(dec, DmtxPropYmin, 0);
 		dmtxDecodeSetProp(dec, DmtxPropYmax, frame->height());
-
-		if ( find(frame, dec, timeoutCalc(frame)) )
+		
+		timeout = timeoutCalc(frame);
+		if ( find(frame, dec, timeout) )
 			return ( true );
 	}
-
+/*
+	if ( find(frame, dec, timeout) )
+		return ( true );
+*/
 	dmtxDecodeDestroy(&dec);
 	dmtxImageDestroy(&img);
 
@@ -156,7 +162,6 @@ Worker<rikiGlue::Frame*>::work( rikiGlue::Frame   *&frame )
 template <> void
 rikiGlue::DMTXInstrThread::work( rikiGlue::DMTXDecode   &decode )
 {
-printf("threaded decode\n");
 	rikiGlue::dmtxDecode(decode);
 }
 

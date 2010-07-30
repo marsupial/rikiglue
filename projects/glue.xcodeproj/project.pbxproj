@@ -153,6 +153,7 @@
 		C25935B511FF63EA008F094E /* pipl.64.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = C25935B411FF63EA008F094E /* pipl.64.rsrc */; };
 		C25DA7C311FB60380025BB8C /* print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C25DA7C211FB60380025BB8C /* print.cpp */; };
 		C2684AF81201F37800A39987 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2684AF71201F37800A39987 /* application.cpp */; };
+		C2684F731202419200A39987 /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2684F721202419200A39987 /* command.cpp */; };
 		C285673211F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
 		C285673711F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
 		C28567C611F5548C00ABCD8A /* pipl.r in Rez */ = {isa = PBXBuildFile; fileRef = C28567C511F5548C00ABCD8A /* pipl.r */; };
@@ -478,6 +479,7 @@
 		C25DA7BD11FB601F0025BB8C /* rikiGlue.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = rikiGlue.plist; path = ../rsrc/rikiGlue.plist; sourceTree = "<group>"; };
 		C25DA7C211FB60380025BB8C /* print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = print.cpp; path = ../src/tools/print.cpp; sourceTree = SOURCE_ROOT; };
 		C2684AF71201F37800A39987 /* application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = application.cpp; path = ../src/common/application.cpp; sourceTree = SOURCE_ROOT; };
+		C2684F721202419200A39987 /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command.cpp; sourceTree = "<group>"; };
 		C285672D11F54F0200ABCD8A /* lut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.cpp; path = ../src/frame/lut.cpp; sourceTree = SOURCE_ROOT; };
 		C28567BF11F5547700ABCD8A /* frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame.h; path = ../include/frame/frame.h; sourceTree = SOURCE_ROOT; };
 		C28567C111F5547700ABCD8A /* pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pf.h; path = ../include/plugin/pf.h; sourceTree = SOURCE_ROOT; };
@@ -726,6 +728,15 @@
 			name = common;
 			sourceTree = "<group>";
 		};
+		C2684F711202419200A39987 /* commands */ = {
+			isa = PBXGroup;
+			children = (
+				C2684F721202419200A39987 /* command.cpp */,
+			);
+			name = commands;
+			path = ../src/commands;
+			sourceTree = SOURCE_ROOT;
+		};
 		C28567BE11F5547700ABCD8A /* frame */ = {
 			isa = PBXGroup;
 			children = (
@@ -843,6 +854,7 @@
 		D0FE57630993C4FD00139A60 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				C2684F711202419200A39987 /* commands */,
 				C2684AFC1201F37E00A39987 /* common */,
 				C259262011FCCBAB008F094E /* ssh */,
 				C259230111FBCFD1008F094E /* dmtx */,
@@ -1293,6 +1305,7 @@
 				C2A3D940120103C800D27C20 /* roaming_client.c in Sources */,
 				C2A3D941120103C800D27C20 /* roaming_common.c in Sources */,
 				C2684AF81201F37800A39987 /* application.cpp in Sources */,
+				C2684F731202419200A39987 /* command.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
