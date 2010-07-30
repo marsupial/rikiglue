@@ -942,7 +942,7 @@ static DWORD try_connect(Actual_Socket sock)
     return err;
 }
 
-Socket sk_new(SockAddr addr, int port, int privport, int oobinline,
+Socket psk_new(SockAddr addr, int port, int privport, int oobinline,
 	      int nodelay, int keepalive, Plug plug)
 {
     static const struct socket_function_table fn_table = {

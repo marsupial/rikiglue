@@ -8,6 +8,22 @@
 #import <memory>
 #import <algorithm>
 
+static void
+toString( const NSString     *nsString,
+          std::string        &str )
+{
+	NSData    *asData;
+
+	size_t maxLen = [nsString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	str.resize(maxLen);
+
+	if ( [nsString getCString: &(*(str.begin())) maxLength:maxLen encoding: NSUTF8StringEncoding] )
+		return;
+
+	asData = [nsString dataUsingEncoding: NSUTF8StringEncoding];
+	str.assign(static_cast<const char*>([asData bytes]), [asData length]/sizeof(char));
+}
+
 @implementation Dabba
 
 - (id) initWithFrame: (NSRect) frameRect
@@ -234,6 +250,36 @@
 
 #endif
 
+}
+
+- (void) openPanelDidEnd: (NSOpenPanel*) panel returnCode: (int) returnCode contextInfo: (void*) contextInfo
+{
+	if ( returnCode == NSOKButton )
+	{
+		NSArray *files = [ panel filenames ];
+		if ( [ files count ] )
+		{
+			std::string filePath;
+			toString([ files objectAtIndex: 0 ], filePath);
+			if ( rikiGlue::Application::instance().setRSAKey(filePath) == false )
+			{
+				NSAlert *alert = [ [ NSAlert alloc ] init ];
+				if ( alert )
+				{
+					[ alert setMessageText: @"Invalid Key" ];
+					[ alert runModal ];
+					[ alert release ];
+				}
+			}
+		}
+	}
+	[panel release];
+}
+
+- (IBAction) openDocument: (id) sender
+{
+	NSOpenPanel *openPanel = [[ NSOpenPanel openPanel ] retain ];
+	[ openPanel beginForDirectory:nil file:nil types:nil modelessDelegate:self didEndSelector:@selector(openPanelDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) application

@@ -4,8 +4,16 @@
 
 #include "common/application.h"
 #include "frame/frame.h"
+
 #include <algorithm>
 #include <string>
+
+#include <openssl/crypto.h>
+#include <openssl/err.h>
+#include <openssl/rand.h>
+#include <openssl/bn.h>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
 
 namespace rikiGlue
 {
@@ -80,11 +88,13 @@ Application::Application() :
 	mRect(0.f, 0.f, 1.f, 1.f),
 	mLocked(false)
 {
+	initSSL();
 }
 
 Application::~Application()
 {
-	stopThreads();
+	stop();
+	closeSSL();
 }
 
 void
@@ -240,6 +250,111 @@ Instructions::clear()
 			std::for_each(tmp.begin(), tmp.end(), deleter<Command>);
 		}
 	unlock();
+}
+
+const static char kRandSeed[] = "Apartment 21 (Tomorrow Can Shut Up and Go Away)";
+static RSA  *sRSA = NULL;
+
+static void
+resetRSA()
+{
+	if ( sRSA )
+	{
+		RSA_free(sRSA);
+		sRSA = NULL;
+	}
+}
+
+static int
+passwordCB( char    *buf,
+            int     size,
+            int     rwflag,
+            void    *userData )
+{
+	// ::memcpy(buf, &pass[0], len-1);
+	// return ( len-1 );
+	return ( 0 );
+}
+
+void
+Application::initSSL()
+{
+    CRYPTO_malloc_debug_init();
+    CRYPTO_dbg_set_options(V_CRYPTO_MDEBUG_ALL);
+    CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_ON);
+    RAND_seed(kRandSeed, sizeof(kRandSeed));
+}
+
+void
+Application::closeSSL()
+{
+	resetRSA();
+	ERR_print_errors_fp(stdout);
+
+    CRYPTO_cleanup_all_ex_data();
+	EVP_cleanup();
+	ERR_remove_state(0);
+    CRYPTO_mem_leaks_fp(stderr);
+}
+
+bool
+Application::setRSAKey( const std::string    &filePath,
+                        int (*pcb) (char*, int, int, void*),
+                        void                 *userData )
+{
+	BIO *bio = BIO_new( BIO_s_file_internal() );
+	if ( bio == NULL )
+		return ( false );
+
+	if ( BIO_read_filename(bio, filePath.data()) <= 0 )
+	{
+		BIO_free(bio);
+		return ( false );
+	}
+
+	RSA *newRSA = NULL;
+	PEM_read_bio_RSAPrivateKey(bio, &newRSA, pcb ? pcb : passwordCB, userData);
+	BIO_free(bio);
+
+	if( newRSA == NULL || RSA_check_key(newRSA) <= 0 )
+	{
+		ERR_print_errors_fp(stdout);
+		if ( newRSA )
+			RSA_free(newRSA);
+		return ( false );
+	}
+	if ( sRSA != NULL )
+		RSA_free(sRSA);
+
+	sRSA = newRSA;
+	return ( true );
+}
+
+bool
+Application::decrypt( const uint8_t    *bytes,
+                      size_t           len,
+                      Context::bytes_t &crypt )
+{
+	if ( sRSA == NULL )
+		return ( false );
+
+	const size_t      rsaSz = RSA_size(sRSA);
+	size_t            tNum = 0;
+	Context::bytes_t  buf( rsaSz );
+
+	while ( tNum < len )
+	{
+		int num = RSA_private_decrypt(rsaSz, &bytes[tNum], &buf[0], sRSA, RSA_PKCS1_PADDING);
+		if ( num < 0 )
+			return ( false );
+		
+		const size_t oldSZ = crypt.size(),
+		             addSZ = num;
+		crypt.resize(oldSZ + addSZ);
+		::memcpy(&crypt[oldSZ], &buf[0], addSZ);
+		tNum += rsaSz;
+	}
+	return ( tNum == len );
 }
 
 } /* namespace rikiGlue */

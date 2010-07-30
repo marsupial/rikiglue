@@ -73,6 +73,16 @@ public:
 	void
 	stop();
 
+	bool
+	setRSAKey( const std::string    &filePath,
+	           int (*passwordCB) (char*, int, int, void*) = NULL,
+	           void                 *userData = NULL );
+
+	bool
+	decrypt( const uint8_t    *bytes,
+	         size_t           len,
+	         Context::bytes_t &decrypted );
+					  
 	void
 	dmtxFrame( Frame    *inFrame );
 
@@ -116,10 +126,16 @@ private:
 	startThreads();
 
 	void
+	initSSL();
+
+	void
 	loadCommands();
 
 	void
 	stopThreads();
+
+	void
+	closeSSL();
 
 	DecodeThread    *mPixelDecodeThread;
 

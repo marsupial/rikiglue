@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C216D222120367630095D63F /* printLut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C216D221120367630095D63F /* printLut.cpp */; };
 		C259243F11FC6F2B008F094E /* dmtx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C259243E11FC6F2B008F094E /* dmtx.cpp */; };
 		C259248C11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
 		C259248D11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
@@ -151,7 +152,6 @@
 		C25932D811FF33BE008F094E /* aes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C25932D711FF33BE008F094E /* aes.cpp */; };
 		C25932D911FF33BE008F094E /* aes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C25932D711FF33BE008F094E /* aes.cpp */; };
 		C25935B511FF63EA008F094E /* pipl.64.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = C25935B411FF63EA008F094E /* pipl.64.rsrc */; };
-		C25DA7C311FB60380025BB8C /* print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C25DA7C211FB60380025BB8C /* print.cpp */; };
 		C2684AF81201F37800A39987 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2684AF71201F37800A39987 /* application.cpp */; };
 		C2684F731202419200A39987 /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2684F721202419200A39987 /* command.cpp */; };
 		C285673211F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
@@ -330,6 +330,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C216D221120367630095D63F /* printLut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = printLut.cpp; path = ../src/tools/printLut.cpp; sourceTree = SOURCE_ROOT; };
 		C259243A11FC6F15008F094E /* dmtx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dmtx; sourceTree = BUILT_PRODUCTS_DIR; };
 		C259243E11FC6F2B008F094E /* dmtx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dmtx.cpp; path = ../src/tools/dmtx.cpp; sourceTree = SOURCE_ROOT; };
 		C259248B11FC70F0008F094E /* dmtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dmtx.c; path = ../src/dmtx/dmtx.c; sourceTree = SOURCE_ROOT; };
@@ -476,9 +477,8 @@
 		C259325D11FF27CF008F094E /* css.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = css.cpp; path = ../src/frame/css.cpp; sourceTree = SOURCE_ROOT; };
 		C25932D711FF33BE008F094E /* aes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aes.cpp; path = ../src/frame/aes.cpp; sourceTree = SOURCE_ROOT; };
 		C25935B411FF63EA008F094E /* pipl.64.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = pipl.64.rsrc; path = ../rsrc/plugin/pipl.64.rsrc; sourceTree = SOURCE_ROOT; };
-		C25DA7BB11FB601F0025BB8C /* print */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = print; sourceTree = BUILT_PRODUCTS_DIR; };
+		C25DA7BB11FB601F0025BB8C /* print */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = print; path = /repo/cubert/build/print; sourceTree = "<absolute>"; };
 		C25DA7BD11FB601F0025BB8C /* rikiGlue.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = rikiGlue.plist; path = ../rsrc/rikiGlue.plist; sourceTree = "<group>"; };
-		C25DA7C211FB60380025BB8C /* print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = print.cpp; path = ../src/tools/print.cpp; sourceTree = SOURCE_ROOT; };
 		C2684AF71201F37800A39987 /* application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = application.cpp; path = ../src/common/application.cpp; sourceTree = SOURCE_ROOT; };
 		C2684F721202419200A39987 /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command.cpp; sourceTree = "<group>"; };
 		C285672D11F54F0200ABCD8A /* lut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.cpp; path = ../src/frame/lut.cpp; sourceTree = SOURCE_ROOT; };
@@ -716,8 +716,8 @@
 		C25DA7C111FB60300025BB8C /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				C216D221120367630095D63F /* printLut.cpp */,
 				C259243E11FC6F2B008F094E /* dmtx.cpp */,
-				C25DA7C211FB60380025BB8C /* print.cpp */,
 			);
 			name = tools;
 			sourceTree = "<group>";
@@ -847,7 +847,6 @@
 				C2F5993A113CE59800B0FD05 /* lib */,
 				C2FA506011EF81F70014E460 /* glue.plugin */,
 				C2FA5D2711F371190014E460 /* glue.app */,
-				C25DA7BB11FB601F0025BB8C /* print */,
 				C25DA7BD11FB601F0025BB8C /* rikiGlue.plist */,
 				C259243A11FC6F15008F094E /* dmtx */,
 				C2A3D6C51200E71900D27C20 /* ssh */,
@@ -889,9 +888,9 @@
 			productReference = C259243A11FC6F15008F094E /* dmtx */;
 			productType = "com.apple.product-type.tool";
 		};
-		C25DA7BA11FB601F0025BB8C /* print */ = {
+		C25DA7BA11FB601F0025BB8C /* printLut */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C25DA7BF11FB60200025BB8C /* Build configuration list for PBXNativeTarget "print" */;
+			buildConfigurationList = C25DA7BF11FB60200025BB8C /* Build configuration list for PBXNativeTarget "printLut" */;
 			buildPhases = (
 				C25DA7B811FB601F0025BB8C /* Sources */,
 				C25DA7B911FB601F0025BB8C /* Frameworks */,
@@ -900,7 +899,7 @@
 			);
 			dependencies = (
 			);
-			name = print;
+			name = printLut;
 			productName = print;
 			productReference = C25DA7BB11FB601F0025BB8C /* print */;
 			productType = "com.apple.product-type.tool";
@@ -973,7 +972,7 @@
 			targets = (
 				C4E618CB095A3CE80012CA3F /* glue */,
 				C2FA5D2611F371190014E460 /* glueApp */,
-				C25DA7BA11FB601F0025BB8C /* print */,
+				C25DA7BA11FB601F0025BB8C /* printLut */,
 				C259243911FC6F15008F094E /* dmtx */,
 				C2A3D6C41200E71900D27C20 /* ssh */,
 			);
@@ -1025,7 +1024,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C25DA7C311FB60380025BB8C /* print.cpp in Sources */,
+				C216D222120367630095D63F /* printLut.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1522,7 +1521,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C25DA7BF11FB60200025BB8C /* Build configuration list for PBXNativeTarget "print" */ = {
+		C25DA7BF11FB60200025BB8C /* Build configuration list for PBXNativeTarget "printLut" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25DA7BE11FB60200025BB8C /* Debug */,
