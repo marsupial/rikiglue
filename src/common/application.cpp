@@ -255,15 +255,6 @@ Instructions::clear()
 const static char kRandSeed[] = "Apartment 21 (Tomorrow Can Shut Up and Go Away)";
 static RSA  *sRSA = NULL;
 
-static void
-resetRSA()
-{
-	if ( sRSA )
-	{
-		RSA_free(sRSA);
-		sRSA = NULL;
-	}
-}
 
 static int
 passwordCB( char    *buf,
@@ -288,7 +279,12 @@ Application::initSSL()
 void
 Application::closeSSL()
 {
-	resetRSA();
+	if ( sRSA )
+	{
+		RSA_free(sRSA);
+		sRSA = NULL;
+	}
+
 	ERR_print_errors_fp(stdout);
 
     CRYPTO_cleanup_all_ex_data();

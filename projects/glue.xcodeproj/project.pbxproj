@@ -477,8 +477,8 @@
 		C259325D11FF27CF008F094E /* css.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = css.cpp; path = ../src/frame/css.cpp; sourceTree = SOURCE_ROOT; };
 		C25932D711FF33BE008F094E /* aes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aes.cpp; path = ../src/frame/aes.cpp; sourceTree = SOURCE_ROOT; };
 		C25935B411FF63EA008F094E /* pipl.64.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = pipl.64.rsrc; path = ../rsrc/plugin/pipl.64.rsrc; sourceTree = SOURCE_ROOT; };
-		C25DA7BB11FB601F0025BB8C /* print */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = print; path = /repo/cubert/build/print; sourceTree = "<absolute>"; };
 		C25DA7BD11FB601F0025BB8C /* rikiGlue.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = rikiGlue.plist; path = ../rsrc/rikiGlue.plist; sourceTree = "<group>"; };
+		C2641C2D12037BAE0034C8AA /* print */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = print; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2684AF71201F37800A39987 /* application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = application.cpp; path = ../src/common/application.cpp; sourceTree = SOURCE_ROOT; };
 		C2684F721202419200A39987 /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command.cpp; sourceTree = "<group>"; };
 		C285672D11F54F0200ABCD8A /* lut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.cpp; path = ../src/frame/lut.cpp; sourceTree = SOURCE_ROOT; };
@@ -850,6 +850,7 @@
 				C25DA7BD11FB601F0025BB8C /* rikiGlue.plist */,
 				C259243A11FC6F15008F094E /* dmtx */,
 				C2A3D6C51200E71900D27C20 /* ssh */,
+				C2641C2D12037BAE0034C8AA /* print */,
 			);
 			sourceTree = "<group>";
 		};
@@ -901,7 +902,7 @@
 			);
 			name = printLut;
 			productName = print;
-			productReference = C25DA7BB11FB601F0025BB8C /* print */;
+			productReference = C2641C2D12037BAE0034C8AA /* print */;
 			productType = "com.apple.product-type.tool";
 		};
 		C2A3D6C41200E71900D27C20 /* ssh */ = {

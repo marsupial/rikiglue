@@ -19,8 +19,6 @@
 namespace rikiGlue
 {
 
-typedef float float_t;
-
 class Context
 {
 

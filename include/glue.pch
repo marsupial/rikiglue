@@ -17,4 +17,6 @@
 	#include <Carbon/Carbon.h>
 #endif
 
+typedef float float_t;
+
 #endif /* _glue_pch__ */
