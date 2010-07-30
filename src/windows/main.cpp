@@ -422,9 +422,9 @@ windowProc( HWND      window,
 				::GetClientRect(window, &rect);
 
 				{
-					rikiGlue::Rect rrect(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top);
-					Command::Context ctx(bdc, rrect);
-					rikiGlue::Application::instance().process(ctx);
+					Context::Rect bounds(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top);
+					Command::Context ctx(bdc, bitmap, bounds);
+					Application::instance().process(ctx);
 				}
 
 				::BitBlt(hdc, 0, 0, rect.right, rect.bottom, bdc, 0, 0, SRCCOPY);

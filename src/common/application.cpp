@@ -88,10 +88,10 @@ Application::~Application()
 }
 
 void
-Application::stop()
+Application::start()
 {
-	stopThreads();
-	mInstructions.clear();
+	startThreads();
+	loadCommands();
 }
 
 void
@@ -102,6 +102,12 @@ Application::startThreads()
 	createThread(mDMTXThread, mDMTXInstrThread);
 }
 
+void
+Application::stop()
+{
+	stopThreads();
+	mInstructions.clear();
+}
 
 void
 Application::stopThreads()
@@ -137,21 +143,23 @@ Application::dmtxFrame( Frame    *inFrame )
 	mDMTXThread->signal();
 }
 
+
 const static register_t
-	kWidth = 100-20,
-	kHeight = 100-20,
-	kOriginX = (1920/2)-40,
-	kOriginY = (1080/2)-40;
+	kWidth = 180-20,
+	kHeight = 180-20,
+	kOriginX = (1920/2)-(kWidth/2),
+	kOriginY = (1080/2)-(kHeight/2);
 
 bool
-Application::addInstruction( const uint8_t     *bytes,
-                             size_t            len,
-                             const Rect        &rect )
+Application::addInstruction( const uint8_t       *bytes,
+                             size_t              len,
+                             const Context::Rect &rect )
 {
 	mRect.width = rect.width/kWidth;
 	mRect.height = rect.height/kHeight;
-	mRect.originX = rect.originX - (kOriginX*mRect.width);
-	mRect.originY = rect.originY - (kOriginY*mRect.height);
+	mRect.height = mRect.width;
+	mRect.origin.x = rect.origin.x - (kOriginX*mRect.width);
+	mRect.origin.y = rect.origin.y - (kOriginY*mRect.height);
 
 	mLocked = true;
 
@@ -195,13 +203,13 @@ Application::addInstruction( const uint8_t     *bytes,
 }
 
 void
-Application::process( Command::Context   &ctx )
+Application::process( Context   &ctx )
 {
 	return ( mInstructions.process(ctx) );
 }
 
 void
-Instructions::process( Command::Context   &ctx )
+Instructions::process( Context   &ctx )
 {
 	lock();
 		list_t  tmp( mInstructions );

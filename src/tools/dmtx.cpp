@@ -53,8 +53,15 @@ main( int        argc,
 {
 	bytes_t    bytes;
 	const char *filePath = NULL;
+	DmtxSymbolSize size = DmtxSymbolSquareAuto;
 	if ( argc < 2 )
 		return ( usage(argv[0]) );
+	else if ( argc > 3 )
+	{
+		size = (DmtxSymbolSize) atol(argv[3]); //9 
+		filePath = argv[2];
+		bytes.assign( argv[1], argv[1]+strlen(argv[1]));
+	}
 	else if ( argc > 2 )
 	{
 		filePath = argv[2];
@@ -74,6 +81,7 @@ main( int        argc,
 
    /* 1) ENCODE a new Data Matrix barcode image (in memory only) */
 	DmtxEncode *enc = dmtxEncodeCreate();
+	dmtxEncodeSetProp(enc, DmtxPropSizeRequest, size);
 	dmtxEncodeDataMatrix(enc, bytes.size(), &bytes[0]);
 	writeImage(filePath, *(enc->image));
 	dmtxEncodeDestroy(&enc);

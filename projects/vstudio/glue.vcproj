@@ -733,6 +733,10 @@
 					RelativePath="..\..\src\commands\command.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\windows\context.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
