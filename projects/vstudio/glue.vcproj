@@ -193,18 +193,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath="..\..\src\windows\main.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						DebugInformationFormat="0"
-					/>
-				</FileConfiguration>
-			</File>
 			<Filter
 				Name="frame"
 				>
@@ -264,6 +252,10 @@
 							DebugInformationFormat="0"
 						/>
 					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\src\frame\rsa.cpp"
+					>
 				</File>
 				<File
 					RelativePath="..\..\src\frame\threads.cpp"
@@ -733,9 +725,25 @@
 					RelativePath="..\..\src\commands\command.cpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="windows"
+				>
 				<File
 					RelativePath="..\..\src\windows\context.cpp"
 					>
+				</File>
+				<File
+					RelativePath="..\..\src\windows\main.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DebugInformationFormat="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>

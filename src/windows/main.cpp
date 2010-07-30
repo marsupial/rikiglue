@@ -10,6 +10,7 @@
 #include "frame/frame.h"
 #include "frame/operations.h"
 #include "common/application.h"
+#include "commands/context.h"
 
 namespace rikiGlue
 {
@@ -423,8 +424,14 @@ windowProc( HWND      window,
 
 				{
 					Context::Rect bounds(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top);
-					Command::Context ctx(bdc, bitmap, bounds);
+					Context ctx(bdc, static_cast<HBITMAP>(bitmap), bounds);
 					Application::instance().process(ctx);
+/*
+					Context::Point pt(0,1080/2);
+					ctx.drawText("Sample Text", pt, 16, "Arial");
+					Context::Rect rect(0,0, 200, 200);
+					ctx.blockOperation(rect, rsaEncrypt);
+*/
 				}
 
 				::BitBlt(hdc, 0, 0, rect.right, rect.bottom, bdc, 0, 0, SRCCOPY);
