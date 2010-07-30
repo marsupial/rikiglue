@@ -8,12 +8,6 @@
 #import <memory>
 #import <algorithm>
 
-namespace rikiGlue
-{
-
-
-} /* namespace rikiGlue */
-
 @implementation Dabba
 
 - (id) initWithFrame: (NSRect) frameRect
@@ -46,12 +40,13 @@ namespace rikiGlue
 
 - (void) drawRect: (NSRect) rect
 {
+	CGContextRef cgContext = static_cast<CGContextRef>( [ [NSGraphicsContext currentContext] graphicsPort ] );
 	if ( imageRef )
-	{
-		CGContextRef cgContext = static_cast<CGContextRef>( [ [NSGraphicsContext currentContext] graphicsPort ] );
-		//CGRect imageRect = { {0,0}, { CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)} };
 		CGContextDrawImage(cgContext,  NSRectToCGRect(rect), imageRef);
-	}
+
+	using namespace rikiGlue;
+	rikiGlue::Rect rrect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+	Application::instance().process( Command::Context(cgContext, rrect) );
 }
 
 @end
@@ -97,7 +92,7 @@ namespace rikiGlue
 	CGImageRelease(capturedImage);
 
 	using namespace rikiGlue;
-	std::auto_ptr<Frame> frame( new Frame(imageRect.size.width, imageRect.size.height, application.decoderThread()) );
+	std::auto_ptr<Frame> frame( new Frame(imageRect.size.width, imageRect.size.height, Application::instance().decoderThread()) );
 
 #define SPLIT_OP
 
@@ -120,7 +115,7 @@ namespace rikiGlue
 //	double interval0 = - [ date0 timeIntervalSinceNow ];
 //	printf("time: %f, %f fps\n", interval0, 1.0/interval0);
 
-	application.dmtxFrame(frame.release());
+	Application::instance().dmtxFrame(frame.release());
 
 	CGImageRef imageRef = CGBitmapContextCreateImage(contextRef);
 	CGContextRelease(contextRef);
@@ -201,7 +196,7 @@ namespace rikiGlue
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
 {
-	application.startThreads();
+	rikiGlue::Application::instance().start();
 
 	colorSpace = CGColorSpaceCreateDeviceRGB();
 	[ window setDelegate: self ];
@@ -218,7 +213,7 @@ namespace rikiGlue
 	[ window setDelegate: nil ];
 	CGColorSpaceRelease(colorSpace);
 
-	application.stopThreads();
+	rikiGlue::Application::instance().stop();
 
 	interval /= -nIntervals;
 	printf("t: %f, %f fps\n", interval, 1.0/interval);
