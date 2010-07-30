@@ -304,6 +304,7 @@
 		C2FA5D5F11F372630014E460 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5B11F372630014E460 /* InfoPlist.strings */; };
 		C2FA5D6011F372630014E460 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5D11F372630014E460 /* MainMenu.xib */; };
 		C2FA5D6711F372B60014E460 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5D6611F372B60014E460 /* main.mm */; };
+		C2FDA228120294190024A1E1 /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FDA227120294190024A1E1 /* context.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -499,6 +500,7 @@
 		C2FA5D5C11F372630014E460 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = ../rsrc/cocoa/English.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		C2FA5D5E11F372630014E460 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ../rsrc/cocoa/English.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
 		C2FA5D6611F372B60014E460 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../src/cocoa/main.mm; sourceTree = SOURCE_ROOT; };
+		C2FDA227120294190024A1E1 /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = context.cpp; path = ../src/cocoa/context.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -812,8 +814,8 @@
 				C25932D711FF33BE008F094E /* aes.cpp */,
 				C259325D11FF27CF008F094E /* css.cpp */,
 				C285672D11F54F0200ABCD8A /* lut.cpp */,
-				C2856B1B11F6116E00ABCD8A /* channel.cpp */,
 				C2592EA811FE4DB6008F094E /* dmtx.cpp */,
+				C2856B1B11F6116E00ABCD8A /* channel.cpp */,
 			);
 			name = frame;
 			sourceTree = "<group>";
@@ -830,6 +832,7 @@
 		C2FA5D6311F3729B0014E460 /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				C2FDA227120294190024A1E1 /* context.cpp */,
 				C2FA5D6611F372B60014E460 /* main.mm */,
 			);
 			name = cocoa;
@@ -1306,6 +1309,7 @@
 				C2A3D941120103C800D27C20 /* roaming_common.c in Sources */,
 				C2684AF81201F37800A39987 /* application.cpp in Sources */,
 				C2684F731202419200A39987 /* command.cpp in Sources */,
+				C2FDA228120294190024A1E1 /* context.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 
 #include "frame/threads.h"
 #include "commands/command.h"
+#include "commands/context.h"
 
 #include <list>
 #include <string>
@@ -45,7 +46,7 @@ public:
 	}
 
 	void
-	process( Command::Context   &ctx );
+	process( Context   &ctx );
 
 	void
 	clear();
@@ -76,12 +77,12 @@ public:
 	dmtxFrame( Frame    *inFrame );
 
 	bool
-	addInstruction( const uint8_t    *bytes,
-	                size_t           len,
-	                const Rect       &rect );
+	addInstruction( const uint8_t      *bytes,
+	                size_t             len,
+	                const Context::Rect &rect );
 
 	void
-	process( Command::Context   &ctx );
+	process( Context   &ctx );
 
 	void
 	notLocked()
@@ -95,7 +96,7 @@ public:
 		return ( mPixelDecodeThread );
 	}
 
-	const Rect&
+	const Context::Rect&
 	transform() const
 	{
 		return ( mRect );
@@ -115,6 +116,9 @@ private:
 	startThreads();
 
 	void
+	loadCommands();
+
+	void
 	stopThreads();
 
 	DecodeThread    *mPixelDecodeThread;
@@ -125,7 +129,7 @@ private:
 	Commands_t     mCommands;
 	Instructions   mInstructions;
 
-	Rect           mRect;
+	Context::Rect  mRect;
 	bool           mLocked;
 };
 

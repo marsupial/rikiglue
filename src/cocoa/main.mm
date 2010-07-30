@@ -45,8 +45,9 @@
 		CGContextDrawImage(cgContext,  NSRectToCGRect(rect), imageRef);
 
 	using namespace rikiGlue;
-	rikiGlue::Rect rrect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-	Command::Context ctx(cgContext, rrect);
+
+	Context::Rect bounds(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+	Context ctx(cgContext, imageRef, bounds);
 	Application::instance().process(ctx);
 }
 
@@ -98,7 +99,7 @@
 #define SPLIT_OP
 
 #if defined(SPLIT_OP)
-	const Frame::operation_t  rgbOps[1] = { splitterRGBA };
+	const Frame::operation_t  rgbOps[1] = {argbToRGB};//{ splitterRGBA };
 #else
 	const Frame::operation_t  rgbOps[4] = { argbToRGB, lutDecrypt, gChannel, rgbToARGB };
 #endif

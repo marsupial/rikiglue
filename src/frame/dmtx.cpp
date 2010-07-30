@@ -48,9 +48,9 @@ dmtxDecode( DMTXDecode   &decode )
 	DmtxMessage *msg = dmtxDecodeMatrixRegion(decode.dec, decode.reg, DmtxUndefined);
 	if ( msg != NULL )
 	{
-		Rect  rect(sLastRect.tl.X+kEdge, sLastRect.br.Y+kEdge,
-		           (sLastRect.br.X-sLastRect.tl.X)-(kEdge*2),
-		           (sLastRect.tl.Y-sLastRect.br.Y)-(kEdge*2)+1 );
+		const Context::Rect rect( sLastRect.tl.X+kEdge, sLastRect.br.Y+kEdge,
+		                         (sLastRect.br.X-sLastRect.tl.X)-(kEdge*2),
+		                         (sLastRect.tl.Y-sLastRect.br.Y)-(kEdge*2)+1 );
 		Application::instance().addInstruction(msg->output, msg->outputIdx, rect);
 		dmtxMessageDestroy(&msg);
 	}
