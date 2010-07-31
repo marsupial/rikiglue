@@ -131,6 +131,65 @@ private:
 	Context::Rect   mRect;
 };
 
+template < register_t E(const Block    &block), register_t D(const Block    &block) >
+class SubRectChoice : public TimeCommand
+{
+public:
+
+	static Command*
+	create( const char       *args,
+	        size_t           len )
+	{
+		if ( len == 0 )
+			return ( NULL );
+		
+		Context::Rect rect;
+		if ( ! parseRect(args, len, rect) )
+			return (NULL);
+
+		register_t n = 1;
+		bool op = 0;
+		if ( len )
+		{
+			parseFrame(args, len, n);
+
+			if ( len >= 2 && args[0] == '1' && ( (len==2) || isspace(args[1]) ) )
+				op = 1;
+		}
+
+		return ( new SubRectChoice(n, rect, op) );
+	}
+
+	virtual ~SubRectChoice()
+	{
+	}
+
+	virtual bool
+	doIt( Context   &context,
+	      float_t   t )
+	{
+		if ( mOp )
+			context.blockOperation(mRect, D);
+		else
+			context.blockOperation(mRect, E);
+		return ( true );
+	}
+
+private:
+
+	SubRectChoice( register_t          n,
+	               const Context::Rect &rect,
+	               bool                op ) :
+		TimeCommand(n),
+		mRect(rect),
+		mOp(op)
+	{
+	}
+
+	Context::Rect   mRect;
+	const bool      mOp;
+};
+
 class DrawText : public Command
 {
 public:
@@ -167,6 +226,8 @@ private:
 	std::string     mFont;
 };
 
+static bool sDrawLock = false;
+
 class DrawLock : public Command
 {
 public:
@@ -175,6 +236,9 @@ public:
 	create( const char       *args,
 	        size_t           len )
 	{
+		if ( sDrawLock )
+			return ( NULL );
+		sDrawLock = true;
 		return ( new DrawLock(args, len) );
 	}
 
@@ -294,7 +358,7 @@ Application::loadCommands()
 {
 	mCommands[ "drawLock" ] = DrawLock::create;
 	mCommands[ "drawText" ] = DrawText::create;
-	mCommands[ "rsaEncrypt" ] = SubRect<rsaEncrypt>::create;
+	mCommands[ "rsa" ] = SubRectChoice<rsaEncrypt, rsaDecrypt>::create;
 	mCommands[ "gChannel" ] = SubRect<gChannel>::create;
 	mCommands[ "ssh" ] = SSH::create;
 }
