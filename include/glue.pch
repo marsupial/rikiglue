@@ -1,0 +1,22 @@
+/*
+	glue.pch
+*/
+
+#ifndef _glue_pch__
+#define _glue_pch__
+
+#if defined(_WINDOWS)
+
+	#include <windows.h>
+	typedef unsigned char    uint8_t;
+	typedef unsigned int     register_t;
+
+#elif defined(__x86_64__)
+	#include <CoreServices/CoreServices.h>
+#else
+	#include <Carbon/Carbon.h>
+#endif
+
+typedef float float_t;
+
+#endif /* _glue_pch__ */

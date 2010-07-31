@@ -1,0 +1,16 @@
+syntax: glob
+
+.DS_Store
+
+syntax: regexp
+
+# top-level build folder
+^build
+
+# xcode
+^projects/.*\.xcodeproj/.*\.(mode*|pbxuser)
+
+# visual studio
+^projects/.*\.(ncb|suo|user)
+
+^data/.*\.mov
