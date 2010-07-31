@@ -10,29 +10,36 @@
 
 static void
 printStruct( const char    *name,
+             register_t    n,
              bytes_t       &bytes )
 {
-	std::cout << "static const uint8_t " << name << "[" << bytes.size() << "] =" << std::endl << "{";
-
-	const size_t   n = bytes.size();
-
-//	bytes_t        inverse(n);
-//	if ( xform ) inverse.resize(n);
+	const size_t   sz = bytes.size()/n;
+	std::cout << "static const uint8_t " << name << "[" << n << "][" << sz << "] =" << std::endl;
+	std::cout << "{";
 
 	const std::ios::fmtflags f = std::cout.flags();
 	std::cout.setf(std::ios::uppercase);
 	std::cout.setf(std::ios::hex, std::ios::basefield);
 	std::cout.fill('0');
 
+
 	for ( register_t i = 0; i < n; ++i )
 	{
-		if ( i != 0 ) std::cout << ",";
-		if ( i % 10 == 0 ) std::cout << std::endl << "\t";
+		std::cout << std::endl << "{";
+	//	bytes_t        inverse(n);
+	//	if ( xform ) inverse.resize(n);
 
-		const register_t val = bytes[i];
-		std::cout << " 0x" << std::setw(2) << val;
+		for ( register_t j = 0; j < sz; ++j )
+		{
+			if ( j != 0 ) std::cout << ",";
+			if ( j % 10 == 0 ) std::cout << std::endl << "\t";
 
-		//if ( xform ) inverse[ val ] = i;
+			const register_t val = bytes[(i*sz)+j];
+			std::cout << " 0x" << std::setw(2) << val;
+
+			//if ( xform ) inverse[ val ] = (i*sz)+j;
+		}
+		std::cout << std::endl << "},";
 	}
 	
 	std::cout << std::endl << "};" << std::endl;
@@ -41,15 +48,30 @@ printStruct( const char    *name,
 	//if ( xform ) bytes.swap(inverse);
 }
 
+static int
+usage( const char    *filePath )
+{
+	printf("usage: %s [name] [n]\n", filePath);
+	return ( -1 );
+}
+
 extern "C" int
 main( int         argc,
       const char  **argv )
 {
+	register_t n = 1;
+	if ( argc > 1 )
+	{
+		n = atol(argv[1]);
+		if ( n == 0 )
+			return ( usage(argv[0]) );
+	}
+	
 	bytes_t bytes;
 	if ( fileToBytes(stdin, bytes) != 0 )
 		return ( -1 );
 
-	printStruct( argc > 1 ? argv[1] : "kEncrypted", bytes);
+	printStruct( argc > 2 ? argv[2] : "kEncrypted", n, bytes);
 	return ( 0 );
 }
 
