@@ -2052,6 +2052,9 @@ client_init_dispatch(void)
 		client_init_dispatch_15();
 }
 
+extern jmp_buf sshJump;
+extern recursiveDiconnect;
+
 /* client specific fatal cleanup */
 void
 cleanup_exit(int i)
@@ -2060,5 +2063,8 @@ cleanup_exit(int i)
 	leave_non_blocking();
 	if (options.control_path != NULL && muxserver_sock != -1)
 		unlink(options.control_path);
-	_exit(i);
+
+	//_exit(i);
+	recursiveDiconnect = 0;
+	longjmp(sshJump, i ? i : 1);
 }

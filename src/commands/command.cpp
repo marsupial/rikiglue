@@ -17,7 +17,7 @@ parsePoint( const char       *&args,
             size_t           &len,
             Context::Point   &pt )
 {
-	if ( len <= 5 || args[0] != 'p' || args[1] != ' ')
+	if ( len <= 5 || args[0] != 'p' || !isspace(args[1]) )
 		return ( false );
 		
 	std::string str(args+1, len-1);
@@ -38,7 +38,7 @@ parseRect( const char        *&args,
            size_t            &len,
            Context::Rect     &rect )
 {
-	if ( len <= 9 || args[0] != 'r' || args[1] != ' ')
+	if ( len <= 9 || args[0] != 'r' || !isspace(args[1]) )
 		return ( false );
 		
 	std::string str(args+1, len-1);
@@ -67,7 +67,7 @@ parseFrame( const char        *&args,
             size_t            &len,
             register_t        &n )
 {
-	if ( len <= 3 || args[0] != 't' || args[1] != ' ')
+	if ( len <= 3 || args[0] != 't' || !isspace(args[1]) )
 		return ( false );
 
 	std::string str(args+1, len-1);
@@ -203,6 +203,92 @@ private:
 	}
 };
 
+extern "C" int
+ssh_main( int, const char**);
+
+
+class SSH : public Command
+{
+public:
+
+	static Command*
+	create( const char       *args,
+	        size_t           len )
+	{
+		if ( len < 4 )
+			return ( NULL );
+
+		bool encrypted = false;
+		if ( args[0] == 'e' && isspace(args[1]) )
+		{
+			encrypted = true;
+			args+=2;
+			len-=2;
+		}
+		return ( new SSH(encrypted, args, len) );
+	}
+
+	virtual ~SSH()
+	{
+	}
+
+	virtual bool
+	doIt( Context   &context )
+	{
+		Context::bytes_t decrypt;
+		
+		if ( mEncrypted )
+		{
+			if ( !Application::instance().decrypt(reinterpret_cast<const uint8_t*>(mString.data()), mString.length(), decrypt) )
+				return ( false );
+		}
+		else
+			decrypt.assign(reinterpret_cast<const uint8_t*>(mString.data()), reinterpret_cast<const uint8_t*>(mString.data())+mString.length());
+
+		if ( decrypt[ decrypt.size() ] != 0 )
+			decrypt.push_back(0);
+
+		const char key[] = " ";
+		const char *str = reinterpret_cast<const char*>(&decrypt[0]);
+
+		std::vector<const char*> argv(1, "ssh");
+		argv.push_back(str);
+
+		const char *pch = strpbrk(str, key);
+		while ( pch != NULL && argv.size() < 5 )
+		{
+			*const_cast<char*>(pch) = 0;
+			argv.push_back(++pch);
+			pch = strpbrk(pch, key);
+		}
+
+		if ( argv.size() > 4 )
+			ssh_main(argv.size(), &argv[0]);
+
+		if ( decrypt.size() )
+		{
+			memset(&decrypt[0], 'X', decrypt.size());
+			decrypt.clear();
+		}
+		
+		return ( false );
+	}
+
+private:
+
+	SSH( bool        encrypted,
+	     const char  *str,
+	     size_t      len ) :
+		mString(str, len),
+		mEncrypted(encrypted)
+	{
+	}
+
+	const std::string    mString;
+	const bool           mEncrypted;
+};
+// echo "user domain pass touch ~/dmtx.txt" | ./ssl ../data/public.key | ./dmtx -t "ssh e " -r ../sourceimages/dmtx/ssh.png
+
 void
 Application::loadCommands()
 {
@@ -210,10 +296,7 @@ Application::loadCommands()
 	mCommands[ "drawText" ] = DrawText::create;
 	mCommands[ "rsaEncrypt" ] = SubRect<rsaEncrypt>::create;
 	mCommands[ "gChannel" ] = SubRect<gChannel>::create;
+	mCommands[ "ssh" ] = SSH::create;
 }
-
-// r 0 0 0 0
-// p 0 0
-// rsaEncrypt r 0 0 200 200 t 10 sin d 
 
 } /* namespace rikiGlue */

@@ -7,78 +7,142 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C211F9291203FA530025B37C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279B11FCD06E008F094E /* base64.c */; };
+		C211F92A1203FA530025B37C /* basename.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279C11FCD06E008F094E /* basename.c */; };
+		C211F92B1203FA530025B37C /* bindresvport.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279D11FCD06E008F094E /* bindresvport.c */; };
+		C211F92C1203FA530025B37C /* bsd-arc4random.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279E11FCD06E008F094E /* bsd-arc4random.c */; };
+		C211F92D1203FA530025B37C /* bsd-asprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279F11FCD06E008F094E /* bsd-asprintf.c */; };
+		C211F92E1203FA530025B37C /* bsd-closefrom.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A011FCD06E008F094E /* bsd-closefrom.c */; };
+		C211F92F1203FA530025B37C /* bsd-cray.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A111FCD06E008F094E /* bsd-cray.c */; };
+		C211F9301203FA530025B37C /* bsd-cygwin_util.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A211FCD06E008F094E /* bsd-cygwin_util.c */; };
+		C211F9311203FA530025B37C /* bsd-getpeereid.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A311FCD06E008F094E /* bsd-getpeereid.c */; };
+		C211F9321203FA530025B37C /* bsd-misc.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A411FCD06E008F094E /* bsd-misc.c */; };
+		C211F9331203FA530025B37C /* bsd-nextstep.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A511FCD06E008F094E /* bsd-nextstep.c */; };
+		C211F9341203FA530025B37C /* bsd-openpty.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A611FCD06E008F094E /* bsd-openpty.c */; };
+		C211F9351203FA530025B37C /* bsd-poll.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A711FCD06E008F094E /* bsd-poll.c */; };
+		C211F9361203FA530025B37C /* bsd-snprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A811FCD06E008F094E /* bsd-snprintf.c */; };
+		C211F9371203FA530025B37C /* bsd-statvfs.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A911FCD06E008F094E /* bsd-statvfs.c */; };
+		C211F9381203FA530025B37C /* bsd-waitpid.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AA11FCD06E008F094E /* bsd-waitpid.c */; };
+		C211F9391203FA530025B37C /* daemon.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AB11FCD06E008F094E /* daemon.c */; };
+		C211F93A1203FA530025B37C /* dirname.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AC11FCD06E008F094E /* dirname.c */; };
+		C211F93B1203FA530025B37C /* fake-rfc2553.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AD11FCD06E008F094E /* fake-rfc2553.c */; };
+		C211F93C1203FA530025B37C /* fmt_scaled.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AE11FCD06E008F094E /* fmt_scaled.c */; };
+		C211F93D1203FA530025B37C /* getcwd.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AF11FCD06E008F094E /* getcwd.c */; };
+		C211F93E1203FA530025B37C /* getgrouplist.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B011FCD06E008F094E /* getgrouplist.c */; };
+		C211F93F1203FA530025B37C /* getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B111FCD06E008F094E /* getopt.c */; };
+		C211F9401203FA530025B37C /* getrrsetbyname.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B211FCD06E008F094E /* getrrsetbyname.c */; };
+		C211F9411203FA530025B37C /* glob.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B311FCD06E008F094E /* glob.c */; };
+		C211F9421203FA530025B37C /* inet_aton.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B411FCD06E008F094E /* inet_aton.c */; };
+		C211F9431203FA530025B37C /* inet_ntoa.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B511FCD06E008F094E /* inet_ntoa.c */; };
+		C211F9441203FA530025B37C /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B611FCD06E008F094E /* inet_ntop.c */; };
+		C211F9451203FA530025B37C /* mktemp.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B711FCD06E008F094E /* mktemp.c */; };
+		C211F9461203FA530025B37C /* openssl-compat.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B811FCD06E008F094E /* openssl-compat.c */; };
+		C211F9471203FA530025B37C /* port-aix.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B911FCD06E008F094E /* port-aix.c */; };
+		C211F9481203FA530025B37C /* port-irix.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BA11FCD06E008F094E /* port-irix.c */; };
+		C211F9491203FA530025B37C /* port-linux.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BB11FCD06E008F094E /* port-linux.c */; };
+		C211F94A1203FA530025B37C /* port-solaris.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BC11FCD06E008F094E /* port-solaris.c */; };
+		C211F94B1203FA530025B37C /* port-tun.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BD11FCD06E008F094E /* port-tun.c */; };
+		C211F94C1203FA530025B37C /* port-uw.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BE11FCD06E008F094E /* port-uw.c */; };
+		C211F94D1203FA530025B37C /* pwcache.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BF11FCD06E008F094E /* pwcache.c */; };
+		C211F94E1203FA530025B37C /* readpassphrase.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C011FCD06E008F094E /* readpassphrase.c */; };
+		C211F94F1203FA530025B37C /* realpath.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C111FCD06E008F094E /* realpath.c */; };
+		C211F9501203FA530025B37C /* rresvport.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C211FCD06E008F094E /* rresvport.c */; };
+		C211F9511203FA530025B37C /* setenv.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C311FCD06E008F094E /* setenv.c */; };
+		C211F9521203FA530025B37C /* setproctitle.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C411FCD06E008F094E /* setproctitle.c */; };
+		C211F9531203FA530025B37C /* sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C511FCD06E008F094E /* sha2.c */; };
+		C211F9541203FA530025B37C /* sigact.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C611FCD06E008F094E /* sigact.c */; };
+		C211F9551203FA530025B37C /* strlcat.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C711FCD06E008F094E /* strlcat.c */; };
+		C211F9561203FA530025B37C /* strlcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C811FCD06E008F094E /* strlcpy.c */; };
+		C211F9571203FA530025B37C /* strmode.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C911FCD06E008F094E /* strmode.c */; };
+		C211F9581203FA530025B37C /* strsep.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CA11FCD06E008F094E /* strsep.c */; };
+		C211F9591203FA530025B37C /* strtoll.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CB11FCD06E008F094E /* strtoll.c */; };
+		C211F95A1203FA530025B37C /* strtonum.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CC11FCD06E008F094E /* strtonum.c */; };
+		C211F95B1203FA530025B37C /* strtoul.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CD11FCD06E008F094E /* strtoul.c */; };
+		C211F95C1203FA530025B37C /* vis.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CE11FCD06E008F094E /* vis.c */; };
+		C211F95D1203FA530025B37C /* xcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CF11FCD06E008F094E /* xcrypt.c */; };
+		C211F95E1203FA530025B37C /* xmmap.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927D011FCD06E008F094E /* xmmap.c */; };
+		C211F95F1203FA530025B37C /* acss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262411FCCBBE008F094E /* acss.c */; };
+		C211F9601203FA530025B37C /* addrmatch.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262511FCCBBE008F094E /* addrmatch.c */; };
+		C211F9611203FA530025B37C /* atomicio.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262611FCCBBE008F094E /* atomicio.c */; };
+		C211F9621203FA530025B37C /* audit-bsm.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262711FCCBBE008F094E /* audit-bsm.c */; };
+		C211F9631203FA530025B37C /* audit.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262811FCCBBE008F094E /* audit.c */; };
+		C211F9641203FA530025B37C /* authfd.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264011FCCBBE008F094E /* authfd.c */; };
+		C211F9651203FA530025B37C /* authfile.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264111FCCBBE008F094E /* authfile.c */; };
+		C211F9661203FA530025B37C /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264211FCCBBE008F094E /* bufaux.c */; };
+		C211F9671203FA530025B37C /* bufbn.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264311FCCBBE008F094E /* bufbn.c */; };
+		C211F9681203FA530025B37C /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264411FCCBBE008F094E /* buffer.c */; };
+		C211F9691203FA530025B37C /* canohost.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264511FCCBBE008F094E /* canohost.c */; };
+		C211F96A1203FA530025B37C /* channels.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264611FCCBBE008F094E /* channels.c */; };
+		C211F96B1203FA530025B37C /* cipher-3des1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264711FCCBBE008F094E /* cipher-3des1.c */; };
+		C211F96C1203FA530025B37C /* cipher-acss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264811FCCBBE008F094E /* cipher-acss.c */; };
+		C211F96D1203FA530025B37C /* cipher-aes.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264911FCCBBE008F094E /* cipher-aes.c */; };
+		C211F96E1203FA530025B37C /* cipher-bf1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264A11FCCBBE008F094E /* cipher-bf1.c */; };
+		C211F96F1203FA530025B37C /* cipher-ctr.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264B11FCCBBE008F094E /* cipher-ctr.c */; };
+		C211F9701203FA530025B37C /* cipher.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264C11FCCBBE008F094E /* cipher.c */; };
+		C211F9711203FA530025B37C /* clientloop.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264E11FCCBBE008F094E /* clientloop.c */; };
+		C211F9721203FA530025B37C /* compat.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264F11FCCBBE008F094E /* compat.c */; };
+		C211F9731203FA530025B37C /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265011FCCBBE008F094E /* compress.c */; };
+		C211F9741203FA530025B37C /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265111FCCBBE008F094E /* crc32.c */; };
+		C211F9751203FA530025B37C /* deattack.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265211FCCBBE008F094E /* deattack.c */; };
+		C211F9761203FA530025B37C /* dh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265311FCCBBE008F094E /* dh.c */; };
+		C211F9771203FA530025B37C /* dispatch.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265411FCCBBE008F094E /* dispatch.c */; };
+		C211F9781203FA530025B37C /* dns.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265511FCCBBE008F094E /* dns.c */; };
+		C211F9791203FA530025B37C /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265611FCCBBE008F094E /* entropy.c */; };
+		C211F97A1203FA530025B37C /* fatal.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265711FCCBBE008F094E /* fatal.c */; };
+		C211F97B1203FA530025B37C /* groupaccess.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265811FCCBBE008F094E /* groupaccess.c */; };
+		C211F97C1203FA530025B37C /* gss-genr.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265911FCCBBE008F094E /* gss-genr.c */; };
+		C211F97D1203FA530025B37C /* gss-serv-krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265A11FCCBBE008F094E /* gss-serv-krb5.c */; };
+		C211F97E1203FA530025B37C /* gss-serv.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265B11FCCBBE008F094E /* gss-serv.c */; };
+		C211F97F1203FA530025B37C /* hostfile.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265C11FCCBBE008F094E /* hostfile.c */; };
+		C211F9801203FA530025B37C /* kex.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265E11FCCBBE008F094E /* kex.c */; };
+		C211F9811203FA530025B37C /* kexdh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265F11FCCBBE008F094E /* kexdh.c */; };
+		C211F9821203FA530025B37C /* kexdhc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266011FCCBBE008F094E /* kexdhc.c */; };
+		C211F9831203FA530025B37C /* kexgex.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266211FCCBBE008F094E /* kexgex.c */; };
+		C211F9841203FA530025B37C /* kexgexc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266311FCCBBE008F094E /* kexgexc.c */; };
+		C211F9851203FA530025B37C /* key.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266511FCCBBE008F094E /* key.c */; };
+		C211F9861203FA530025B37C /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266611FCCBBE008F094E /* log.c */; };
+		C211F9871203FA530025B37C /* loginrec.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266711FCCBBE008F094E /* loginrec.c */; };
+		C211F9881203FA530025B37C /* mac.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266911FCCBBE008F094E /* mac.c */; };
+		C211F9891203FA530025B37C /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266A11FCCBBE008F094E /* match.c */; };
+		C211F98A1203FA530025B37C /* md-sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266B11FCCBBE008F094E /* md-sha256.c */; };
+		C211F98B1203FA530025B37C /* md5crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266C11FCCBBE008F094E /* md5crypt.c */; };
+		C211F98C1203FA530025B37C /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266D11FCCBBE008F094E /* misc.c */; };
+		C211F98D1203FA530025B37C /* moduli.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266E11FCCBBE008F094E /* moduli.c */; };
+		C211F98E1203FA530025B37C /* monitor_fdpass.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266F11FCCBBE008F094E /* monitor_fdpass.c */; };
+		C211F98F1203FA530025B37C /* monitor_mm.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267011FCCBBE008F094E /* monitor_mm.c */; };
+		C211F9901203FA530025B37C /* msg.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267311FCCBBE008F094E /* msg.c */; };
+		C211F9911203FA530025B37C /* mux.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267411FCCBBE008F094E /* mux.c */; };
+		C211F9921203FA530025B37C /* nchan.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267511FCCBBE008F094E /* nchan.c */; };
+		C211F9931203FA530025B37C /* packet.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267611FCCBBE008F094E /* packet.c */; };
+		C211F9941203FA530025B37C /* platform.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267711FCCBBE008F094E /* platform.c */; };
+		C211F9951203FA530025B37C /* progressmeter.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267811FCCBBE008F094E /* progressmeter.c */; };
+		C211F9961203FA530025B37C /* readconf.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267911FCCBBE008F094E /* readconf.c */; };
+		C211F9981203FA530025B37C /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267B11FCCBBE008F094E /* rijndael.c */; };
+		C211F9991203FA530025B37C /* roaming_client.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267C11FCCBBE008F094E /* roaming_client.c */; };
+		C211F99A1203FA530025B37C /* roaming_common.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267D11FCCBBE008F094E /* roaming_common.c */; };
+		C211F99B1203FA530025B37C /* rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = C259268011FCCBBE008F094E /* rsa.c */; };
+		C211F99C1203FA530025B37C /* ssh-dss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259268E11FCCBBE008F094E /* ssh-dss.c */; };
+		C211F99D1203FA530025B37C /* ssh-pkcs11-client.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269211FCCBBE008F094E /* ssh-pkcs11-client.c */; };
+		C211F99E1203FA530025B37C /* ssh-rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269611FCCBBE008F094E /* ssh-rsa.c */; };
+		C211F99F1203FA530025B37C /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269711FCCBBE008F094E /* ssh.c */; };
+		C211F9A01203FA530025B37C /* sshconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269811FCCBBE008F094E /* sshconnect.c */; };
+		C211F9A11203FA530025B37C /* sshconnect1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269911FCCBBE008F094E /* sshconnect1.c */; };
+		C211F9A21203FA530025B37C /* sshconnect2.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269A11FCCBBE008F094E /* sshconnect2.c */; };
+		C211F9A31203FA530025B37C /* sshpty.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269D11FCCBBE008F094E /* sshpty.c */; };
+		C211F9A41203FA530025B37C /* sshtty.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269E11FCCBBE008F094E /* sshtty.c */; };
+		C211F9A51203FA530025B37C /* ttymodes.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269F11FCCBBE008F094E /* ttymodes.c */; };
+		C211F9A61203FA530025B37C /* uidswap.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A011FCCBBE008F094E /* uidswap.c */; };
+		C211F9A71203FA530025B37C /* umac.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A111FCCBBE008F094E /* umac.c */; };
+		C211F9A81203FA530025B37C /* uuencode.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A211FCCBBE008F094E /* uuencode.c */; };
+		C211F9A91203FA530025B37C /* xmalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A311FCCBBE008F094E /* xmalloc.c */; };
+		C211F9CE1203FB2C0025B37C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277111FCCF91008F094E /* libcrypto.dylib */; };
+		C211F9D21203FB370025B37C /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277311FCCF91008F094E /* libz.1.dylib */; };
 		C216D222120367630095D63F /* printLut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C216D221120367630095D63F /* printLut.cpp */; };
 		C259243F11FC6F2B008F094E /* dmtx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C259243E11FC6F2B008F094E /* dmtx.cpp */; };
 		C259248C11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
 		C259248D11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
 		C25924B111FC71DF008F094E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25924B011FC71DF008F094E /* ApplicationServices.framework */; };
 		C25924B311FC71DF008F094E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25924B211FC71DF008F094E /* CoreFoundation.framework */; };
-		C25926A411FCCBBE008F094E /* acss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262411FCCBBE008F094E /* acss.c */; };
-		C25926A511FCCBBE008F094E /* addrmatch.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262511FCCBBE008F094E /* addrmatch.c */; };
-		C25926A611FCCBBE008F094E /* atomicio.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262611FCCBBE008F094E /* atomicio.c */; };
-		C25926A711FCCBBE008F094E /* audit-bsm.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262711FCCBBE008F094E /* audit-bsm.c */; };
-		C25926A811FCCBBE008F094E /* audit.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262811FCCBBE008F094E /* audit.c */; };
-		C25926C011FCCBBE008F094E /* authfd.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264011FCCBBE008F094E /* authfd.c */; };
-		C25926C111FCCBBE008F094E /* authfile.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264111FCCBBE008F094E /* authfile.c */; };
-		C25926C211FCCBBE008F094E /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264211FCCBBE008F094E /* bufaux.c */; };
-		C25926C311FCCBBE008F094E /* bufbn.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264311FCCBBE008F094E /* bufbn.c */; };
-		C25926C411FCCBBE008F094E /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264411FCCBBE008F094E /* buffer.c */; };
-		C25926C511FCCBBE008F094E /* canohost.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264511FCCBBE008F094E /* canohost.c */; };
-		C25926C611FCCBBE008F094E /* channels.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264611FCCBBE008F094E /* channels.c */; };
-		C25926C711FCCBBE008F094E /* cipher-3des1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264711FCCBBE008F094E /* cipher-3des1.c */; };
-		C25926C811FCCBBE008F094E /* cipher-acss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264811FCCBBE008F094E /* cipher-acss.c */; };
-		C25926C911FCCBBE008F094E /* cipher-aes.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264911FCCBBE008F094E /* cipher-aes.c */; };
-		C25926CA11FCCBBE008F094E /* cipher-bf1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264A11FCCBBE008F094E /* cipher-bf1.c */; };
-		C25926CB11FCCBBE008F094E /* cipher-ctr.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264B11FCCBBE008F094E /* cipher-ctr.c */; };
-		C25926CC11FCCBBE008F094E /* cipher.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264C11FCCBBE008F094E /* cipher.c */; };
-		C25926CE11FCCBBE008F094E /* clientloop.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264E11FCCBBE008F094E /* clientloop.c */; };
-		C25926CF11FCCBBE008F094E /* compat.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264F11FCCBBE008F094E /* compat.c */; };
-		C25926D011FCCBBE008F094E /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265011FCCBBE008F094E /* compress.c */; };
-		C25926D111FCCBBE008F094E /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265111FCCBBE008F094E /* crc32.c */; };
-		C25926D211FCCBBE008F094E /* deattack.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265211FCCBBE008F094E /* deattack.c */; };
-		C25926D311FCCBBE008F094E /* dh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265311FCCBBE008F094E /* dh.c */; };
-		C25926D411FCCBBE008F094E /* dispatch.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265411FCCBBE008F094E /* dispatch.c */; };
-		C25926D611FCCBBE008F094E /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265611FCCBBE008F094E /* entropy.c */; };
-		C25926D711FCCBBE008F094E /* fatal.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265711FCCBBE008F094E /* fatal.c */; };
-		C25926D811FCCBBE008F094E /* groupaccess.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265811FCCBBE008F094E /* groupaccess.c */; };
-		C25926D911FCCBBE008F094E /* gss-genr.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265911FCCBBE008F094E /* gss-genr.c */; };
-		C25926DA11FCCBBE008F094E /* gss-serv-krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265A11FCCBBE008F094E /* gss-serv-krb5.c */; };
-		C25926DB11FCCBBE008F094E /* gss-serv.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265B11FCCBBE008F094E /* gss-serv.c */; };
-		C25926DC11FCCBBE008F094E /* hostfile.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265C11FCCBBE008F094E /* hostfile.c */; };
-		C25926DF11FCCBBE008F094E /* kexdh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265F11FCCBBE008F094E /* kexdh.c */; };
-		C25926E011FCCBBE008F094E /* kexdhc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266011FCCBBE008F094E /* kexdhc.c */; };
-		C25926E211FCCBBE008F094E /* kexgex.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266211FCCBBE008F094E /* kexgex.c */; };
-		C25926E311FCCBBE008F094E /* kexgexc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266311FCCBBE008F094E /* kexgexc.c */; };
-		C25926E511FCCBBE008F094E /* key.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266511FCCBBE008F094E /* key.c */; };
-		C25926E611FCCBBE008F094E /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266611FCCBBE008F094E /* log.c */; };
-		C25926E711FCCBBE008F094E /* loginrec.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266711FCCBBE008F094E /* loginrec.c */; };
-		C25926E911FCCBBE008F094E /* mac.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266911FCCBBE008F094E /* mac.c */; };
-		C25926EA11FCCBBE008F094E /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266A11FCCBBE008F094E /* match.c */; };
-		C25926EB11FCCBBE008F094E /* md-sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266B11FCCBBE008F094E /* md-sha256.c */; };
-		C25926EC11FCCBBE008F094E /* md5crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266C11FCCBBE008F094E /* md5crypt.c */; };
-		C25926ED11FCCBBE008F094E /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266D11FCCBBE008F094E /* misc.c */; };
-		C25926EE11FCCBBE008F094E /* moduli.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266E11FCCBBE008F094E /* moduli.c */; };
-		C25926EF11FCCBBE008F094E /* monitor_fdpass.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266F11FCCBBE008F094E /* monitor_fdpass.c */; };
-		C25926F011FCCBBE008F094E /* monitor_mm.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267011FCCBBE008F094E /* monitor_mm.c */; };
-		C25926F311FCCBBE008F094E /* msg.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267311FCCBBE008F094E /* msg.c */; };
-		C25926F411FCCBBE008F094E /* mux.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267411FCCBBE008F094E /* mux.c */; };
-		C25926F511FCCBBE008F094E /* nchan.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267511FCCBBE008F094E /* nchan.c */; };
-		C25926F611FCCBBE008F094E /* packet.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267611FCCBBE008F094E /* packet.c */; };
-		C25926F711FCCBBE008F094E /* platform.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267711FCCBBE008F094E /* platform.c */; };
-		C25926F811FCCBBE008F094E /* progressmeter.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267811FCCBBE008F094E /* progressmeter.c */; };
-		C25926F911FCCBBE008F094E /* readconf.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267911FCCBBE008F094E /* readconf.c */; };
-		C25926FB11FCCBBE008F094E /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267B11FCCBBE008F094E /* rijndael.c */; };
-		C259270011FCCBBE008F094E /* rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = C259268011FCCBBE008F094E /* rsa.c */; };
-		C259271611FCCBBE008F094E /* ssh-rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269611FCCBBE008F094E /* ssh-rsa.c */; };
-		C259271711FCCBBE008F094E /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269711FCCBBE008F094E /* ssh.c */; };
-		C259271911FCCBBE008F094E /* sshconnect1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269911FCCBBE008F094E /* sshconnect1.c */; };
-		C259271D11FCCBBE008F094E /* sshpty.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269D11FCCBBE008F094E /* sshpty.c */; };
-		C259271E11FCCBBE008F094E /* sshtty.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269E11FCCBBE008F094E /* sshtty.c */; };
-		C259271F11FCCBBE008F094E /* ttymodes.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269F11FCCBBE008F094E /* ttymodes.c */; };
-		C259272011FCCBBE008F094E /* uidswap.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A011FCCBBE008F094E /* uidswap.c */; };
-		C259272111FCCBBE008F094E /* umac.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A111FCCBBE008F094E /* umac.c */; };
-		C259272211FCCBBE008F094E /* uuencode.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A211FCCBBE008F094E /* uuencode.c */; };
-		C259272311FCCBBE008F094E /* xmalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A311FCCBBE008F094E /* xmalloc.c */; };
 		C259276C11FCCF2F008F094E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C259276B11FCCF2F008F094E /* AppKit.framework */; };
 		C259276E11FCCF2F008F094E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C259276D11FCCF2F008F094E /* Foundation.framework */; };
 		C259277411FCCF91008F094E /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277111FCCF91008F094E /* libcrypto.dylib */; };
@@ -86,64 +150,6 @@
 		C259277611FCCF91008F094E /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277311FCCF91008F094E /* libz.1.dylib */; };
 		C259278F11FCD029008F094E /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259278E11FCD028008F094E /* libresolv.dylib */; };
 		C259279111FCD03C008F094E /* libbsm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259279011FCD03C008F094E /* libbsm.dylib */; };
-		C25927D111FCD06E008F094E /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279B11FCD06E008F094E /* base64.c */; };
-		C25927D211FCD06E008F094E /* basename.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279C11FCD06E008F094E /* basename.c */; };
-		C25927D311FCD06E008F094E /* bindresvport.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279D11FCD06E008F094E /* bindresvport.c */; };
-		C25927D411FCD06E008F094E /* bsd-arc4random.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279E11FCD06E008F094E /* bsd-arc4random.c */; };
-		C25927D511FCD06E008F094E /* bsd-asprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279F11FCD06E008F094E /* bsd-asprintf.c */; };
-		C25927D611FCD06E008F094E /* bsd-closefrom.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A011FCD06E008F094E /* bsd-closefrom.c */; };
-		C25927D711FCD06E008F094E /* bsd-cray.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A111FCD06E008F094E /* bsd-cray.c */; };
-		C25927D811FCD06E008F094E /* bsd-cygwin_util.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A211FCD06E008F094E /* bsd-cygwin_util.c */; };
-		C25927D911FCD06E008F094E /* bsd-getpeereid.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A311FCD06E008F094E /* bsd-getpeereid.c */; };
-		C25927DA11FCD06E008F094E /* bsd-misc.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A411FCD06E008F094E /* bsd-misc.c */; };
-		C25927DB11FCD06E008F094E /* bsd-nextstep.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A511FCD06E008F094E /* bsd-nextstep.c */; };
-		C25927DC11FCD06E008F094E /* bsd-openpty.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A611FCD06E008F094E /* bsd-openpty.c */; };
-		C25927DD11FCD06E008F094E /* bsd-poll.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A711FCD06E008F094E /* bsd-poll.c */; };
-		C25927DE11FCD06E008F094E /* bsd-snprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A811FCD06E008F094E /* bsd-snprintf.c */; };
-		C25927DF11FCD06E008F094E /* bsd-statvfs.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A911FCD06E008F094E /* bsd-statvfs.c */; };
-		C25927E011FCD06E008F094E /* bsd-waitpid.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AA11FCD06E008F094E /* bsd-waitpid.c */; };
-		C25927E111FCD06E008F094E /* daemon.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AB11FCD06E008F094E /* daemon.c */; };
-		C25927E211FCD06E008F094E /* dirname.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AC11FCD06E008F094E /* dirname.c */; };
-		C25927E311FCD06E008F094E /* fake-rfc2553.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AD11FCD06E008F094E /* fake-rfc2553.c */; };
-		C25927E411FCD06E008F094E /* fmt_scaled.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AE11FCD06E008F094E /* fmt_scaled.c */; };
-		C25927E511FCD06E008F094E /* getcwd.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AF11FCD06E008F094E /* getcwd.c */; };
-		C25927E611FCD06E008F094E /* getgrouplist.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B011FCD06E008F094E /* getgrouplist.c */; };
-		C25927E711FCD06E008F094E /* getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B111FCD06E008F094E /* getopt.c */; };
-		C25927E911FCD06E008F094E /* glob.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B311FCD06E008F094E /* glob.c */; };
-		C25927EA11FCD06E008F094E /* inet_aton.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B411FCD06E008F094E /* inet_aton.c */; };
-		C25927EB11FCD06E008F094E /* inet_ntoa.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B511FCD06E008F094E /* inet_ntoa.c */; };
-		C25927EC11FCD06E008F094E /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B611FCD06E008F094E /* inet_ntop.c */; };
-		C25927ED11FCD06E008F094E /* mktemp.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B711FCD06E008F094E /* mktemp.c */; };
-		C25927EE11FCD06E008F094E /* openssl-compat.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B811FCD06E008F094E /* openssl-compat.c */; };
-		C25927EF11FCD06E008F094E /* port-aix.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B911FCD06E008F094E /* port-aix.c */; };
-		C25927F011FCD06E008F094E /* port-irix.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BA11FCD06E008F094E /* port-irix.c */; };
-		C25927F111FCD06E008F094E /* port-linux.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BB11FCD06E008F094E /* port-linux.c */; };
-		C25927F211FCD06E008F094E /* port-solaris.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BC11FCD06E008F094E /* port-solaris.c */; };
-		C25927F311FCD06E008F094E /* port-tun.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BD11FCD06E008F094E /* port-tun.c */; };
-		C25927F411FCD06E008F094E /* port-uw.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BE11FCD06E008F094E /* port-uw.c */; };
-		C25927F511FCD06E008F094E /* pwcache.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BF11FCD06E008F094E /* pwcache.c */; };
-		C25927F611FCD06E008F094E /* readpassphrase.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C011FCD06E008F094E /* readpassphrase.c */; };
-		C25927F711FCD06E008F094E /* realpath.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C111FCD06E008F094E /* realpath.c */; };
-		C25927F811FCD06E008F094E /* rresvport.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C211FCD06E008F094E /* rresvport.c */; };
-		C25927F911FCD06E008F094E /* setenv.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C311FCD06E008F094E /* setenv.c */; };
-		C25927FA11FCD06E008F094E /* setproctitle.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C411FCD06E008F094E /* setproctitle.c */; };
-		C25927FB11FCD06E008F094E /* sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C511FCD06E008F094E /* sha2.c */; };
-		C25927FC11FCD06E008F094E /* sigact.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C611FCD06E008F094E /* sigact.c */; };
-		C25927FD11FCD06E008F094E /* strlcat.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C711FCD06E008F094E /* strlcat.c */; };
-		C25927FE11FCD06E008F094E /* strlcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C811FCD06E008F094E /* strlcpy.c */; };
-		C25927FF11FCD06E008F094E /* strmode.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C911FCD06E008F094E /* strmode.c */; };
-		C259280011FCD06E008F094E /* strsep.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CA11FCD06E008F094E /* strsep.c */; };
-		C259280111FCD06E008F094E /* strtoll.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CB11FCD06E008F094E /* strtoll.c */; };
-		C259280211FCD06E008F094E /* strtonum.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CC11FCD06E008F094E /* strtonum.c */; };
-		C259280311FCD06E008F094E /* strtoul.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CD11FCD06E008F094E /* strtoul.c */; };
-		C259280411FCD06E008F094E /* vis.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CE11FCD06E008F094E /* vis.c */; };
-		C259280511FCD06E008F094E /* xcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CF11FCD06E008F094E /* xcrypt.c */; };
-		C259280611FCD06E008F094E /* xmmap.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927D011FCD06E008F094E /* xmmap.c */; };
-		C259282A11FCD307008F094E /* sshconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269811FCCBBE008F094E /* sshconnect.c */; };
-		C259282D11FCD331008F094E /* ssh-dss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259268E11FCCBBE008F094E /* ssh-dss.c */; };
-		C259283011FCD3A4008F094E /* sshconnect2.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269A11FCCBBE008F094E /* sshconnect2.c */; };
-		C259283611FCD42D008F094E /* getrrsetbyname.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B211FCD06E008F094E /* getrrsetbyname.c */; };
-		C259284511FCD595008F094E /* kex.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265E11FCCBBE008F094E /* kex.c */; };
 		C2592EA911FE4DB6008F094E /* dmtx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2592EA811FE4DB6008F094E /* dmtx.cpp */; };
 		C2592FA511FE55B5008F094E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2592FA411FE55B5008F094E /* threads.cpp */; };
 		C2592FB711FE564C008F094E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2592FA411FE55B5008F094E /* threads.cpp */; };
@@ -167,140 +173,6 @@
 		C2856B1D11F6116E00ABCD8A /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856B1B11F6116E00ABCD8A /* channel.cpp */; };
 		C2856BE011F6249B00ABCD8A /* threads.pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */; };
 		C2856BE611F624B400ABCD8A /* threads.pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */; };
-		C2A3D6B41200E3DF00D27C20 /* dns.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265511FCCBBE008F094E /* dns.c */; };
-		C2A3D6B71200E3DF00D27C20 /* ssh-pkcs11-client.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269211FCCBBE008F094E /* ssh-pkcs11-client.c */; };
-		C2A3D6C81200E73700D27C20 /* acss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262411FCCBBE008F094E /* acss.c */; };
-		C2A3D6C91200E73700D27C20 /* addrmatch.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262511FCCBBE008F094E /* addrmatch.c */; };
-		C2A3D6CA1200E73700D27C20 /* atomicio.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262611FCCBBE008F094E /* atomicio.c */; };
-		C2A3D6CB1200E73700D27C20 /* audit-bsm.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262711FCCBBE008F094E /* audit-bsm.c */; };
-		C2A3D6CC1200E73700D27C20 /* audit.c in Sources */ = {isa = PBXBuildFile; fileRef = C259262811FCCBBE008F094E /* audit.c */; };
-		C2A3D6CD1200E73700D27C20 /* authfd.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264011FCCBBE008F094E /* authfd.c */; };
-		C2A3D6CE1200E73700D27C20 /* authfile.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264111FCCBBE008F094E /* authfile.c */; };
-		C2A3D6CF1200E73700D27C20 /* bufaux.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264211FCCBBE008F094E /* bufaux.c */; };
-		C2A3D6D01200E73700D27C20 /* bufbn.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264311FCCBBE008F094E /* bufbn.c */; };
-		C2A3D6D11200E73700D27C20 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264411FCCBBE008F094E /* buffer.c */; };
-		C2A3D6D21200E73700D27C20 /* canohost.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264511FCCBBE008F094E /* canohost.c */; };
-		C2A3D6D31200E73700D27C20 /* channels.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264611FCCBBE008F094E /* channels.c */; };
-		C2A3D6D41200E73700D27C20 /* cipher-3des1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264711FCCBBE008F094E /* cipher-3des1.c */; };
-		C2A3D6D51200E73700D27C20 /* cipher-acss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264811FCCBBE008F094E /* cipher-acss.c */; };
-		C2A3D6D61200E73700D27C20 /* cipher-aes.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264911FCCBBE008F094E /* cipher-aes.c */; };
-		C2A3D6D71200E73700D27C20 /* cipher-bf1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264A11FCCBBE008F094E /* cipher-bf1.c */; };
-		C2A3D6D81200E73700D27C20 /* cipher-ctr.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264B11FCCBBE008F094E /* cipher-ctr.c */; };
-		C2A3D6D91200E73700D27C20 /* cipher.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264C11FCCBBE008F094E /* cipher.c */; };
-		C2A3D6DA1200E73700D27C20 /* clientloop.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264E11FCCBBE008F094E /* clientloop.c */; };
-		C2A3D6DB1200E73700D27C20 /* compat.c in Sources */ = {isa = PBXBuildFile; fileRef = C259264F11FCCBBE008F094E /* compat.c */; };
-		C2A3D6DC1200E73700D27C20 /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265011FCCBBE008F094E /* compress.c */; };
-		C2A3D6DD1200E73700D27C20 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265111FCCBBE008F094E /* crc32.c */; };
-		C2A3D6DE1200E73700D27C20 /* deattack.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265211FCCBBE008F094E /* deattack.c */; };
-		C2A3D6DF1200E73700D27C20 /* dh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265311FCCBBE008F094E /* dh.c */; };
-		C2A3D6E01200E73700D27C20 /* dispatch.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265411FCCBBE008F094E /* dispatch.c */; };
-		C2A3D6E11200E73700D27C20 /* dns.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265511FCCBBE008F094E /* dns.c */; };
-		C2A3D6E21200E73700D27C20 /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265611FCCBBE008F094E /* entropy.c */; };
-		C2A3D6E31200E73700D27C20 /* fatal.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265711FCCBBE008F094E /* fatal.c */; };
-		C2A3D6E41200E73700D27C20 /* groupaccess.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265811FCCBBE008F094E /* groupaccess.c */; };
-		C2A3D6E51200E73700D27C20 /* gss-genr.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265911FCCBBE008F094E /* gss-genr.c */; };
-		C2A3D6E61200E73700D27C20 /* gss-serv-krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265A11FCCBBE008F094E /* gss-serv-krb5.c */; };
-		C2A3D6E71200E73700D27C20 /* gss-serv.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265B11FCCBBE008F094E /* gss-serv.c */; };
-		C2A3D6E81200E73700D27C20 /* hostfile.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265C11FCCBBE008F094E /* hostfile.c */; };
-		C2A3D6EA1200E73700D27C20 /* kex.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265E11FCCBBE008F094E /* kex.c */; };
-		C2A3D6EB1200E73700D27C20 /* kexdh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259265F11FCCBBE008F094E /* kexdh.c */; };
-		C2A3D6EC1200E73700D27C20 /* kexdhc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266011FCCBBE008F094E /* kexdhc.c */; };
-		C2A3D6ED1200E73700D27C20 /* kexgex.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266211FCCBBE008F094E /* kexgex.c */; };
-		C2A3D6EE1200E73700D27C20 /* kexgexc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266311FCCBBE008F094E /* kexgexc.c */; };
-		C2A3D6EF1200E73700D27C20 /* key.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266511FCCBBE008F094E /* key.c */; };
-		C2A3D6F01200E73700D27C20 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266611FCCBBE008F094E /* log.c */; };
-		C2A3D6F11200E73700D27C20 /* loginrec.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266711FCCBBE008F094E /* loginrec.c */; };
-		C2A3D6F21200E73700D27C20 /* mac.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266911FCCBBE008F094E /* mac.c */; };
-		C2A3D6F31200E73700D27C20 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266A11FCCBBE008F094E /* match.c */; };
-		C2A3D6F41200E73700D27C20 /* md-sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266B11FCCBBE008F094E /* md-sha256.c */; };
-		C2A3D6F51200E73700D27C20 /* md5crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266C11FCCBBE008F094E /* md5crypt.c */; };
-		C2A3D6F61200E73700D27C20 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266D11FCCBBE008F094E /* misc.c */; };
-		C2A3D6F71200E73700D27C20 /* moduli.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266E11FCCBBE008F094E /* moduli.c */; };
-		C2A3D6F81200E73700D27C20 /* monitor_fdpass.c in Sources */ = {isa = PBXBuildFile; fileRef = C259266F11FCCBBE008F094E /* monitor_fdpass.c */; };
-		C2A3D6F91200E73700D27C20 /* monitor_mm.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267011FCCBBE008F094E /* monitor_mm.c */; };
-		C2A3D6FA1200E73700D27C20 /* msg.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267311FCCBBE008F094E /* msg.c */; };
-		C2A3D6FB1200E73700D27C20 /* mux.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267411FCCBBE008F094E /* mux.c */; };
-		C2A3D6FC1200E73700D27C20 /* nchan.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267511FCCBBE008F094E /* nchan.c */; };
-		C2A3D6FD1200E73700D27C20 /* packet.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267611FCCBBE008F094E /* packet.c */; };
-		C2A3D6FE1200E73700D27C20 /* platform.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267711FCCBBE008F094E /* platform.c */; };
-		C2A3D6FF1200E73700D27C20 /* progressmeter.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267811FCCBBE008F094E /* progressmeter.c */; };
-		C2A3D7001200E73700D27C20 /* readconf.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267911FCCBBE008F094E /* readconf.c */; };
-		C2A3D7021200E73700D27C20 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267B11FCCBBE008F094E /* rijndael.c */; };
-		C2A3D7031200E73700D27C20 /* roaming_client.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267C11FCCBBE008F094E /* roaming_client.c */; };
-		C2A3D7041200E73700D27C20 /* roaming_common.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267D11FCCBBE008F094E /* roaming_common.c */; };
-		C2A3D7051200E73700D27C20 /* rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = C259268011FCCBBE008F094E /* rsa.c */; };
-		C2A3D7061200E73700D27C20 /* ssh-dss.c in Sources */ = {isa = PBXBuildFile; fileRef = C259268E11FCCBBE008F094E /* ssh-dss.c */; };
-		C2A3D7071200E73700D27C20 /* ssh-pkcs11-client.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269211FCCBBE008F094E /* ssh-pkcs11-client.c */; };
-		C2A3D7081200E73700D27C20 /* ssh-rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269611FCCBBE008F094E /* ssh-rsa.c */; };
-		C2A3D70A1200E73700D27C20 /* sshconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269811FCCBBE008F094E /* sshconnect.c */; };
-		C2A3D70B1200E73700D27C20 /* sshconnect1.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269911FCCBBE008F094E /* sshconnect1.c */; };
-		C2A3D70C1200E73700D27C20 /* sshconnect2.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269A11FCCBBE008F094E /* sshconnect2.c */; };
-		C2A3D70D1200E73700D27C20 /* sshpty.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269D11FCCBBE008F094E /* sshpty.c */; };
-		C2A3D70E1200E73700D27C20 /* sshtty.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269E11FCCBBE008F094E /* sshtty.c */; };
-		C2A3D70F1200E73700D27C20 /* ttymodes.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269F11FCCBBE008F094E /* ttymodes.c */; };
-		C2A3D7101200E73700D27C20 /* uidswap.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A011FCCBBE008F094E /* uidswap.c */; };
-		C2A3D7111200E73700D27C20 /* umac.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A111FCCBBE008F094E /* umac.c */; };
-		C2A3D7121200E73700D27C20 /* uuencode.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A211FCCBBE008F094E /* uuencode.c */; };
-		C2A3D7131200E73700D27C20 /* xmalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = C25926A311FCCBBE008F094E /* xmalloc.c */; };
-		C2A3D7141200E74600D27C20 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279B11FCD06E008F094E /* base64.c */; };
-		C2A3D7151200E74600D27C20 /* basename.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279C11FCD06E008F094E /* basename.c */; };
-		C2A3D7161200E74600D27C20 /* bindresvport.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279D11FCD06E008F094E /* bindresvport.c */; };
-		C2A3D7171200E74600D27C20 /* bsd-arc4random.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279E11FCD06E008F094E /* bsd-arc4random.c */; };
-		C2A3D7181200E74600D27C20 /* bsd-asprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = C259279F11FCD06E008F094E /* bsd-asprintf.c */; };
-		C2A3D7191200E74600D27C20 /* bsd-closefrom.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A011FCD06E008F094E /* bsd-closefrom.c */; };
-		C2A3D71A1200E74600D27C20 /* bsd-cray.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A111FCD06E008F094E /* bsd-cray.c */; };
-		C2A3D71B1200E74600D27C20 /* bsd-cygwin_util.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A211FCD06E008F094E /* bsd-cygwin_util.c */; };
-		C2A3D71C1200E74600D27C20 /* bsd-getpeereid.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A311FCD06E008F094E /* bsd-getpeereid.c */; };
-		C2A3D71D1200E74600D27C20 /* bsd-misc.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A411FCD06E008F094E /* bsd-misc.c */; };
-		C2A3D71E1200E74600D27C20 /* bsd-nextstep.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A511FCD06E008F094E /* bsd-nextstep.c */; };
-		C2A3D71F1200E74600D27C20 /* bsd-openpty.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A611FCD06E008F094E /* bsd-openpty.c */; };
-		C2A3D7201200E74600D27C20 /* bsd-poll.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A711FCD06E008F094E /* bsd-poll.c */; };
-		C2A3D7211200E74600D27C20 /* bsd-snprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A811FCD06E008F094E /* bsd-snprintf.c */; };
-		C2A3D7221200E74600D27C20 /* bsd-statvfs.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927A911FCD06E008F094E /* bsd-statvfs.c */; };
-		C2A3D7231200E74600D27C20 /* bsd-waitpid.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AA11FCD06E008F094E /* bsd-waitpid.c */; };
-		C2A3D7241200E74600D27C20 /* daemon.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AB11FCD06E008F094E /* daemon.c */; };
-		C2A3D7251200E74600D27C20 /* dirname.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AC11FCD06E008F094E /* dirname.c */; };
-		C2A3D7261200E74600D27C20 /* fake-rfc2553.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AD11FCD06E008F094E /* fake-rfc2553.c */; };
-		C2A3D7271200E74600D27C20 /* fmt_scaled.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AE11FCD06E008F094E /* fmt_scaled.c */; };
-		C2A3D7281200E74600D27C20 /* getcwd.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927AF11FCD06E008F094E /* getcwd.c */; };
-		C2A3D7291200E74600D27C20 /* getgrouplist.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B011FCD06E008F094E /* getgrouplist.c */; };
-		C2A3D72A1200E74600D27C20 /* getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B111FCD06E008F094E /* getopt.c */; };
-		C2A3D72B1200E74600D27C20 /* getrrsetbyname.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B211FCD06E008F094E /* getrrsetbyname.c */; };
-		C2A3D72C1200E74600D27C20 /* glob.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B311FCD06E008F094E /* glob.c */; };
-		C2A3D72D1200E74600D27C20 /* inet_aton.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B411FCD06E008F094E /* inet_aton.c */; };
-		C2A3D72E1200E74600D27C20 /* inet_ntoa.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B511FCD06E008F094E /* inet_ntoa.c */; };
-		C2A3D72F1200E74600D27C20 /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B611FCD06E008F094E /* inet_ntop.c */; };
-		C2A3D7301200E74600D27C20 /* mktemp.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B711FCD06E008F094E /* mktemp.c */; };
-		C2A3D7311200E74600D27C20 /* openssl-compat.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B811FCD06E008F094E /* openssl-compat.c */; };
-		C2A3D7321200E74600D27C20 /* port-aix.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927B911FCD06E008F094E /* port-aix.c */; };
-		C2A3D7331200E74600D27C20 /* port-irix.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BA11FCD06E008F094E /* port-irix.c */; };
-		C2A3D7341200E74600D27C20 /* port-linux.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BB11FCD06E008F094E /* port-linux.c */; };
-		C2A3D7351200E74600D27C20 /* port-solaris.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BC11FCD06E008F094E /* port-solaris.c */; };
-		C2A3D7361200E74600D27C20 /* port-tun.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BD11FCD06E008F094E /* port-tun.c */; };
-		C2A3D7371200E74600D27C20 /* port-uw.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BE11FCD06E008F094E /* port-uw.c */; };
-		C2A3D7381200E74600D27C20 /* pwcache.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927BF11FCD06E008F094E /* pwcache.c */; };
-		C2A3D7391200E74600D27C20 /* readpassphrase.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C011FCD06E008F094E /* readpassphrase.c */; };
-		C2A3D73A1200E74600D27C20 /* realpath.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C111FCD06E008F094E /* realpath.c */; };
-		C2A3D73B1200E74600D27C20 /* rresvport.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C211FCD06E008F094E /* rresvport.c */; };
-		C2A3D73C1200E74600D27C20 /* setenv.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C311FCD06E008F094E /* setenv.c */; };
-		C2A3D73D1200E74600D27C20 /* setproctitle.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C411FCD06E008F094E /* setproctitle.c */; };
-		C2A3D73E1200E74600D27C20 /* sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C511FCD06E008F094E /* sha2.c */; };
-		C2A3D73F1200E74600D27C20 /* sigact.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C611FCD06E008F094E /* sigact.c */; };
-		C2A3D7401200E74600D27C20 /* strlcat.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C711FCD06E008F094E /* strlcat.c */; };
-		C2A3D7411200E74600D27C20 /* strlcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C811FCD06E008F094E /* strlcpy.c */; };
-		C2A3D7421200E74600D27C20 /* strmode.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927C911FCD06E008F094E /* strmode.c */; };
-		C2A3D7431200E74600D27C20 /* strsep.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CA11FCD06E008F094E /* strsep.c */; };
-		C2A3D7441200E74600D27C20 /* strtoll.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CB11FCD06E008F094E /* strtoll.c */; };
-		C2A3D7451200E74600D27C20 /* strtonum.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CC11FCD06E008F094E /* strtonum.c */; };
-		C2A3D7461200E74600D27C20 /* strtoul.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CD11FCD06E008F094E /* strtoul.c */; };
-		C2A3D7471200E74600D27C20 /* vis.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CE11FCD06E008F094E /* vis.c */; };
-		C2A3D7481200E74600D27C20 /* xcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927CF11FCD06E008F094E /* xcrypt.c */; };
-		C2A3D7491200E74600D27C20 /* xmmap.c in Sources */ = {isa = PBXBuildFile; fileRef = C25927D011FCD06E008F094E /* xmmap.c */; };
-		C2A3D75B1200E7FA00D27C20 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277111FCCF91008F094E /* libcrypto.dylib */; };
-		C2A3D75E1200E80200D27C20 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277311FCCF91008F094E /* libz.1.dylib */; };
-		C2A3D88C1200FC9C00D27C20 /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = C259269711FCCBBE008F094E /* ssh.c */; };
-		C2A3D940120103C800D27C20 /* roaming_client.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267C11FCCBBE008F094E /* roaming_client.c */; };
-		C2A3D941120103C800D27C20 /* roaming_common.c in Sources */ = {isa = PBXBuildFile; fileRef = C259267D11FCCBBE008F094E /* roaming_common.c */; };
 		C2FA5D5F11F372630014E460 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5B11F372630014E460 /* InfoPlist.strings */; };
 		C2FA5D6011F372630014E460 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2FA5D5D11F372630014E460 /* MainMenu.xib */; };
 		C2FA5D6711F372B60014E460 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5D6611F372B60014E460 /* main.mm */; };
@@ -308,6 +180,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C211FA2E1203FE0E0025B37C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C211F9241203FA210025B37C /* ssh */;
+			remoteInfo = ssh;
+		};
 		C2592FB311FE5644008F094E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
@@ -327,9 +206,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C211F9C81203FAEA0025B37C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = ../build/ssh.bundle;
+			dstSubfolderSpec = 6;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C211F9251203FA210025B37C /* ssh.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ssh.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		C211F9261203FA210025B37C /* ssh_main-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ssh_main-Info.plist"; sourceTree = "<group>"; };
 		C216D221120367630095D63F /* printLut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = printLut.cpp; path = ../src/tools/printLut.cpp; sourceTree = SOURCE_ROOT; };
 		C259243A11FC6F15008F094E /* dmtx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dmtx; sourceTree = BUILT_PRODUCTS_DIR; };
 		C259243E11FC6F2B008F094E /* dmtx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dmtx.cpp; path = ../src/tools/dmtx.cpp; sourceTree = SOURCE_ROOT; };
@@ -477,7 +367,6 @@
 		C259325D11FF27CF008F094E /* css.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = css.cpp; path = ../src/frame/css.cpp; sourceTree = SOURCE_ROOT; };
 		C25932D711FF33BE008F094E /* aes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aes.cpp; path = ../src/frame/aes.cpp; sourceTree = SOURCE_ROOT; };
 		C25935B411FF63EA008F094E /* pipl.64.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; name = pipl.64.rsrc; path = ../rsrc/plugin/pipl.64.rsrc; sourceTree = SOURCE_ROOT; };
-		C25DA7BD11FB601F0025BB8C /* rikiGlue.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = rikiGlue.plist; path = ../rsrc/rikiGlue.plist; sourceTree = "<group>"; };
 		C2641C2D12037BAE0034C8AA /* print */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = print; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2684AF71201F37800A39987 /* application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = application.cpp; path = ../src/common/application.cpp; sourceTree = SOURCE_ROOT; };
 		C2684F721202419200A39987 /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command.cpp; sourceTree = "<group>"; };
@@ -493,7 +382,6 @@
 		C2856B1311F6107300ABCD8A /* rsa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rsa.cpp; path = ../src/frame/rsa.cpp; sourceTree = SOURCE_ROOT; };
 		C2856B1B11F6116E00ABCD8A /* channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = channel.cpp; path = ../src/frame/channel.cpp; sourceTree = SOURCE_ROOT; };
 		C2856BDF11F6249B00ABCD8A /* threads.pthreads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threads.pthreads.cpp; path = ../src/threads/threads.pthreads.cpp; sourceTree = SOURCE_ROOT; };
-		C2A3D6C51200E71900D27C20 /* ssh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ssh; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2FA506011EF81F70014E460 /* glue.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glue.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2FA59F911F213E00014E460 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		C2FA5D2711F371190014E460 /* glue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glue.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -504,6 +392,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C211F9231203FA210025B37C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C211F9CE1203FB2C0025B37C /* libcrypto.dylib in Frameworks */,
+				C211F9D21203FB370025B37C /* libz.1.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C259243811FC6F15008F094E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -517,15 +414,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C2A3D6C31200E71900D27C20 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2A3D75B1200E7FA00D27C20 /* libcrypto.dylib in Frameworks */,
-				C2A3D75E1200E80200D27C20 /* libz.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +452,7 @@
 		C259262011FCCBAB008F094E /* ssh */ = {
 			isa = PBXGroup;
 			children = (
+				C259267A11FCCBBE008F094E /* readpass.c */,
 				C259279411FCD053008F094E /* bsd */,
 				C259262411FCCBBE008F094E /* acss.c */,
 				C259262511FCCBBE008F094E /* addrmatch.c */,
@@ -621,7 +510,6 @@
 				C259267711FCCBBE008F094E /* platform.c */,
 				C259267811FCCBBE008F094E /* progressmeter.c */,
 				C259267911FCCBBE008F094E /* readconf.c */,
-				C259267A11FCCBBE008F094E /* readpass.c */,
 				C259267B11FCCBBE008F094E /* rijndael.c */,
 				C259267C11FCCBBE008F094E /* roaming_client.c */,
 				C259267D11FCCBBE008F094E /* roaming_common.c */,
@@ -847,10 +735,10 @@
 				C2F5993A113CE59800B0FD05 /* lib */,
 				C2FA506011EF81F70014E460 /* glue.plugin */,
 				C2FA5D2711F371190014E460 /* glue.app */,
-				C25DA7BD11FB601F0025BB8C /* rikiGlue.plist */,
 				C259243A11FC6F15008F094E /* dmtx */,
-				C2A3D6C51200E71900D27C20 /* ssh */,
 				C2641C2D12037BAE0034C8AA /* print */,
+				C211F9251203FA210025B37C /* ssh.bundle */,
+				C211F9261203FA210025B37C /* ssh_main-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -873,6 +761,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C211F9241203FA210025B37C /* ssh */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C211F9281203FA220025B37C /* Build configuration list for PBXNativeTarget "ssh" */;
+			buildPhases = (
+				C211F9211203FA210025B37C /* Resources */,
+				C211F9221203FA210025B37C /* Sources */,
+				C211F9231203FA210025B37C /* Frameworks */,
+				C211F9C81203FAEA0025B37C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ssh;
+			productName = ssh_main;
+			productReference = C211F9251203FA210025B37C /* ssh.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 		C259243911FC6F15008F094E /* dmtx */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C259244011FC6F2B008F094E /* Build configuration list for PBXNativeTarget "dmtx" */;
@@ -905,22 +811,6 @@
 			productReference = C2641C2D12037BAE0034C8AA /* print */;
 			productType = "com.apple.product-type.tool";
 		};
-		C2A3D6C41200E71900D27C20 /* ssh */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C2A3D74C1200E76800D27C20 /* Build configuration list for PBXNativeTarget "ssh" */;
-			buildPhases = (
-				C2A3D6C21200E71900D27C20 /* Sources */,
-				C2A3D6C31200E71900D27C20 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ssh;
-			productName = ssh;
-			productReference = C2A3D6C51200E71900D27C20 /* ssh */;
-			productType = "com.apple.product-type.tool";
-		};
 		C2FA5D2611F371190014E460 /* glueApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2FA5D2B11F3711B0014E460 /* Build configuration list for PBXNativeTarget "glueApp" */;
@@ -928,10 +818,12 @@
 				C2FA5D2311F371190014E460 /* Resources */,
 				C2FA5D2411F371190014E460 /* Sources */,
 				C2FA5D2511F371190014E460 /* Frameworks */,
+				C211FA99120403AD0025B37C /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C211FA2F1203FE0E0025B37C /* PBXTargetDependency */,
 				C2592FB411FE5644008F094E /* PBXTargetDependency */,
 			);
 			name = glueApp;
@@ -975,12 +867,19 @@
 				C2FA5D2611F371190014E460 /* glueApp */,
 				C25DA7BA11FB601F0025BB8C /* printLut */,
 				C259243911FC6F15008F094E /* dmtx */,
-				C2A3D6C41200E71900D27C20 /* ssh */,
+				C211F9241203FA210025B37C /* ssh */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C211F9211203FA210025B37C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2FA5D2311F371190014E460 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1011,7 +910,158 @@
 		};
 /* End PBXRezBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C211FA99120403AD0025B37C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -R ../build/ssh.bundle ../build/$WRAPPER_NAME/Contents/MacOS";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		C211F9221203FA210025B37C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C211F9291203FA530025B37C /* base64.c in Sources */,
+				C211F92A1203FA530025B37C /* basename.c in Sources */,
+				C211F92B1203FA530025B37C /* bindresvport.c in Sources */,
+				C211F92C1203FA530025B37C /* bsd-arc4random.c in Sources */,
+				C211F92D1203FA530025B37C /* bsd-asprintf.c in Sources */,
+				C211F92E1203FA530025B37C /* bsd-closefrom.c in Sources */,
+				C211F92F1203FA530025B37C /* bsd-cray.c in Sources */,
+				C211F9301203FA530025B37C /* bsd-cygwin_util.c in Sources */,
+				C211F9311203FA530025B37C /* bsd-getpeereid.c in Sources */,
+				C211F9321203FA530025B37C /* bsd-misc.c in Sources */,
+				C211F9331203FA530025B37C /* bsd-nextstep.c in Sources */,
+				C211F9341203FA530025B37C /* bsd-openpty.c in Sources */,
+				C211F9351203FA530025B37C /* bsd-poll.c in Sources */,
+				C211F9361203FA530025B37C /* bsd-snprintf.c in Sources */,
+				C211F9371203FA530025B37C /* bsd-statvfs.c in Sources */,
+				C211F9381203FA530025B37C /* bsd-waitpid.c in Sources */,
+				C211F9391203FA530025B37C /* daemon.c in Sources */,
+				C211F93A1203FA530025B37C /* dirname.c in Sources */,
+				C211F93B1203FA530025B37C /* fake-rfc2553.c in Sources */,
+				C211F93C1203FA530025B37C /* fmt_scaled.c in Sources */,
+				C211F93D1203FA530025B37C /* getcwd.c in Sources */,
+				C211F93E1203FA530025B37C /* getgrouplist.c in Sources */,
+				C211F93F1203FA530025B37C /* getopt.c in Sources */,
+				C211F9401203FA530025B37C /* getrrsetbyname.c in Sources */,
+				C211F9411203FA530025B37C /* glob.c in Sources */,
+				C211F9421203FA530025B37C /* inet_aton.c in Sources */,
+				C211F9431203FA530025B37C /* inet_ntoa.c in Sources */,
+				C211F9441203FA530025B37C /* inet_ntop.c in Sources */,
+				C211F9451203FA530025B37C /* mktemp.c in Sources */,
+				C211F9461203FA530025B37C /* openssl-compat.c in Sources */,
+				C211F9471203FA530025B37C /* port-aix.c in Sources */,
+				C211F9481203FA530025B37C /* port-irix.c in Sources */,
+				C211F9491203FA530025B37C /* port-linux.c in Sources */,
+				C211F94A1203FA530025B37C /* port-solaris.c in Sources */,
+				C211F94B1203FA530025B37C /* port-tun.c in Sources */,
+				C211F94C1203FA530025B37C /* port-uw.c in Sources */,
+				C211F94D1203FA530025B37C /* pwcache.c in Sources */,
+				C211F94E1203FA530025B37C /* readpassphrase.c in Sources */,
+				C211F94F1203FA530025B37C /* realpath.c in Sources */,
+				C211F9501203FA530025B37C /* rresvport.c in Sources */,
+				C211F9511203FA530025B37C /* setenv.c in Sources */,
+				C211F9521203FA530025B37C /* setproctitle.c in Sources */,
+				C211F9531203FA530025B37C /* sha2.c in Sources */,
+				C211F9541203FA530025B37C /* sigact.c in Sources */,
+				C211F9551203FA530025B37C /* strlcat.c in Sources */,
+				C211F9561203FA530025B37C /* strlcpy.c in Sources */,
+				C211F9571203FA530025B37C /* strmode.c in Sources */,
+				C211F9581203FA530025B37C /* strsep.c in Sources */,
+				C211F9591203FA530025B37C /* strtoll.c in Sources */,
+				C211F95A1203FA530025B37C /* strtonum.c in Sources */,
+				C211F95B1203FA530025B37C /* strtoul.c in Sources */,
+				C211F95C1203FA530025B37C /* vis.c in Sources */,
+				C211F95D1203FA530025B37C /* xcrypt.c in Sources */,
+				C211F95E1203FA530025B37C /* xmmap.c in Sources */,
+				C211F95F1203FA530025B37C /* acss.c in Sources */,
+				C211F9601203FA530025B37C /* addrmatch.c in Sources */,
+				C211F9611203FA530025B37C /* atomicio.c in Sources */,
+				C211F9621203FA530025B37C /* audit-bsm.c in Sources */,
+				C211F9631203FA530025B37C /* audit.c in Sources */,
+				C211F9641203FA530025B37C /* authfd.c in Sources */,
+				C211F9651203FA530025B37C /* authfile.c in Sources */,
+				C211F9661203FA530025B37C /* bufaux.c in Sources */,
+				C211F9671203FA530025B37C /* bufbn.c in Sources */,
+				C211F9681203FA530025B37C /* buffer.c in Sources */,
+				C211F9691203FA530025B37C /* canohost.c in Sources */,
+				C211F96A1203FA530025B37C /* channels.c in Sources */,
+				C211F96B1203FA530025B37C /* cipher-3des1.c in Sources */,
+				C211F96C1203FA530025B37C /* cipher-acss.c in Sources */,
+				C211F96D1203FA530025B37C /* cipher-aes.c in Sources */,
+				C211F96E1203FA530025B37C /* cipher-bf1.c in Sources */,
+				C211F96F1203FA530025B37C /* cipher-ctr.c in Sources */,
+				C211F9701203FA530025B37C /* cipher.c in Sources */,
+				C211F9711203FA530025B37C /* clientloop.c in Sources */,
+				C211F9721203FA530025B37C /* compat.c in Sources */,
+				C211F9731203FA530025B37C /* compress.c in Sources */,
+				C211F9741203FA530025B37C /* crc32.c in Sources */,
+				C211F9751203FA530025B37C /* deattack.c in Sources */,
+				C211F9761203FA530025B37C /* dh.c in Sources */,
+				C211F9771203FA530025B37C /* dispatch.c in Sources */,
+				C211F9781203FA530025B37C /* dns.c in Sources */,
+				C211F9791203FA530025B37C /* entropy.c in Sources */,
+				C211F97A1203FA530025B37C /* fatal.c in Sources */,
+				C211F97B1203FA530025B37C /* groupaccess.c in Sources */,
+				C211F97C1203FA530025B37C /* gss-genr.c in Sources */,
+				C211F97D1203FA530025B37C /* gss-serv-krb5.c in Sources */,
+				C211F97E1203FA530025B37C /* gss-serv.c in Sources */,
+				C211F97F1203FA530025B37C /* hostfile.c in Sources */,
+				C211F9801203FA530025B37C /* kex.c in Sources */,
+				C211F9811203FA530025B37C /* kexdh.c in Sources */,
+				C211F9821203FA530025B37C /* kexdhc.c in Sources */,
+				C211F9831203FA530025B37C /* kexgex.c in Sources */,
+				C211F9841203FA530025B37C /* kexgexc.c in Sources */,
+				C211F9851203FA530025B37C /* key.c in Sources */,
+				C211F9861203FA530025B37C /* log.c in Sources */,
+				C211F9871203FA530025B37C /* loginrec.c in Sources */,
+				C211F9881203FA530025B37C /* mac.c in Sources */,
+				C211F9891203FA530025B37C /* match.c in Sources */,
+				C211F98A1203FA530025B37C /* md-sha256.c in Sources */,
+				C211F98B1203FA530025B37C /* md5crypt.c in Sources */,
+				C211F98C1203FA530025B37C /* misc.c in Sources */,
+				C211F98D1203FA530025B37C /* moduli.c in Sources */,
+				C211F98E1203FA530025B37C /* monitor_fdpass.c in Sources */,
+				C211F98F1203FA530025B37C /* monitor_mm.c in Sources */,
+				C211F9901203FA530025B37C /* msg.c in Sources */,
+				C211F9911203FA530025B37C /* mux.c in Sources */,
+				C211F9921203FA530025B37C /* nchan.c in Sources */,
+				C211F9931203FA530025B37C /* packet.c in Sources */,
+				C211F9941203FA530025B37C /* platform.c in Sources */,
+				C211F9951203FA530025B37C /* progressmeter.c in Sources */,
+				C211F9961203FA530025B37C /* readconf.c in Sources */,
+				C211F9981203FA530025B37C /* rijndael.c in Sources */,
+				C211F9991203FA530025B37C /* roaming_client.c in Sources */,
+				C211F99A1203FA530025B37C /* roaming_common.c in Sources */,
+				C211F99B1203FA530025B37C /* rsa.c in Sources */,
+				C211F99C1203FA530025B37C /* ssh-dss.c in Sources */,
+				C211F99D1203FA530025B37C /* ssh-pkcs11-client.c in Sources */,
+				C211F99E1203FA530025B37C /* ssh-rsa.c in Sources */,
+				C211F99F1203FA530025B37C /* ssh.c in Sources */,
+				C211F9A01203FA530025B37C /* sshconnect.c in Sources */,
+				C211F9A11203FA530025B37C /* sshconnect1.c in Sources */,
+				C211F9A21203FA530025B37C /* sshconnect2.c in Sources */,
+				C211F9A31203FA530025B37C /* sshpty.c in Sources */,
+				C211F9A41203FA530025B37C /* sshtty.c in Sources */,
+				C211F9A51203FA530025B37C /* ttymodes.c in Sources */,
+				C211F9A61203FA530025B37C /* uidswap.c in Sources */,
+				C211F9A71203FA530025B37C /* umac.c in Sources */,
+				C211F9A81203FA530025B37C /* uuencode.c in Sources */,
+				C211F9A91203FA530025B37C /* xmalloc.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C259243711FC6F15008F094E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1029,141 +1079,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C2A3D6C21200E71900D27C20 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2A3D6C81200E73700D27C20 /* acss.c in Sources */,
-				C2A3D6C91200E73700D27C20 /* addrmatch.c in Sources */,
-				C2A3D6CA1200E73700D27C20 /* atomicio.c in Sources */,
-				C2A3D6CB1200E73700D27C20 /* audit-bsm.c in Sources */,
-				C2A3D6CC1200E73700D27C20 /* audit.c in Sources */,
-				C2A3D6CD1200E73700D27C20 /* authfd.c in Sources */,
-				C2A3D6CE1200E73700D27C20 /* authfile.c in Sources */,
-				C2A3D6CF1200E73700D27C20 /* bufaux.c in Sources */,
-				C2A3D6D01200E73700D27C20 /* bufbn.c in Sources */,
-				C2A3D6D11200E73700D27C20 /* buffer.c in Sources */,
-				C2A3D6D21200E73700D27C20 /* canohost.c in Sources */,
-				C2A3D6D31200E73700D27C20 /* channels.c in Sources */,
-				C2A3D6D41200E73700D27C20 /* cipher-3des1.c in Sources */,
-				C2A3D6D51200E73700D27C20 /* cipher-acss.c in Sources */,
-				C2A3D6D61200E73700D27C20 /* cipher-aes.c in Sources */,
-				C2A3D6D71200E73700D27C20 /* cipher-bf1.c in Sources */,
-				C2A3D6D81200E73700D27C20 /* cipher-ctr.c in Sources */,
-				C2A3D6D91200E73700D27C20 /* cipher.c in Sources */,
-				C2A3D6DA1200E73700D27C20 /* clientloop.c in Sources */,
-				C2A3D6DB1200E73700D27C20 /* compat.c in Sources */,
-				C2A3D6DC1200E73700D27C20 /* compress.c in Sources */,
-				C2A3D6DD1200E73700D27C20 /* crc32.c in Sources */,
-				C2A3D6DE1200E73700D27C20 /* deattack.c in Sources */,
-				C2A3D6DF1200E73700D27C20 /* dh.c in Sources */,
-				C2A3D6E01200E73700D27C20 /* dispatch.c in Sources */,
-				C2A3D6E11200E73700D27C20 /* dns.c in Sources */,
-				C2A3D6E21200E73700D27C20 /* entropy.c in Sources */,
-				C2A3D6E31200E73700D27C20 /* fatal.c in Sources */,
-				C2A3D6E41200E73700D27C20 /* groupaccess.c in Sources */,
-				C2A3D6E51200E73700D27C20 /* gss-genr.c in Sources */,
-				C2A3D6E61200E73700D27C20 /* gss-serv-krb5.c in Sources */,
-				C2A3D6E71200E73700D27C20 /* gss-serv.c in Sources */,
-				C2A3D6E81200E73700D27C20 /* hostfile.c in Sources */,
-				C2A3D6EA1200E73700D27C20 /* kex.c in Sources */,
-				C2A3D6EB1200E73700D27C20 /* kexdh.c in Sources */,
-				C2A3D6EC1200E73700D27C20 /* kexdhc.c in Sources */,
-				C2A3D6ED1200E73700D27C20 /* kexgex.c in Sources */,
-				C2A3D6EE1200E73700D27C20 /* kexgexc.c in Sources */,
-				C2A3D6EF1200E73700D27C20 /* key.c in Sources */,
-				C2A3D6F01200E73700D27C20 /* log.c in Sources */,
-				C2A3D6F11200E73700D27C20 /* loginrec.c in Sources */,
-				C2A3D6F21200E73700D27C20 /* mac.c in Sources */,
-				C2A3D6F31200E73700D27C20 /* match.c in Sources */,
-				C2A3D6F41200E73700D27C20 /* md-sha256.c in Sources */,
-				C2A3D6F51200E73700D27C20 /* md5crypt.c in Sources */,
-				C2A3D6F61200E73700D27C20 /* misc.c in Sources */,
-				C2A3D6F71200E73700D27C20 /* moduli.c in Sources */,
-				C2A3D6F81200E73700D27C20 /* monitor_fdpass.c in Sources */,
-				C2A3D6F91200E73700D27C20 /* monitor_mm.c in Sources */,
-				C2A3D6FA1200E73700D27C20 /* msg.c in Sources */,
-				C2A3D6FB1200E73700D27C20 /* mux.c in Sources */,
-				C2A3D6FC1200E73700D27C20 /* nchan.c in Sources */,
-				C2A3D6FD1200E73700D27C20 /* packet.c in Sources */,
-				C2A3D6FE1200E73700D27C20 /* platform.c in Sources */,
-				C2A3D6FF1200E73700D27C20 /* progressmeter.c in Sources */,
-				C2A3D7001200E73700D27C20 /* readconf.c in Sources */,
-				C2A3D7021200E73700D27C20 /* rijndael.c in Sources */,
-				C2A3D7031200E73700D27C20 /* roaming_client.c in Sources */,
-				C2A3D7041200E73700D27C20 /* roaming_common.c in Sources */,
-				C2A3D7051200E73700D27C20 /* rsa.c in Sources */,
-				C2A3D7061200E73700D27C20 /* ssh-dss.c in Sources */,
-				C2A3D7071200E73700D27C20 /* ssh-pkcs11-client.c in Sources */,
-				C2A3D7081200E73700D27C20 /* ssh-rsa.c in Sources */,
-				C2A3D70A1200E73700D27C20 /* sshconnect.c in Sources */,
-				C2A3D70B1200E73700D27C20 /* sshconnect1.c in Sources */,
-				C2A3D70C1200E73700D27C20 /* sshconnect2.c in Sources */,
-				C2A3D70D1200E73700D27C20 /* sshpty.c in Sources */,
-				C2A3D70E1200E73700D27C20 /* sshtty.c in Sources */,
-				C2A3D70F1200E73700D27C20 /* ttymodes.c in Sources */,
-				C2A3D7101200E73700D27C20 /* uidswap.c in Sources */,
-				C2A3D7111200E73700D27C20 /* umac.c in Sources */,
-				C2A3D7121200E73700D27C20 /* uuencode.c in Sources */,
-				C2A3D7131200E73700D27C20 /* xmalloc.c in Sources */,
-				C2A3D7141200E74600D27C20 /* base64.c in Sources */,
-				C2A3D7151200E74600D27C20 /* basename.c in Sources */,
-				C2A3D7161200E74600D27C20 /* bindresvport.c in Sources */,
-				C2A3D7171200E74600D27C20 /* bsd-arc4random.c in Sources */,
-				C2A3D7181200E74600D27C20 /* bsd-asprintf.c in Sources */,
-				C2A3D7191200E74600D27C20 /* bsd-closefrom.c in Sources */,
-				C2A3D71A1200E74600D27C20 /* bsd-cray.c in Sources */,
-				C2A3D71B1200E74600D27C20 /* bsd-cygwin_util.c in Sources */,
-				C2A3D71C1200E74600D27C20 /* bsd-getpeereid.c in Sources */,
-				C2A3D71D1200E74600D27C20 /* bsd-misc.c in Sources */,
-				C2A3D71E1200E74600D27C20 /* bsd-nextstep.c in Sources */,
-				C2A3D71F1200E74600D27C20 /* bsd-openpty.c in Sources */,
-				C2A3D7201200E74600D27C20 /* bsd-poll.c in Sources */,
-				C2A3D7211200E74600D27C20 /* bsd-snprintf.c in Sources */,
-				C2A3D7221200E74600D27C20 /* bsd-statvfs.c in Sources */,
-				C2A3D7231200E74600D27C20 /* bsd-waitpid.c in Sources */,
-				C2A3D7241200E74600D27C20 /* daemon.c in Sources */,
-				C2A3D7251200E74600D27C20 /* dirname.c in Sources */,
-				C2A3D7261200E74600D27C20 /* fake-rfc2553.c in Sources */,
-				C2A3D7271200E74600D27C20 /* fmt_scaled.c in Sources */,
-				C2A3D7281200E74600D27C20 /* getcwd.c in Sources */,
-				C2A3D7291200E74600D27C20 /* getgrouplist.c in Sources */,
-				C2A3D72A1200E74600D27C20 /* getopt.c in Sources */,
-				C2A3D72B1200E74600D27C20 /* getrrsetbyname.c in Sources */,
-				C2A3D72C1200E74600D27C20 /* glob.c in Sources */,
-				C2A3D72D1200E74600D27C20 /* inet_aton.c in Sources */,
-				C2A3D72E1200E74600D27C20 /* inet_ntoa.c in Sources */,
-				C2A3D72F1200E74600D27C20 /* inet_ntop.c in Sources */,
-				C2A3D7301200E74600D27C20 /* mktemp.c in Sources */,
-				C2A3D7311200E74600D27C20 /* openssl-compat.c in Sources */,
-				C2A3D7321200E74600D27C20 /* port-aix.c in Sources */,
-				C2A3D7331200E74600D27C20 /* port-irix.c in Sources */,
-				C2A3D7341200E74600D27C20 /* port-linux.c in Sources */,
-				C2A3D7351200E74600D27C20 /* port-solaris.c in Sources */,
-				C2A3D7361200E74600D27C20 /* port-tun.c in Sources */,
-				C2A3D7371200E74600D27C20 /* port-uw.c in Sources */,
-				C2A3D7381200E74600D27C20 /* pwcache.c in Sources */,
-				C2A3D7391200E74600D27C20 /* readpassphrase.c in Sources */,
-				C2A3D73A1200E74600D27C20 /* realpath.c in Sources */,
-				C2A3D73B1200E74600D27C20 /* rresvport.c in Sources */,
-				C2A3D73C1200E74600D27C20 /* setenv.c in Sources */,
-				C2A3D73D1200E74600D27C20 /* setproctitle.c in Sources */,
-				C2A3D73E1200E74600D27C20 /* sha2.c in Sources */,
-				C2A3D73F1200E74600D27C20 /* sigact.c in Sources */,
-				C2A3D7401200E74600D27C20 /* strlcat.c in Sources */,
-				C2A3D7411200E74600D27C20 /* strlcpy.c in Sources */,
-				C2A3D7421200E74600D27C20 /* strmode.c in Sources */,
-				C2A3D7431200E74600D27C20 /* strsep.c in Sources */,
-				C2A3D7441200E74600D27C20 /* strtoll.c in Sources */,
-				C2A3D7451200E74600D27C20 /* strtonum.c in Sources */,
-				C2A3D7461200E74600D27C20 /* strtoul.c in Sources */,
-				C2A3D7471200E74600D27C20 /* vis.c in Sources */,
-				C2A3D7481200E74600D27C20 /* xcrypt.c in Sources */,
-				C2A3D7491200E74600D27C20 /* xmmap.c in Sources */,
-				C2A3D88C1200FC9C00D27C20 /* ssh.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C2FA5D2411F371190014E460 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1175,138 +1090,10 @@
 				C2856B1D11F6116E00ABCD8A /* channel.cpp in Sources */,
 				C2856BE011F6249B00ABCD8A /* threads.pthreads.cpp in Sources */,
 				C259248D11FC70F0008F094E /* dmtx.c in Sources */,
-				C25926A411FCCBBE008F094E /* acss.c in Sources */,
-				C25926A511FCCBBE008F094E /* addrmatch.c in Sources */,
-				C25926A611FCCBBE008F094E /* atomicio.c in Sources */,
-				C25926A711FCCBBE008F094E /* audit-bsm.c in Sources */,
-				C25926A811FCCBBE008F094E /* audit.c in Sources */,
-				C25926C011FCCBBE008F094E /* authfd.c in Sources */,
-				C25926C111FCCBBE008F094E /* authfile.c in Sources */,
-				C25926C211FCCBBE008F094E /* bufaux.c in Sources */,
-				C25926C311FCCBBE008F094E /* bufbn.c in Sources */,
-				C25926C411FCCBBE008F094E /* buffer.c in Sources */,
-				C25926C511FCCBBE008F094E /* canohost.c in Sources */,
-				C25926C611FCCBBE008F094E /* channels.c in Sources */,
-				C25926C711FCCBBE008F094E /* cipher-3des1.c in Sources */,
-				C25926C811FCCBBE008F094E /* cipher-acss.c in Sources */,
-				C25926C911FCCBBE008F094E /* cipher-aes.c in Sources */,
-				C25926CA11FCCBBE008F094E /* cipher-bf1.c in Sources */,
-				C25926CB11FCCBBE008F094E /* cipher-ctr.c in Sources */,
-				C25926CC11FCCBBE008F094E /* cipher.c in Sources */,
-				C25926CE11FCCBBE008F094E /* clientloop.c in Sources */,
-				C25926CF11FCCBBE008F094E /* compat.c in Sources */,
-				C25926D011FCCBBE008F094E /* compress.c in Sources */,
-				C25926D111FCCBBE008F094E /* crc32.c in Sources */,
-				C25926D211FCCBBE008F094E /* deattack.c in Sources */,
-				C25926D311FCCBBE008F094E /* dh.c in Sources */,
-				C25926D411FCCBBE008F094E /* dispatch.c in Sources */,
-				C25926D611FCCBBE008F094E /* entropy.c in Sources */,
-				C25926D711FCCBBE008F094E /* fatal.c in Sources */,
-				C25926D811FCCBBE008F094E /* groupaccess.c in Sources */,
-				C25926D911FCCBBE008F094E /* gss-genr.c in Sources */,
-				C25926DA11FCCBBE008F094E /* gss-serv-krb5.c in Sources */,
-				C25926DB11FCCBBE008F094E /* gss-serv.c in Sources */,
-				C25926DC11FCCBBE008F094E /* hostfile.c in Sources */,
-				C25926DF11FCCBBE008F094E /* kexdh.c in Sources */,
-				C25926E011FCCBBE008F094E /* kexdhc.c in Sources */,
-				C25926E211FCCBBE008F094E /* kexgex.c in Sources */,
-				C25926E311FCCBBE008F094E /* kexgexc.c in Sources */,
-				C25926E511FCCBBE008F094E /* key.c in Sources */,
-				C25926E611FCCBBE008F094E /* log.c in Sources */,
-				C25926E711FCCBBE008F094E /* loginrec.c in Sources */,
-				C25926E911FCCBBE008F094E /* mac.c in Sources */,
-				C25926EA11FCCBBE008F094E /* match.c in Sources */,
-				C25926EB11FCCBBE008F094E /* md-sha256.c in Sources */,
-				C25926EC11FCCBBE008F094E /* md5crypt.c in Sources */,
-				C25926ED11FCCBBE008F094E /* misc.c in Sources */,
-				C25926EE11FCCBBE008F094E /* moduli.c in Sources */,
-				C25926EF11FCCBBE008F094E /* monitor_fdpass.c in Sources */,
-				C25926F011FCCBBE008F094E /* monitor_mm.c in Sources */,
-				C25926F311FCCBBE008F094E /* msg.c in Sources */,
-				C25926F411FCCBBE008F094E /* mux.c in Sources */,
-				C25926F511FCCBBE008F094E /* nchan.c in Sources */,
-				C25926F611FCCBBE008F094E /* packet.c in Sources */,
-				C25926F711FCCBBE008F094E /* platform.c in Sources */,
-				C25926F811FCCBBE008F094E /* progressmeter.c in Sources */,
-				C25926F911FCCBBE008F094E /* readconf.c in Sources */,
-				C25926FB11FCCBBE008F094E /* rijndael.c in Sources */,
-				C259270011FCCBBE008F094E /* rsa.c in Sources */,
-				C259271611FCCBBE008F094E /* ssh-rsa.c in Sources */,
-				C259271711FCCBBE008F094E /* ssh.c in Sources */,
-				C259271911FCCBBE008F094E /* sshconnect1.c in Sources */,
-				C259271D11FCCBBE008F094E /* sshpty.c in Sources */,
-				C259271E11FCCBBE008F094E /* sshtty.c in Sources */,
-				C259271F11FCCBBE008F094E /* ttymodes.c in Sources */,
-				C259272011FCCBBE008F094E /* uidswap.c in Sources */,
-				C259272111FCCBBE008F094E /* umac.c in Sources */,
-				C259272211FCCBBE008F094E /* uuencode.c in Sources */,
-				C259272311FCCBBE008F094E /* xmalloc.c in Sources */,
-				C25927D111FCD06E008F094E /* base64.c in Sources */,
-				C25927D211FCD06E008F094E /* basename.c in Sources */,
-				C25927D311FCD06E008F094E /* bindresvport.c in Sources */,
-				C25927D411FCD06E008F094E /* bsd-arc4random.c in Sources */,
-				C25927D511FCD06E008F094E /* bsd-asprintf.c in Sources */,
-				C25927D611FCD06E008F094E /* bsd-closefrom.c in Sources */,
-				C25927D711FCD06E008F094E /* bsd-cray.c in Sources */,
-				C25927D811FCD06E008F094E /* bsd-cygwin_util.c in Sources */,
-				C25927D911FCD06E008F094E /* bsd-getpeereid.c in Sources */,
-				C25927DA11FCD06E008F094E /* bsd-misc.c in Sources */,
-				C25927DB11FCD06E008F094E /* bsd-nextstep.c in Sources */,
-				C25927DC11FCD06E008F094E /* bsd-openpty.c in Sources */,
-				C25927DD11FCD06E008F094E /* bsd-poll.c in Sources */,
-				C25927DE11FCD06E008F094E /* bsd-snprintf.c in Sources */,
-				C25927DF11FCD06E008F094E /* bsd-statvfs.c in Sources */,
-				C25927E011FCD06E008F094E /* bsd-waitpid.c in Sources */,
-				C25927E111FCD06E008F094E /* daemon.c in Sources */,
-				C25927E211FCD06E008F094E /* dirname.c in Sources */,
-				C25927E311FCD06E008F094E /* fake-rfc2553.c in Sources */,
-				C25927E411FCD06E008F094E /* fmt_scaled.c in Sources */,
-				C25927E511FCD06E008F094E /* getcwd.c in Sources */,
-				C25927E611FCD06E008F094E /* getgrouplist.c in Sources */,
-				C25927E711FCD06E008F094E /* getopt.c in Sources */,
-				C25927E911FCD06E008F094E /* glob.c in Sources */,
-				C25927EA11FCD06E008F094E /* inet_aton.c in Sources */,
-				C25927EB11FCD06E008F094E /* inet_ntoa.c in Sources */,
-				C25927EC11FCD06E008F094E /* inet_ntop.c in Sources */,
-				C25927ED11FCD06E008F094E /* mktemp.c in Sources */,
-				C25927EE11FCD06E008F094E /* openssl-compat.c in Sources */,
-				C25927EF11FCD06E008F094E /* port-aix.c in Sources */,
-				C25927F011FCD06E008F094E /* port-irix.c in Sources */,
-				C25927F111FCD06E008F094E /* port-linux.c in Sources */,
-				C25927F211FCD06E008F094E /* port-solaris.c in Sources */,
-				C25927F311FCD06E008F094E /* port-tun.c in Sources */,
-				C25927F411FCD06E008F094E /* port-uw.c in Sources */,
-				C25927F511FCD06E008F094E /* pwcache.c in Sources */,
-				C25927F611FCD06E008F094E /* readpassphrase.c in Sources */,
-				C25927F711FCD06E008F094E /* realpath.c in Sources */,
-				C25927F811FCD06E008F094E /* rresvport.c in Sources */,
-				C25927F911FCD06E008F094E /* setenv.c in Sources */,
-				C25927FA11FCD06E008F094E /* setproctitle.c in Sources */,
-				C25927FB11FCD06E008F094E /* sha2.c in Sources */,
-				C25927FC11FCD06E008F094E /* sigact.c in Sources */,
-				C25927FD11FCD06E008F094E /* strlcat.c in Sources */,
-				C25927FE11FCD06E008F094E /* strlcpy.c in Sources */,
-				C25927FF11FCD06E008F094E /* strmode.c in Sources */,
-				C259280011FCD06E008F094E /* strsep.c in Sources */,
-				C259280111FCD06E008F094E /* strtoll.c in Sources */,
-				C259280211FCD06E008F094E /* strtonum.c in Sources */,
-				C259280311FCD06E008F094E /* strtoul.c in Sources */,
-				C259280411FCD06E008F094E /* vis.c in Sources */,
-				C259280511FCD06E008F094E /* xcrypt.c in Sources */,
-				C259280611FCD06E008F094E /* xmmap.c in Sources */,
-				C259282A11FCD307008F094E /* sshconnect.c in Sources */,
-				C259282D11FCD331008F094E /* ssh-dss.c in Sources */,
-				C259283011FCD3A4008F094E /* sshconnect2.c in Sources */,
-				C259283611FCD42D008F094E /* getrrsetbyname.c in Sources */,
-				C259284511FCD595008F094E /* kex.c in Sources */,
 				C2592EA911FE4DB6008F094E /* dmtx.cpp in Sources */,
 				C2592FA511FE55B5008F094E /* threads.cpp in Sources */,
 				C259326D11FF2948008F094E /* css.cpp in Sources */,
 				C25932D811FF33BE008F094E /* aes.cpp in Sources */,
-				C2A3D6B41200E3DF00D27C20 /* dns.c in Sources */,
-				C2A3D6B71200E3DF00D27C20 /* ssh-pkcs11-client.c in Sources */,
-				C2A3D940120103C800D27C20 /* roaming_client.c in Sources */,
-				C2A3D941120103C800D27C20 /* roaming_common.c in Sources */,
 				C2684AF81201F37800A39987 /* application.cpp in Sources */,
 				C2684F731202419200A39987 /* command.cpp in Sources */,
 				C2FDA228120294190024A1E1 /* context.cpp in Sources */,
@@ -1333,6 +1120,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C211FA2F1203FE0E0025B37C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C211F9241203FA210025B37C /* ssh */;
+			targetProxy = C211FA2E1203FE0E0025B37C /* PBXContainerItemProxy */;
+		};
 		C2592FB411FE5644008F094E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C4E618CB095A3CE80012CA3F /* glue */;
@@ -1360,6 +1152,30 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C211F9271203FA210025B37C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/ssh.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ssh;
+				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		C259243C11FC6F16008F094E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1387,28 +1203,6 @@
 				INSTALL_PATH = /usr/local/bin;
 				PREBINDING = NO;
 				PRODUCT_NAME = print;
-			};
-			name = Debug;
-		};
-		C2A3D6C71200E71A00D27C20 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"BS_GLOBAL_SP=1",
-					"FIXED=1",
-					"CCSDS=1",
-					SSH_CMDLINE,
-				);
-				INSTALL_PATH = /usr/local/bin;
-				PREBINDING = NO;
-				PRODUCT_NAME = ssh;
-				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
 			};
 			name = Debug;
 		};
@@ -1514,6 +1308,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C211F9281203FA220025B37C /* Build configuration list for PBXNativeTarget "ssh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C211F9271203FA210025B37C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		C259244011FC6F2B008F094E /* Build configuration list for PBXNativeTarget "dmtx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1526,14 +1328,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25DA7BE11FB60200025BB8C /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		C2A3D74C1200E76800D27C20 /* Build configuration list for PBXNativeTarget "ssh" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C2A3D6C71200E71A00D27C20 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

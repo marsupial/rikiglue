@@ -78,7 +78,7 @@ public:
 	           int (*passwordCB) (char*, int, int, void*) = NULL,
 	           void                 *userData = NULL );
 
-	bool
+	size_t
 	decrypt( const uint8_t    *bytes,
 	         size_t           len,
 	         Context::bytes_t &decrypted );
