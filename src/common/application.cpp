@@ -128,9 +128,23 @@ Application::stopThreads()
 	destroyThread(mDMTXInstrThread, DMTXDecode::finished);
 }
 
+static bool sScan = 1;
+
+void
+Application::setScan( bool   scan )
+{
+	sScan = scan;
+}
+
 void
 Application::dmtxFrame( Frame    *inFrame )
 {
+	if ( sScan == false )
+	{
+		delete inFrame;
+		return;
+	}
+
 	std::auto_ptr<Frame> frame(inFrame);
 	if ( !mDMTXThread )
 	{
@@ -156,8 +170,8 @@ Application::dmtxFrame( Frame    *inFrame )
 
 
 const static register_t
-	kWidth = 180-20,
-	kHeight = 180-20,
+	kWidth = 280-20,
+	kHeight = 280-20,
 	kOriginX = (1920/2)-(kWidth/2),
 	kOriginY = (1080/2)-(kHeight/2);
 
@@ -315,6 +329,7 @@ Application::setRSAKey( const std::string    &filePath,
 
 	if( newRSA == NULL || RSA_check_key(newRSA) <= 0 )
 	{
+if ( sRSA != NULL ) { RSA_free(sRSA); sRSA = NULL; }
 		ERR_print_errors_fp(stdout);
 		if ( newRSA )
 			RSA_free(newRSA);

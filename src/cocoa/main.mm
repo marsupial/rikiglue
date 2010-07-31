@@ -162,6 +162,13 @@ toString( const NSString     *nsString,
 		[ sender setState: b ];
 }
 
+- (IBAction) setScan: (id) sender
+{
+	BOOL scan = ! [ sender state ];
+	[ self setItem: sender check: scan ];
+	rikiGlue::Application::instance().setScan(scan);
+}
+
 - (IBAction) setPaused: (id) sender
 {
 	if ( timer != nil || [ window isMiniaturized ] )
@@ -312,7 +319,8 @@ ssh_main(int ac, const char **av)
 				
 					ssh_main2_t ssh_main2;
 					ssh_main2 = (ssh_main2_t) CFBundleGetFunctionPointerForName(bundleRef, CFSTR("ssh_main2"));
-					rval = ssh_main2(ac, av, __progname, environ);
+					if ( ssh_main2 )
+						rval = ssh_main2(ac, av, __progname, environ);
 					CFBundleUnloadExecutable(bundleRef);
 				}
 				CFRelease(bundleRef);

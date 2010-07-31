@@ -86,6 +86,10 @@ public:
 	         size_t           len,
 	         Context::bytes_t &decrypted );
 					  
+	
+	void
+	setScan( bool   scan );
+
 	void
 	dmtxFrame( Frame    *inFrame );
 

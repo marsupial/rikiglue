@@ -142,6 +142,7 @@
 		C23C4E6D120420CD00ABBAC7 /* lut.decrypted.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23C4E6C120420CD00ABBAC7 /* lut.decrypted.cpp */; };
 		C23C4E7E120421AE00ABBAC7 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277111FCCF91008F094E /* libcrypto.dylib */; };
 		C23C4E87120421D200ABBAC7 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C259276B11FCCF2F008F094E /* AppKit.framework */; };
+		C23C4EA91204285100ABBAC7 /* lut.decrypted.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23C4E6C120420CD00ABBAC7 /* lut.decrypted.cpp */; };
 		C259243F11FC6F2B008F094E /* dmtx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C259243E11FC6F2B008F094E /* dmtx.cpp */; };
 		C259248C11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
 		C259248D11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
@@ -188,7 +189,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C4E618CB095A3CE80012CA3F /* glue */;
+			remoteGlobalIDString = C4E618CB095A3CE80012CA3F;
 			remoteInfo = glue;
 		};
 /* End PBXContainerItemProxy section */
@@ -1092,6 +1093,7 @@
 				C2684AF81201F37800A39987 /* application.cpp in Sources */,
 				C2684F731202419200A39987 /* command.cpp in Sources */,
 				C2FDA228120294190024A1E1 /* context.cpp in Sources */,
+				C23C4EA91204285100ABBAC7 /* lut.decrypted.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1202,23 +1204,7 @@
 			};
 			name = Debug;
 		};
-		C2FA5D2A11F3711B0014E460 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = ../rsrc/cocoa/info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
-				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
-			};
-			name = Debug;
-		};
-		C4E61880095A3C800012CA3F /* Debug */ = {
+		C2E76425120496D500B3BD6B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				AESDK = "$(SDKs)/AfterEffects/CS4";
@@ -1227,11 +1213,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
 				EXECUTABLE_EXTENSION = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../include/glue.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1261,7 +1248,183 @@
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
 				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
-				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = all;
+				SYMROOT = ../build;
+				USER_HEADER_SEARCH_PATHS = "../include/**";
+				VALID_ARCHS = "i386 ppc x86_64";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C2E76426120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					RIKI_AUTHOR,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=i386]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=7",
+					PLEXUS_CARBON,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=ppc]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=7",
+					PLEXUS_CARBON,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=10",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(AESDK)/include/**",
+				);
+				INFOPLIST_FILE = ../rsrc/plugin/info.plist;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		C2E76427120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
+			};
+			name = Release;
+		};
+		C2E76428120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = print;
+			};
+			name = Release;
+		};
+		C2E76429120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = dmtx;
+			};
+			name = Release;
+		};
+		C2E7642A120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/ssh.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ssh;
+				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		C2FA5D2A11F3711B0014E460 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
+			};
+			name = Debug;
+		};
+		C4E61880095A3C800012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				AESDK = "$(SDKs)/AfterEffects/CS4";
+				"AESDK[arch=x86_64]" = "$(SDKs)/AfterEffects/CS5";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
+				EXECUTABLE_EXTENSION = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../include/glue.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"BS_GLOBAL_SP=1",
+					"FIXED=1",
+					"CCSDS=1",
+				);
+				GCC_REUSE_STRINGS = NO;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = ../rsrc/rikiGlue.plist;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_REZFLAGS = "$(inherited) -i \"$(AESDK)/include\" -i \"$(AESDK)/rsrc\"";
+				PRODUCT_NAME = glue;
+				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = all;
 				SYMROOT = ../build;
 				USER_HEADER_SEARCH_PATHS = "../include/**";
 				VALID_ARCHS = "i386 ppc x86_64";
@@ -1312,6 +1475,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C211F9271203FA210025B37C /* Debug */,
+				C2E7642A120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1320,6 +1484,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C259243C11FC6F16008F094E /* Debug */,
+				C2E76429120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1328,6 +1493,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25DA7BE11FB60200025BB8C /* Debug */,
+				C2E76428120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1336,6 +1502,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C2FA5D2A11F3711B0014E460 /* Debug */,
+				C2E76427120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1344,6 +1511,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C4E61880095A3C800012CA3F /* Debug */,
+				C2E76425120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
 			defaultConfigurationName = Debug;
@@ -1352,6 +1520,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C4E618CF095A3CE90012CA3F /* Debug */,
+				C2E76426120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
