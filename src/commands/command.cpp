@@ -245,7 +245,7 @@ public:
 		else
 			decrypt.assign(reinterpret_cast<const uint8_t*>(mString.data()), reinterpret_cast<const uint8_t*>(mString.data())+mString.length());
 
-		if ( decrypt[ decrypt.size() ] != 0 )
+		if ( decrypt[ decrypt.size()-1 ] != 0 )
 			decrypt.push_back(0);
 
 		const char key[] = " ";
