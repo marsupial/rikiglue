@@ -241,7 +241,6 @@ ssh_main( int           argc,
 	strcpy(cfg.host, argv[2]);
 	strcpy(cfg.password, argv[3]);
 	strcpy(cfg.remote_cmd, argv[4]);
-	// "touch ssh.txt; mv ~/html/index2.html ~/html/index.ssh.html;");
 
 	sk_init();
 
@@ -255,16 +254,19 @@ ssh_main( int           argc,
     error = ssh_backend.init(NULL, &backhandle, &cfg,
 		       cfg.host, cfg.port, &realhost, cfg.tcp_nodelay,
 		       cfg.tcp_keepalives);
-    ssh_backend.provide_logctx(backhandle, logctx);
 	sfree(realhost);
-    while ( !ssh_backend.sendok(backhandle) )
+
+	if ( error == NULL )
 	{
-		if ( eventLoop(INVALID_HANDLE_VALUE) < 0 )
-			break;
-    }
+		ssh_backend.provide_logctx(backhandle, logctx);
+		while ( !ssh_backend.sendok(backhandle) )
+		{
+			if ( eventLoop(INVALID_HANDLE_VALUE) < 0 )
+				break;
+		}
+	}
 
 	CloseHandle(sEvent);
-
 	sk_cleanup();
 	return ( 0 );
 }
