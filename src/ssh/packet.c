@@ -1587,17 +1587,17 @@ packet_send_debug(const char *fmt,...)
  * should not contain a newline.  The length of the formatted message must
  * not exceed 1024 bytes.
  */
+int recursiveDiconnect = 0;
 
 void
 packet_disconnect(const char *fmt,...)
 {
 	char buf[1024];
 	va_list args;
-	static int disconnecting = 0;
 
-	if (disconnecting)	/* Guard against recursive invocations. */
+	if (recursiveDiconnect)	/* Guard against recursive invocations. */
 		fatal("packet_disconnect called recursively.");
-	disconnecting = 1;
+	recursiveDiconnect = 1;
 
 	/*
 	 * Format the message.  Note that the caller must make sure the

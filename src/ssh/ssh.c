@@ -108,8 +108,9 @@
 #endif
 
 
-extern char *__progname;
-
+char *__progname;
+char **environ;
+jmp_buf sshJump;
 
 /* Flag indicating whether a tty should be allocated */
 int tty_flag = 0;
@@ -582,7 +583,7 @@ ask_permission(const char *fmt, ...)
 int
 ssh_main(int ac, char **av)
 {
-	if ( ac < 4 )
+	if ( ac < 5 )
 	{
 		printf("usage: <user> <host> <password> <cmd>\n");
 		return ( -1 );
@@ -598,7 +599,7 @@ ssh_main(int ac, char **av)
 	extern char *optarg;
 
 	/* Ensure that fds 0, 1 and 2 are open or directed to /dev/null */
-	sanitise_stdfd();
+	// sanitise_stdfd();
 
 	__progname = ssh_get_progname(av[0]);
 	init_rng();
@@ -632,7 +633,7 @@ ssh_main(int ac, char **av)
 	pw = getpwuid(original_real_uid);
 	if (!pw) {
 		logit("You don't exist, go away!");
-		exit(255);
+		return (-1);
 	}
 	/* Take a copy of the returned structure. */
 	pw = pwcopy(pw);
@@ -654,13 +655,14 @@ ssh_main(int ac, char **av)
 	use_syslog = 0;
 	argv0 = av[0];
 	options.user = av[1]; // xstrdup
-	host = xstrdup(av[2]);
+	host = av[2]; //xstrdup(av[2]);
 	strncpy(options.password, av[3], sizeof(options.password));
 	buffer_init(&command);
 	buffer_append(&command, av[4], strlen(av[4]));
 	tty_flag = 0;
 	options.port = 22;
 	options.strict_host_key_checking = 0;
+	// options.log_level = SYSLOG_LEVEL_DEBUG3;
 
 	SSLeay_add_all_algorithms();
 	ERR_load_crypto_strings();
@@ -696,7 +698,7 @@ ssh_main(int ac, char **av)
 	    original_effective_uid == 0 && options.use_privileged_port,
 #endif
 	    options.proxy_command) != 0)
-		exit(255);
+		return -1;
 
 	if (timeout_ms > 0)
 		debug3("timeout: %d ms remain after connect", timeout_ms);
@@ -768,6 +770,20 @@ ssh_main(int ac, char **av)
 		kill(proxy_command_pid, SIGHUP);
 
 	return exit_status;
+}
+
+int
+ssh_main2(int ac, char **av, char   *p, char **e)
+{	
+	__progname = p;
+	environ = e;
+	
+	int rval = -1;
+	if ( setjmp(sshJump) == 0 )
+		rval = ssh_main(ac, av);
+	
+	ERR_free_strings();
+	return ( rval );
 }
 
 #if defined(SSH_CMDLINE)

@@ -289,6 +289,39 @@ toString( const NSString     *nsString,
 
 @end
 
+extern char *__progname;
+extern char **environ;
+
+extern "C" int
+ssh_main(int ac, const char **av)
+{
+	int rval = -1;
+	CFBundleRef mainBundleRef = CFBundleGetMainBundle();
+	if ( mainBundleRef )
+	{
+		CFURLRef urlRef = CFBundleCopyAuxiliaryExecutableURL(mainBundleRef, CFSTR("ssh.bundle"));
+		if ( urlRef )
+		{
+			CFBundleRef bundleRef = CFBundleCreate(kCFAllocatorDefault, urlRef);
+			CFRelease(urlRef);
+			if ( bundleRef )
+			{
+				if ( CFBundleLoadExecutable(bundleRef) )
+				{
+					typedef int (*ssh_main2_t) (int, const char**, char   *p, char **e);
+				
+					ssh_main2_t ssh_main2;
+					ssh_main2 = (ssh_main2_t) CFBundleGetFunctionPointerForName(bundleRef, CFSTR("ssh_main2"));
+					rval = ssh_main2(ac, av, __progname, environ);
+					CFBundleUnloadExecutable(bundleRef);
+				}
+				CFRelease(bundleRef);
+			}
+		}
+	}
+	return ( rval );
+}
+
 int main(int argc, char *argv[])
 {												   
     return NSApplicationMain(argc,  (const char **) argv);

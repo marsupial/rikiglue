@@ -14,7 +14,7 @@
 static int
 usage( const char    *filePath )
 {
-	printf("usage: %s [string] <filepath> \n", filePath);
+	printf("usage: %s [-t string] [-s size] [-r] <filepath> \n", filePath);
 	return ( -1 );
 }
 
@@ -51,35 +51,68 @@ extern "C" int
 main( int        argc,
       const char **argv )
 {
-	bytes_t    bytes;
-	const char *filePath = NULL;
-	DmtxSymbolSize size = DmtxSymbolSquareAuto;
 	if ( argc < 2 )
 		return ( usage(argv[0]) );
-	else if ( argc > 3 )
+
+	bytes_t        bytes;
+	int            rval;
+	const char     *filePath = argv[--argc];
+	DmtxSymbolSize size = DmtxSymbolSquareAuto;
+
+	for ( int i = 1; i < argc; ++i )
 	{
-		size = (DmtxSymbolSize) atol(argv[3]); //9 
-		filePath = argv[2];
-		bytes.assign( argv[1], argv[1]+strlen(argv[1]));
+		const char *arg = argv[i];
+		if ( arg[0] == '-' )
+		{
+
+	
+			switch ( arg[1] )
+			{
+				case 'r':
+					rval = fileToBytes(stdin, bytes);
+					if ( rval != 0 )
+						return ( rval );
+					break;
+
+				case 't':
+					if ( ++i >= argc )
+						return ( usage(argv[0]) );
+					bytes.insert(bytes.end(), argv[i], argv[i]+strlen(argv[i]));
+					break;
+			
+				case 's':
+					if ( ++i >= argc )
+						return ( usage(argv[0]) );
+					size = static_cast<DmtxSymbolSize>(atol(argv[i]));
+					break;
+			}
+		}
 	}
-	else if ( argc > 2 )
+	if ( bytes.empty() )
 	{
-		filePath = argv[2];
-		bytes.assign( argv[1], argv[1]+strlen(argv[1]));
-	}
-	else
-	{
-		filePath = argv[1];
-		int rval = fileToBytes(stdin, bytes);
+		rval = fileToBytes(stdin, bytes);
 		if ( rval != 0 )
 			return ( rval );
 	}
-	if ( bytes[ bytes.size()-1 ] )
-		bytes.push_back(0);
+
+	uint8_t &b = bytes[ bytes.size()-1 ];
+	switch ( b )
+	{
+		case '\r':
+		case '\n':
+		case EOF:
+			b = 0;
+		case 0:
+			break;
+
+		default:
+			bytes.push_back(0);
+	}
+
+//printf("Encoding \"%s\"\n", &bytes[0]);
 
 	printf("Encoding %d bytes\n", bytes.size());
 
-   /* 1) ENCODE a new Data Matrix barcode image (in memory only) */
 	DmtxEncode *enc = dmtxEncodeCreate();
 	dmtxEncodeSetProp(enc, DmtxPropSizeRequest, size);
 	dmtxEncodeDataMatrix(enc, bytes.size(), &bytes[0]);

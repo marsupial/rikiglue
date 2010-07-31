@@ -229,7 +229,7 @@ int
 ssh_main( int           argc,
           const char    **argv )
 {
-	if ( argc < 4 )
+	if ( argc < 5 )
 	{
 		printf("usage: <user> <host> <password> <cmd>\n");
 		return ( -1 );

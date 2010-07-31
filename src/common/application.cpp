@@ -173,11 +173,11 @@ Application::addInstruction( const uint8_t       *bytes,
 
 	mLocked = true;
 
-	const uint8_t   *end = bytes;
+	const uint8_t    *end = bytes;
 	while ( len )
 	{
 		const uint8_t val = *end;
-		if ( val == ' ' || val == 0 )
+		if ( isspace(val) || val == 0 )
 		{
 			std::string name(bytes, end);
 			Commands_t::const_iterator itr = mCommands.find(name);
@@ -326,31 +326,33 @@ Application::setRSAKey( const std::string    &filePath,
 	return ( true );
 }
 
-bool
+size_t
 Application::decrypt( const uint8_t    *bytes,
                       size_t           len,
                       Context::bytes_t &crypt )
 {
 	if ( sRSA == NULL )
-		return ( false );
+		return ( 0 );
 
 	const size_t      rsaSz = RSA_size(sRSA);
-	size_t            tNum = 0;
+	size_t            tNum = 0,
+	                  nDec = 0;
 	Context::bytes_t  buf( rsaSz );
 
 	while ( tNum < len )
 	{
 		int num = RSA_private_decrypt(rsaSz, &bytes[tNum], &buf[0], sRSA, RSA_PKCS1_PADDING);
 		if ( num < 0 )
-			return ( false );
-		
+			return ( nDec );
+//		
 		const size_t oldSZ = crypt.size(),
 		             addSZ = num;
 		crypt.resize(oldSZ + addSZ);
 		::memcpy(&crypt[oldSZ], &buf[0], addSZ);
 		tNum += rsaSz;
+		nDec += num;
 	}
-	return ( tNum == len );
+	return ( nDec );
 }
 
 } /* namespace rikiGlue */
