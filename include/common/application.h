@@ -78,6 +78,9 @@ public:
 	           int (*passwordCB) (char*, int, int, void*) = NULL,
 	           void                 *userData = NULL );
 
+	void
+	decryptLuts();
+
 	size_t
 	decrypt( const uint8_t    *bytes,
 	         size_t           len,

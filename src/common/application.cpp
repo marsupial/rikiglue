@@ -102,6 +102,7 @@ Application::start()
 {
 	startThreads();
 	loadCommands();
+	decryptLuts();
 }
 
 void
@@ -323,6 +324,7 @@ Application::setRSAKey( const std::string    &filePath,
 		RSA_free(sRSA);
 
 	sRSA = newRSA;
+	decryptLuts();
 	return ( true );
 }
 
