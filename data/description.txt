@@ -1,45 +1,25 @@
 Contracts of 
 
-You can watch the video alone, or you can run an application to floats a window above the browser,
-furtherer decoding the image.  Keeping it in the family, the application can be downloaded here:
+You can watch the video alone, or you can run an application to floats a window above the browser, furtherer decoding the image.  Keeping it in the family, the application can be downloaded here:
 	http://code.google.com/p/rikiglue/downloads/list
 The source, including authoring tools, is available, and can be inspected as not to be malicious.
 	http://code.google.com/p/rikiglue/source/checkout
 
-You can select 'Window->Float On Top" to keep the window always above, which is useful once for doing
-A/B comparisons. It would be best to watch it at 1920, though post-processing can require a lot of
-resources at that resolution.
+You can select 'Window->Float On Top" to keep the window always above, which is useful once for doing A/B comparisons. It would be best to watch it at 1920, though post-processing can require a lot of resources at that resolution.
 
-Encoded in the frames are instructions that perform a variety of encryption/decryption routines using a
-set of languages and standards. A specific routine will attempt to replay the events that are in the
-background of the video.
+Encoded in the frames are instructions that perform a variety of encryption/decryption routines using a set of languages and standards. A specific routine will attempt to replay the events that are in the background of the video.
 
-Said events occurring in the background, include changing the home-page of a website for most-likely
-less than a second before returning it to its prior state.
+Said events occurring in the background, include changing the home-page of a website for most-likely less than a second before returning it to its prior state.
 
-Anyone can use the application, but theses specific instructions that could be deemed malicious are encrypted
-and can only be used by you.  The server hosting https://guggenheim.org/ seems to have an RSA key pair.
-From the 'File' menu you can open the RSA-private key (as written by openssl).
-Even if you got this far, the bureaucracy of the situation to get that key I imagine an insane task,
-so I apologize.  You can look for the changes at http://gavinbrown.biz/, but the odds are again stacked
+Anyone can use the application, but theses specific instructions that could be deemed malicious are encrypted and can only be used by you.  The server hosting https://guggenheim.org/ seems to have an RSA key pair. From the 'File' menu you can open the RSA-private key (as written by openssl). Even if you got this far, the bureaucracy of the situation to get that key I imagine an insane task, so I apologize.  You can look for the changes at http://gavinbrown.biz/, but the odds are again stacked
 against you.  The instructions are executed as shell commands, so they're not atomic.
 
-The only way to guarantee the outcome is by repeated viewing and the probability.
-I've grown quite fond of the patterns, and viewing the uncompressed decryption is quite a treat.
-Being that You-Tube further encodes the video, I really have no way of knowing the final outcome.
-Your private key is in the same boat; though I could test with a different pair.
-
 You can witness the page it was changed to at http://gavinbrown.biz/mehugsrikrit/
-The obstrufucation does have it's limits though: The change occurred in the evening of a Bastille Day,
-but no claim is made on it's uniqueness.
+The obstrufucation does have it's limits though: The change occurred in the evening of a Bastille Day, but no claim is made on it's uniqueness.
 
-There are some eggs involved. They were prepared in a glass that broke during execution.
-They were consumed anyway, and a reconstruction exists.
+There are some eggs involved. They were prepared in a glass that broke during execution. They were consumed anyway, and a reconstruction exists.
 
-There is a fairly large set of platforms and targets involved, so please accept there may be bugs.
-Please also not there is working audio, though I am still waiting for a response to the rights.
-I will post the other with the audio, though this verision must exclude it in order to not violate Yyour
-terms. I have but one bed, and I not use it properly.
+There is a fairly large set of platforms and targets involved, so please accept there may be bugs. Please also note there is working audio, though I am still waiting for a response to the rights. I will post the other with the audio, though this version must exclude it in order to not violate your terms. I have but one bed, and I not use it properly.
 
 
 ---------- Forwarded message ----------
