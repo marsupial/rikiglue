@@ -26,6 +26,7 @@
 	double interval, nIntervals;
 }
 
+- (IBAction) setScan: (id) sender;
 - (IBAction) setPaused: (id) sender;
 - (IBAction) setFloating: (id) sender;
 - (void) windowDidMiniaturize: (NSNotification*) notification;

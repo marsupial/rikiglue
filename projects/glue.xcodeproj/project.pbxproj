@@ -138,18 +138,17 @@
 		C211F9CE1203FB2C0025B37C /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277111FCCF91008F094E /* libcrypto.dylib */; };
 		C211F9D21203FB370025B37C /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277311FCCF91008F094E /* libz.1.dylib */; };
 		C216D222120367630095D63F /* printLut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C216D221120367630095D63F /* printLut.cpp */; };
+		C23C4E6012041FC700ABBAC7 /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
+		C23C4E6D120420CD00ABBAC7 /* lut.decrypted.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23C4E6C120420CD00ABBAC7 /* lut.decrypted.cpp */; };
+		C23C4E7E120421AE00ABBAC7 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277111FCCF91008F094E /* libcrypto.dylib */; };
+		C23C4E87120421D200ABBAC7 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C259276B11FCCF2F008F094E /* AppKit.framework */; };
+		C23C4EA91204285100ABBAC7 /* lut.decrypted.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23C4E6C120420CD00ABBAC7 /* lut.decrypted.cpp */; };
 		C259243F11FC6F2B008F094E /* dmtx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C259243E11FC6F2B008F094E /* dmtx.cpp */; };
 		C259248C11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
 		C259248D11FC70F0008F094E /* dmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = C259248B11FC70F0008F094E /* dmtx.c */; };
 		C25924B111FC71DF008F094E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25924B011FC71DF008F094E /* ApplicationServices.framework */; };
 		C25924B311FC71DF008F094E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25924B211FC71DF008F094E /* CoreFoundation.framework */; };
-		C259276C11FCCF2F008F094E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C259276B11FCCF2F008F094E /* AppKit.framework */; };
-		C259276E11FCCF2F008F094E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C259276D11FCCF2F008F094E /* Foundation.framework */; };
-		C259277411FCCF91008F094E /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277111FCCF91008F094E /* libcrypto.dylib */; };
-		C259277511FCCF91008F094E /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277211FCCF91008F094E /* libssl.dylib */; };
 		C259277611FCCF91008F094E /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259277311FCCF91008F094E /* libz.1.dylib */; };
-		C259278F11FCD029008F094E /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259278E11FCD028008F094E /* libresolv.dylib */; };
-		C259279111FCD03C008F094E /* libbsm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C259279011FCD03C008F094E /* libbsm.dylib */; };
 		C2592EA911FE4DB6008F094E /* dmtx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2592EA811FE4DB6008F094E /* dmtx.cpp */; };
 		C2592FA511FE55B5008F094E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2592FA411FE55B5008F094E /* threads.cpp */; };
 		C2592FB711FE564C008F094E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2592FA411FE55B5008F094E /* threads.cpp */; };
@@ -160,7 +159,6 @@
 		C25935B511FF63EA008F094E /* pipl.64.rsrc in Rez */ = {isa = PBXBuildFile; fileRef = C25935B411FF63EA008F094E /* pipl.64.rsrc */; };
 		C2684AF81201F37800A39987 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2684AF71201F37800A39987 /* application.cpp */; };
 		C2684F731202419200A39987 /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2684F721202419200A39987 /* command.cpp */; };
-		C285673211F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
 		C285673711F54F0200ABCD8A /* lut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C285672D11F54F0200ABCD8A /* lut.cpp */; };
 		C28567C611F5548C00ABCD8A /* pipl.r in Rez */ = {isa = PBXBuildFile; fileRef = C28567C511F5548C00ABCD8A /* pipl.r */; };
 		C28567D111F554E600ABCD8A /* pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C28567CF11F554E600ABCD8A /* pf.cpp */; };
@@ -184,10 +182,10 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C211F9241203FA210025B37C /* ssh */;
+			remoteGlobalIDString = C211F9241203FA210025B37C;
 			remoteInfo = ssh;
 		};
-		C2592FB311FE5644008F094E /* PBXContainerItemProxy */ = {
+		C23C4E981204222300ABBAC7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C4E6187E095A3C800012CA3F /* Project object */;
 			proxyType = 1;
@@ -221,6 +219,7 @@
 		C211F9251203FA210025B37C /* ssh.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ssh.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		C211F9261203FA210025B37C /* ssh_main-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ssh_main-Info.plist"; sourceTree = "<group>"; };
 		C216D221120367630095D63F /* printLut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = printLut.cpp; path = ../src/tools/printLut.cpp; sourceTree = SOURCE_ROOT; };
+		C23C4E6C120420CD00ABBAC7 /* lut.decrypted.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lut.decrypted.cpp; path = ../src/frame/lut.decrypted.cpp; sourceTree = SOURCE_ROOT; };
 		C259243A11FC6F15008F094E /* dmtx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dmtx; sourceTree = BUILT_PRODUCTS_DIR; };
 		C259243E11FC6F2B008F094E /* dmtx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dmtx.cpp; path = ../src/tools/dmtx.cpp; sourceTree = SOURCE_ROOT; };
 		C259248B11FC70F0008F094E /* dmtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dmtx.c; path = ../src/dmtx/dmtx.c; sourceTree = SOURCE_ROOT; };
@@ -421,13 +420,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C259276C11FCCF2F008F094E /* AppKit.framework in Frameworks */,
-				C259276E11FCCF2F008F094E /* Foundation.framework in Frameworks */,
-				C259277411FCCF91008F094E /* libcrypto.dylib in Frameworks */,
-				C259277511FCCF91008F094E /* libssl.dylib in Frameworks */,
 				C259277611FCCF91008F094E /* libz.1.dylib in Frameworks */,
-				C259278F11FCD029008F094E /* libresolv.dylib in Frameworks */,
-				C259279111FCD03C008F094E /* libbsm.dylib in Frameworks */,
+				C23C4E7E120421AE00ABBAC7 /* libcrypto.dylib in Frameworks */,
+				C23C4E87120421D200ABBAC7 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +691,7 @@
 		C2FA5D6111F372750014E460 /* frame */ = {
 			isa = PBXGroup;
 			children = (
+				C23C4E6C120420CD00ABBAC7 /* lut.decrypted.cpp */,
 				C2592FA411FE55B5008F094E /* threads.cpp */,
 				C285684C11F55B5300ABCD8A /* frame.cpp */,
 				C2856B1311F6107300ABCD8A /* rsa.cpp */,
@@ -735,9 +731,9 @@
 				C2F5993A113CE59800B0FD05 /* lib */,
 				C2FA506011EF81F70014E460 /* glue.plugin */,
 				C2FA5D2711F371190014E460 /* glue.app */,
+				C211F9251203FA210025B37C /* ssh.bundle */,
 				C259243A11FC6F15008F094E /* dmtx */,
 				C2641C2D12037BAE0034C8AA /* print */,
-				C211F9251203FA210025B37C /* ssh.bundle */,
 				C211F9261203FA210025B37C /* ssh_main-Info.plist */,
 			);
 			sourceTree = "<group>";
@@ -823,8 +819,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				C23C4E991204222300ABBAC7 /* PBXTargetDependency */,
 				C211FA2F1203FE0E0025B37C /* PBXTargetDependency */,
-				C2592FB411FE5644008F094E /* PBXTargetDependency */,
 			);
 			name = glueApp;
 			productName = cocoaApp;
@@ -1097,6 +1093,7 @@
 				C2684AF81201F37800A39987 /* application.cpp in Sources */,
 				C2684F731202419200A39987 /* command.cpp in Sources */,
 				C2FDA228120294190024A1E1 /* context.cpp in Sources */,
+				C23C4EA91204285100ABBAC7 /* lut.decrypted.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,7 +1101,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C285673211F54F0200ABCD8A /* lut.cpp in Sources */,
 				C28567D111F554E600ABCD8A /* pf.cpp in Sources */,
 				C28567D211F554E600ABCD8A /* strings.cpp in Sources */,
 				C285684D11F55B5300ABCD8A /* frame.cpp in Sources */,
@@ -1114,6 +1110,8 @@
 				C2592FB711FE564C008F094E /* threads.cpp in Sources */,
 				C25932A011FF2EBA008F094E /* css.cpp in Sources */,
 				C25932D911FF33BE008F094E /* aes.cpp in Sources */,
+				C23C4E6012041FC700ABBAC7 /* lut.cpp in Sources */,
+				C23C4E6D120420CD00ABBAC7 /* lut.decrypted.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1125,10 +1123,10 @@
 			target = C211F9241203FA210025B37C /* ssh */;
 			targetProxy = C211FA2E1203FE0E0025B37C /* PBXContainerItemProxy */;
 		};
-		C2592FB411FE5644008F094E /* PBXTargetDependency */ = {
+		C23C4E991204222300ABBAC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C4E618CB095A3CE80012CA3F /* glue */;
-			targetProxy = C2592FB311FE5644008F094E /* PBXContainerItemProxy */;
+			targetProxy = C23C4E981204222300ABBAC7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1206,23 +1204,7 @@
 			};
 			name = Debug;
 		};
-		C2FA5D2A11F3711B0014E460 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = ../rsrc/cocoa/info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
-				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
-			};
-			name = Debug;
-		};
-		C4E61880095A3C800012CA3F /* Debug */ = {
+		C2E76425120496D500B3BD6B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				AESDK = "$(SDKs)/AfterEffects/CS4";
@@ -1231,11 +1213,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
 				EXECUTABLE_EXTENSION = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../include/glue.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1265,7 +1248,183 @@
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
 				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
-				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = all;
+				SYMROOT = ../build;
+				USER_HEADER_SEARCH_PATHS = "../include/**";
+				VALID_ARCHS = "i386 ppc x86_64";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C2E76426120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					RIKI_AUTHOR,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=i386]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=7",
+					PLEXUS_CARBON,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=ppc]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=7",
+					PLEXUS_CARBON,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+					"$(inherited)",
+					"BS_BUILD_FOR_AE_MAJOR=10",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(AESDK)/include/**",
+				);
+				INFOPLIST_FILE = ../rsrc/plugin/info.plist;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		C2E76427120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
+			};
+			name = Release;
+		};
+		C2E76428120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = print;
+			};
+			name = Release;
+		};
+		C2E76429120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = dmtx;
+			};
+			name = Release;
+		};
+		C2E7642A120496D500B3BD6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/ssh.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ssh;
+				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		C2FA5D2A11F3711B0014E460 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = ../rsrc/cocoa/info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				USER_HEADER_SEARCH_PATHS = "../include/ssh ../include/**";
+			};
+			name = Debug;
+		};
+		C4E61880095A3C800012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				AESDK = "$(SDKs)/AfterEffects/CS4";
+				"AESDK[arch=x86_64]" = "$(SDKs)/AfterEffects/CS5";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
+				EXECUTABLE_EXTENSION = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../include/glue.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"BS_GLOBAL_SP=1",
+					"FIXED=1",
+					"CCSDS=1",
+				);
+				GCC_REUSE_STRINGS = NO;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = ../rsrc/rikiGlue.plist;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_REZFLAGS = "$(inherited) -i \"$(AESDK)/include\" -i \"$(AESDK)/rsrc\"";
+				PRODUCT_NAME = glue;
+				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = all;
 				SYMROOT = ../build;
 				USER_HEADER_SEARCH_PATHS = "../include/**";
 				VALID_ARCHS = "i386 ppc x86_64";
@@ -1276,6 +1435,10 @@
 		C4E618CF095A3CE90012CA3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					RIKI_AUTHOR,
+				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=i386]" = (
 					"$(inherited)",
 					"BS_BUILD_FOR_AE_MAJOR=7",
@@ -1312,6 +1475,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C211F9271203FA210025B37C /* Debug */,
+				C2E7642A120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1320,6 +1484,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C259243C11FC6F16008F094E /* Debug */,
+				C2E76429120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1328,6 +1493,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C25DA7BE11FB60200025BB8C /* Debug */,
+				C2E76428120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1336,6 +1502,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C2FA5D2A11F3711B0014E460 /* Debug */,
+				C2E76427120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1344,6 +1511,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C4E61880095A3C800012CA3F /* Debug */,
+				C2E76425120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 1;
 			defaultConfigurationName = Debug;
@@ -1352,6 +1520,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C4E618CF095A3CE90012CA3F /* Debug */,
+				C2E76426120496D500B3BD6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
