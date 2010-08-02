@@ -1,32 +1,41 @@
 Contracts of 
 
-You can watch the video alone, or you can run an application to floats a window above the browser, furtherer decoding the image.  Keeping it in the family, the application can be downloaded here:
+The images been transformed with a series of encryption techniques that can be reversed by running an executable and floating its window above the content located at http://www.youtube.com/watch?v=GspjsTC_j2s&fmt=37.
+
+Keeping it in the family, the application can be downloaded here:
 	http://code.google.com/p/rikiglue/downloads/list
-The source, including authoring tools, is available, and can be inspected as not to be malicious.
+The source, including authoring tools, is available, and can be inspected:
 	http://code.google.com/p/rikiglue/source/checkout
 
-You can select 'Window->Float On Top" to keep the window always above, which is useful once for doing A/B comparisons. It would be best to watch it at 1920, though post-processing can require a lot of resources at that resolution.
+Further encoded in the frames are instructions that perform a variety of encryption and decryption routines using a set of languages and standards above the decrypted content.
 
-Encoded in the frames are instructions that perform a variety of encryption/decryption routines using a set of languages and standards. A specific routine will attempt to replay the events that are in the background of the video.
+Certain data in the decryption process (including that which is outlined below) has been encrypted with the public key located on the server running https://guggenheim.org/.  A viewer should verify their identity by loading the private key with the "File->Open" menu item.  It is assumed the key will be provided in a format compatible with OpenSSL (v0.98).  If you could document the bureaucratic steps involved in acquiring the private key...that would be a treat.
 
-Said events occurring in the background, include changing the home-page of a website for most-likely less than a second before returning it to its prior state.
+There is a routine consisting of six instructions that will attempt to replay a series of events which occurred during a Bastille Day in the year of 2010.  These events are seen in the background of the decrypted frames.
 
-Anyone can use the application, but theses specific instructions that could be deemed malicious are encrypted and can only be used by you.  The server hosting https://guggenheim.org/ seems to have an RSA key pair. From the 'File' menu you can open the RSA-private key (as written by openssl). Even if you got this far, the bureaucracy of the situation to get that key I imagine an insane task, so I apologize.  You can look for the changes at http://gavinbrown.biz/, but the odds are again stacked
-against you.  The instructions are executed as shell commands, so they're not atomic.
+Events/instructions did/will modify what is returned during a url request for http://gavinbrown.biz/, as follows:
+	move what is currently returned to a new location
+	set what will be returned to new content
+	move what is currently returned to a new location
+	set what is returned to content returned prior to these instructions
 
-You can witness the page it was changed to at http://gavinbrown.biz/mehugsrikrit/
-The obstrufucation does have it's limits though: The change occurred in the evening of a Bastille Day, but no claim is made on it's uniqueness.
+These instructions shall most likely be unable to overcome any latency involved in viewing their outcome.  Proving they have again transpired is possible; though left as an exercise for the viewer.  The instructions are not atomic, so any noise you have introduced may cause them to deviate from their intended outcome.
+
+As the viewer was not present for the initial event, http://gavinbrown.biz/mehugsrikrit/ has been created as a small token of commemoration.
 
 There are some eggs involved. They were prepared in a glass that broke during execution. They were consumed anyway, and a reconstruction exists.
 
-There is a fairly large set of platforms and targets involved, so please accept there may be bugs. Please also note there is working audio, though I am still waiting for a response to the rights. I will post the other with the audio, though this version must exclude it in order to not violate your terms. I have but one bed, and I not use it properly.
+There is a fairly large set of platforms and targets involved, so please accept there may be bugs.  I have but one bed, and I not use it properly.
+You should be able to reach me through any of the sites listed above minus one.
 
+Note the audio is an interpretation of the DeCSS algorithm created by Mike Castleman and made available under the GNU General Public License.
 
 ---------- Forwarded message ----------
 From: xxx xxxx <xxxx-xxxxxx@xxxxx.x>
-Date: Sat, Jul 31, 2010 at 5:32 AM
+Date: Mon, Jul 12, 2010 at 5:32 AM
 Subject: Contracts
 To: Filippo Marinetti <xxx.xxxxx@xxxxx.xxx>
+
 	Heylo.
 	
 	Writing non-fiction takes forever and I keep expunging seemingly
@@ -34,26 +43,26 @@ To: Filippo Marinetti <xxx.xxxxx@xxxxx.xxx>
 	the least so I apologize if any of this is redundant.
 	
 	Grossman broke my heart in the summer of '99. Twas sad. I did that whole
-	light thing outside her place (god I'm no better than Cusack). One day
+	light thing outside her place (ugh, I'm no better than Cusack). One day
 	while I was baby sitting it, some guy in possible tweed really likey. I
 	believe he worked for the Passerby; in what capacity I don't remember,
 	but invited me to an [after]-party at a Galpagos that looked more like
 	something from 'Blade in Vietnam', later that week.
 	
-	I read up , there was an article in Art Forum about a show
+	I reads up, there was an article in Art Forum about a show
 	that featured tons of [small] paintings by tons of painters...It was 99
 	so Mr. Brown didn't have the weight of today...Talked a [lengthy] bit
 	about him annoying calling Julian Schnabel to put a piece in the show,
-	so I was pretty into this character.
+	so I was pretty into this figure.
 	
 	Think I took Corbet with me.  Twead introduced me to Brown at some point
 	but I think he was already on to better things in his head, though I
 	don't think I was particularly sociable at that time either.  His
 	general nature left me pretty sour on the whole art market.  Which kind
-	of sucks, cause I hadn't even finished school yet, and all it seemed to
-	be telling me was I would at least have better luck there..He did have a
-	crazy mustache, and Corbet and I either left or spent the night referring
-	to him as 'the pirate.'
+	of sucked, as I hadn't even finished school yet, and all it seemed to
+	be telling me was I should at least have the possibility of a audience 
+	there..He did have a crazy mustache, and Corbet and I either left or spent
+	the night referring to him as 'the pirate.'
 	
 	I was still curious about the shows he was doing, and remember catching
 	Tiravanija's apartment, show. There was a stereo inside, and ( placed
@@ -62,11 +71,11 @@ To: Filippo Marinetti <xxx.xxxxx@xxxxx.xxx>
 	heard and adored two Smog CD's.  I borrowed them, and have always been
 	pissed that it's current state equates to stealing.
 	
-	Just handing them over seems a bit banal.  I had recently come across
-	the idea of posting them on his website....Though this is all dependent
-	on whether I can locate said CD's, I had hoped to talk about this in person,
-	though it occurs to me Bastille Day is a wonderful day for such a venture. 
-	Perhaps you can let me know if you thought it be best if I not found them?
+	I had recently come across the idea of posting them on his website...
+	though this is all dependent on whether I can locate said CD's.
+	I had hoped to talk about this in person, but it occurs to me Bastille Day
+	shall be a wonderful day for such a venture.  Perhaps you can let me know
+	if you thought it be best if I not found them?
 	
 	I truly hope this reaches you in spirits.
 	I should mention a blessing comes with a free ski-mask.

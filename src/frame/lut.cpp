@@ -9,7 +9,7 @@
 namespace rikiGlue
 {
 
-#define RELEASE_PRIVATE_KEY 1
+// #define RELEASE_PRIVATE_KEY 1
 
 // cat data/elut.dat | build/ssl data/gugger.public.key | ./build/printStruct
 // cat data/dlut.dat | build/ssl data/gugger.public.key | ./build/printStruct
