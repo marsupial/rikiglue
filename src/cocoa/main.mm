@@ -331,6 +331,6 @@ ssh_main(int ac, const char **av)
 }
 
 int main(int argc, char *argv[])
-{												   
+{
     return NSApplicationMain(argc,  (const char **) argv);
 }
