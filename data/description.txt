@@ -1,15 +1,15 @@
 Contracts of 
 
-The images been transformed with a series of encryption techniques that can be reversed by running an executable and floating its window above the content located at http://www.youtube.com/watch?v=GspjsTC_j2s&fmt=37.
+The images have been transformed with a series of encryption techniques that can be reversed by running an executable and floating its window above the content located at http://www.youtube.com/watch?v=GspjsTC_j2s&fmt=37.
 
-Keeping it in the family, the application can be downloaded here:
+Keeping it in the family, the executable can be downloaded here:
 	http://code.google.com/p/rikiglue/downloads/list
 The source, including authoring tools, is available, and can be inspected:
 	http://code.google.com/p/rikiglue/source/checkout
 
 Further encoded in the frames are instructions that perform a variety of encryption and decryption routines using a set of languages and standards above the decrypted content.
 
-Certain data in the decryption process (including that which is outlined below) has been encrypted with the public key located on the server running https://guggenheim.org/.  A viewer should verify their identity by loading the private key with the "File->Open" menu item.  It is assumed the key will be provided in a format compatible with OpenSSL (v0.98).  If you could document the bureaucratic steps involved in acquiring the private key...that would be a treat.
+Certain data in the decryption process (including that which is outlined below) has been encrypted with the public key located on the server running https://guggenheim.org/.  A viewer should verify their identity by loading the private key with the "File->Open" menu item.  It is assumed the key will be provided in a format compatible with OpenSSL (v0.98).  If you could document the bureaucratic steps involved in acquiring the private key...well that would be a treat.
 
 There is a routine consisting of six instructions that will attempt to replay a series of events which occurred during a Bastille Day in the year of 2010.  These events are seen in the background of the decrypted frames.
 
@@ -19,7 +19,7 @@ Events/instructions did/will modify what is returned during a url request for ht
 	move what is currently returned to a new location
 	set what is returned to content returned prior to these instructions
 
-These instructions shall most likely be unable to overcome any latency involved in viewing their outcome.  Proving they have again transpired is possible; though left as an exercise for the viewer.  The instructions are not atomic, so any noise you have introduced may cause them to deviate from their intended outcome.
+These instructions shall most likely be unable to overcome any latency involved in viewing their outcome.  Proving they have again transpired is possible; though left as an exercise for the viewer.  The instructions are not atomic, so any noise you have introduced may cause them to deviate from their intended effect.
 
 As the viewer was not present for the initial event, http://gavinbrown.biz/mehugsrikrit/ has been created as a small token of commemoration.
 
